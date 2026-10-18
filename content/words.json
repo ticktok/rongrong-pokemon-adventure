@@ -1,0 +1,2402 @@
+[
+  {
+    "id": "word-1-1",
+    "word": "red",
+    "meaning": "红色",
+    "topic": "颜色与感受",
+    "level": 1,
+    "example": "It is red."
+  },
+  {
+    "id": "word-1-2",
+    "word": "blue",
+    "meaning": "蓝色",
+    "topic": "颜色与感受",
+    "level": 1,
+    "example": "It is blue."
+  },
+  {
+    "id": "word-1-3",
+    "word": "green",
+    "meaning": "绿色",
+    "topic": "颜色与感受",
+    "level": 1,
+    "example": "It is green."
+  },
+  {
+    "id": "word-1-4",
+    "word": "yellow",
+    "meaning": "黄色",
+    "topic": "颜色与感受",
+    "level": 1,
+    "example": "It is yellow."
+  },
+  {
+    "id": "word-1-5",
+    "word": "black",
+    "meaning": "黑色",
+    "topic": "颜色与感受",
+    "level": 1,
+    "example": "It is black."
+  },
+  {
+    "id": "word-1-6",
+    "word": "white",
+    "meaning": "白色",
+    "topic": "颜色与感受",
+    "level": 1,
+    "example": "It is white."
+  },
+  {
+    "id": "word-1-7",
+    "word": "orange",
+    "meaning": "橙色",
+    "topic": "颜色与感受",
+    "level": 1,
+    "example": "It is orange."
+  },
+  {
+    "id": "word-1-8",
+    "word": "pink",
+    "meaning": "粉色",
+    "topic": "颜色与感受",
+    "level": 1,
+    "example": "It is pink."
+  },
+  {
+    "id": "word-1-9",
+    "word": "purple",
+    "meaning": "紫色",
+    "topic": "颜色与感受",
+    "level": 1,
+    "example": "It is purple."
+  },
+  {
+    "id": "word-1-10",
+    "word": "brown",
+    "meaning": "棕色",
+    "topic": "颜色与感受",
+    "level": 1,
+    "example": "It is brown."
+  },
+  {
+    "id": "word-1-11",
+    "word": "grey",
+    "meaning": "灰色",
+    "topic": "颜色与感受",
+    "level": 1,
+    "example": "It is grey."
+  },
+  {
+    "id": "word-1-12",
+    "word": "happy",
+    "meaning": "开心的",
+    "topic": "颜色与感受",
+    "level": 1,
+    "example": "It is happy."
+  },
+  {
+    "id": "word-1-13",
+    "word": "sad",
+    "meaning": "难过的",
+    "topic": "颜色与感受",
+    "level": 1,
+    "example": "It is sad."
+  },
+  {
+    "id": "word-1-14",
+    "word": "angry",
+    "meaning": "生气的",
+    "topic": "颜色与感受",
+    "level": 1,
+    "example": "It is angry."
+  },
+  {
+    "id": "word-1-15",
+    "word": "tired",
+    "meaning": "累的",
+    "topic": "颜色与感受",
+    "level": 1,
+    "example": "It is tired."
+  },
+  {
+    "id": "word-1-16",
+    "word": "hungry",
+    "meaning": "饥饿的",
+    "topic": "颜色与感受",
+    "level": 2,
+    "example": "It is hungry."
+  },
+  {
+    "id": "word-1-17",
+    "word": "thirsty",
+    "meaning": "口渴的",
+    "topic": "颜色与感受",
+    "level": 2,
+    "example": "It is thirsty."
+  },
+  {
+    "id": "word-1-18",
+    "word": "hot",
+    "meaning": "热的",
+    "topic": "颜色与感受",
+    "level": 2,
+    "example": "It is hot."
+  },
+  {
+    "id": "word-1-19",
+    "word": "cold",
+    "meaning": "冷的",
+    "topic": "颜色与感受",
+    "level": 2,
+    "example": "It is cold."
+  },
+  {
+    "id": "word-1-20",
+    "word": "warm",
+    "meaning": "温暖的",
+    "topic": "颜色与感受",
+    "level": 2,
+    "example": "It is warm."
+  },
+  {
+    "id": "word-1-21",
+    "word": "cool",
+    "meaning": "凉爽的",
+    "topic": "颜色与感受",
+    "level": 2,
+    "example": "It is cool."
+  },
+  {
+    "id": "word-1-22",
+    "word": "good",
+    "meaning": "好的",
+    "topic": "颜色与感受",
+    "level": 2,
+    "example": "It is good."
+  },
+  {
+    "id": "word-1-23",
+    "word": "bad",
+    "meaning": "坏的",
+    "topic": "颜色与感受",
+    "level": 2,
+    "example": "It is bad."
+  },
+  {
+    "id": "word-1-24",
+    "word": "nice",
+    "meaning": "友好的",
+    "topic": "颜色与感受",
+    "level": 2,
+    "example": "It is nice."
+  },
+  {
+    "id": "word-1-25",
+    "word": "beautiful",
+    "meaning": "美丽的",
+    "topic": "颜色与感受",
+    "level": 2,
+    "example": "It is beautiful."
+  },
+  {
+    "id": "word-2-1",
+    "word": "one",
+    "meaning": "一",
+    "topic": "数字与形状",
+    "level": 1,
+    "example": "Let us say \"one\"."
+  },
+  {
+    "id": "word-2-2",
+    "word": "two",
+    "meaning": "二",
+    "topic": "数字与形状",
+    "level": 1,
+    "example": "Let us say \"two\"."
+  },
+  {
+    "id": "word-2-3",
+    "word": "three",
+    "meaning": "三",
+    "topic": "数字与形状",
+    "level": 1,
+    "example": "Let us say \"three\"."
+  },
+  {
+    "id": "word-2-4",
+    "word": "four",
+    "meaning": "四",
+    "topic": "数字与形状",
+    "level": 1,
+    "example": "Let us say \"four\"."
+  },
+  {
+    "id": "word-2-5",
+    "word": "five",
+    "meaning": "五",
+    "topic": "数字与形状",
+    "level": 1,
+    "example": "Let us say \"five\"."
+  },
+  {
+    "id": "word-2-6",
+    "word": "six",
+    "meaning": "六",
+    "topic": "数字与形状",
+    "level": 1,
+    "example": "Let us say \"six\"."
+  },
+  {
+    "id": "word-2-7",
+    "word": "seven",
+    "meaning": "七",
+    "topic": "数字与形状",
+    "level": 1,
+    "example": "Let us say \"seven\"."
+  },
+  {
+    "id": "word-2-8",
+    "word": "eight",
+    "meaning": "八",
+    "topic": "数字与形状",
+    "level": 1,
+    "example": "Let us say \"eight\"."
+  },
+  {
+    "id": "word-2-9",
+    "word": "nine",
+    "meaning": "九",
+    "topic": "数字与形状",
+    "level": 1,
+    "example": "Let us say \"nine\"."
+  },
+  {
+    "id": "word-2-10",
+    "word": "ten",
+    "meaning": "十",
+    "topic": "数字与形状",
+    "level": 1,
+    "example": "Let us say \"ten\"."
+  },
+  {
+    "id": "word-2-11",
+    "word": "eleven",
+    "meaning": "十一",
+    "topic": "数字与形状",
+    "level": 1,
+    "example": "Let us say \"eleven\"."
+  },
+  {
+    "id": "word-2-12",
+    "word": "twelve",
+    "meaning": "十二",
+    "topic": "数字与形状",
+    "level": 1,
+    "example": "Let us say \"twelve\"."
+  },
+  {
+    "id": "word-2-13",
+    "word": "thirteen",
+    "meaning": "十三",
+    "topic": "数字与形状",
+    "level": 1,
+    "example": "Let us say \"thirteen\"."
+  },
+  {
+    "id": "word-2-14",
+    "word": "fourteen",
+    "meaning": "十四",
+    "topic": "数字与形状",
+    "level": 1,
+    "example": "Let us say \"fourteen\"."
+  },
+  {
+    "id": "word-2-15",
+    "word": "fifteen",
+    "meaning": "十五",
+    "topic": "数字与形状",
+    "level": 1,
+    "example": "Let us say \"fifteen\"."
+  },
+  {
+    "id": "word-2-16",
+    "word": "sixteen",
+    "meaning": "十六",
+    "topic": "数字与形状",
+    "level": 2,
+    "example": "Let us say \"sixteen\"."
+  },
+  {
+    "id": "word-2-17",
+    "word": "seventeen",
+    "meaning": "十七",
+    "topic": "数字与形状",
+    "level": 2,
+    "example": "Let us say \"seventeen\"."
+  },
+  {
+    "id": "word-2-18",
+    "word": "eighteen",
+    "meaning": "十八",
+    "topic": "数字与形状",
+    "level": 2,
+    "example": "Let us say \"eighteen\"."
+  },
+  {
+    "id": "word-2-19",
+    "word": "nineteen",
+    "meaning": "十九",
+    "topic": "数字与形状",
+    "level": 2,
+    "example": "Let us say \"nineteen\"."
+  },
+  {
+    "id": "word-2-20",
+    "word": "twenty",
+    "meaning": "二十",
+    "topic": "数字与形状",
+    "level": 2,
+    "example": "Let us say \"twenty\"."
+  },
+  {
+    "id": "word-2-21",
+    "word": "hundred",
+    "meaning": "一百",
+    "topic": "数字与形状",
+    "level": 2,
+    "example": "Let us say \"hundred\"."
+  },
+  {
+    "id": "word-2-22",
+    "word": "circle",
+    "meaning": "圆形",
+    "topic": "数字与形状",
+    "level": 2,
+    "example": "Let us say \"circle\"."
+  },
+  {
+    "id": "word-2-23",
+    "word": "square",
+    "meaning": "正方形",
+    "topic": "数字与形状",
+    "level": 2,
+    "example": "Let us say \"square\"."
+  },
+  {
+    "id": "word-2-24",
+    "word": "triangle",
+    "meaning": "三角形",
+    "topic": "数字与形状",
+    "level": 2,
+    "example": "Let us say \"triangle\"."
+  },
+  {
+    "id": "word-2-25",
+    "word": "rectangle",
+    "meaning": "长方形",
+    "topic": "数字与形状",
+    "level": 2,
+    "example": "Let us say \"rectangle\"."
+  },
+  {
+    "id": "word-3-1",
+    "word": "cat",
+    "meaning": "猫",
+    "topic": "动物朋友",
+    "level": 1,
+    "example": "Look at the cat."
+  },
+  {
+    "id": "word-3-2",
+    "word": "dog",
+    "meaning": "狗",
+    "topic": "动物朋友",
+    "level": 1,
+    "example": "Look at the dog."
+  },
+  {
+    "id": "word-3-3",
+    "word": "bird",
+    "meaning": "鸟",
+    "topic": "动物朋友",
+    "level": 1,
+    "example": "Look at the bird."
+  },
+  {
+    "id": "word-3-4",
+    "word": "fish",
+    "meaning": "鱼",
+    "topic": "动物朋友",
+    "level": 1,
+    "example": "Look at the fish."
+  },
+  {
+    "id": "word-3-5",
+    "word": "rabbit",
+    "meaning": "兔子",
+    "topic": "动物朋友",
+    "level": 1,
+    "example": "Look at the rabbit."
+  },
+  {
+    "id": "word-3-6",
+    "word": "duck",
+    "meaning": "鸭子",
+    "topic": "动物朋友",
+    "level": 1,
+    "example": "Look at the duck."
+  },
+  {
+    "id": "word-3-7",
+    "word": "chicken",
+    "meaning": "鸡",
+    "topic": "动物朋友",
+    "level": 1,
+    "example": "Look at the chicken."
+  },
+  {
+    "id": "word-3-8",
+    "word": "cow",
+    "meaning": "奶牛",
+    "topic": "动物朋友",
+    "level": 1,
+    "example": "Look at the cow."
+  },
+  {
+    "id": "word-3-9",
+    "word": "horse",
+    "meaning": "马",
+    "topic": "动物朋友",
+    "level": 1,
+    "example": "Look at the horse."
+  },
+  {
+    "id": "word-3-10",
+    "word": "sheep",
+    "meaning": "绵羊",
+    "topic": "动物朋友",
+    "level": 1,
+    "example": "Look at the sheep."
+  },
+  {
+    "id": "word-3-11",
+    "word": "pig",
+    "meaning": "猪",
+    "topic": "动物朋友",
+    "level": 1,
+    "example": "Look at the pig."
+  },
+  {
+    "id": "word-3-12",
+    "word": "goat",
+    "meaning": "山羊",
+    "topic": "动物朋友",
+    "level": 1,
+    "example": "Look at the goat."
+  },
+  {
+    "id": "word-3-13",
+    "word": "mouse",
+    "meaning": "老鼠",
+    "topic": "动物朋友",
+    "level": 1,
+    "example": "Look at the mouse."
+  },
+  {
+    "id": "word-3-14",
+    "word": "lion",
+    "meaning": "狮子",
+    "topic": "动物朋友",
+    "level": 1,
+    "example": "Look at the lion."
+  },
+  {
+    "id": "word-3-15",
+    "word": "tiger",
+    "meaning": "老虎",
+    "topic": "动物朋友",
+    "level": 1,
+    "example": "Look at the tiger."
+  },
+  {
+    "id": "word-3-16",
+    "word": "elephant",
+    "meaning": "大象",
+    "topic": "动物朋友",
+    "level": 2,
+    "example": "Look at the elephant."
+  },
+  {
+    "id": "word-3-17",
+    "word": "monkey",
+    "meaning": "猴子",
+    "topic": "动物朋友",
+    "level": 2,
+    "example": "Look at the monkey."
+  },
+  {
+    "id": "word-3-18",
+    "word": "panda",
+    "meaning": "熊猫",
+    "topic": "动物朋友",
+    "level": 2,
+    "example": "Look at the panda."
+  },
+  {
+    "id": "word-3-19",
+    "word": "bear",
+    "meaning": "熊",
+    "topic": "动物朋友",
+    "level": 2,
+    "example": "Look at the bear."
+  },
+  {
+    "id": "word-3-20",
+    "word": "giraffe",
+    "meaning": "长颈鹿",
+    "topic": "动物朋友",
+    "level": 2,
+    "example": "Look at the giraffe."
+  },
+  {
+    "id": "word-3-21",
+    "word": "zebra",
+    "meaning": "斑马",
+    "topic": "动物朋友",
+    "level": 2,
+    "example": "Look at the zebra."
+  },
+  {
+    "id": "word-3-22",
+    "word": "snake",
+    "meaning": "蛇",
+    "topic": "动物朋友",
+    "level": 2,
+    "example": "Look at the snake."
+  },
+  {
+    "id": "word-3-23",
+    "word": "frog",
+    "meaning": "青蛙",
+    "topic": "动物朋友",
+    "level": 2,
+    "example": "Look at the frog."
+  },
+  {
+    "id": "word-3-24",
+    "word": "turtle",
+    "meaning": "乌龟",
+    "topic": "动物朋友",
+    "level": 2,
+    "example": "Look at the turtle."
+  },
+  {
+    "id": "word-3-25",
+    "word": "butterfly",
+    "meaning": "蝴蝶",
+    "topic": "动物朋友",
+    "level": 2,
+    "example": "Look at the butterfly."
+  },
+  {
+    "id": "word-4-1",
+    "word": "apple",
+    "meaning": "苹果",
+    "topic": "美味食物",
+    "level": 1,
+    "example": "Look at the apple."
+  },
+  {
+    "id": "word-4-2",
+    "word": "banana",
+    "meaning": "香蕉",
+    "topic": "美味食物",
+    "level": 1,
+    "example": "Look at the banana."
+  },
+  {
+    "id": "word-4-3",
+    "word": "pear",
+    "meaning": "梨",
+    "topic": "美味食物",
+    "level": 1,
+    "example": "Look at the pear."
+  },
+  {
+    "id": "word-4-4",
+    "word": "peach",
+    "meaning": "桃子",
+    "topic": "美味食物",
+    "level": 1,
+    "example": "Look at the peach."
+  },
+  {
+    "id": "word-4-5",
+    "word": "grape",
+    "meaning": "葡萄",
+    "topic": "美味食物",
+    "level": 1,
+    "example": "Look at the grape."
+  },
+  {
+    "id": "word-4-6",
+    "word": "watermelon",
+    "meaning": "西瓜",
+    "topic": "美味食物",
+    "level": 1,
+    "example": "Look at the watermelon."
+  },
+  {
+    "id": "word-4-7",
+    "word": "strawberry",
+    "meaning": "草莓",
+    "topic": "美味食物",
+    "level": 1,
+    "example": "Look at the strawberry."
+  },
+  {
+    "id": "word-4-8",
+    "word": "lemon",
+    "meaning": "柠檬",
+    "topic": "美味食物",
+    "level": 1,
+    "example": "Look at the lemon."
+  },
+  {
+    "id": "word-4-9",
+    "word": "cherry",
+    "meaning": "樱桃",
+    "topic": "美味食物",
+    "level": 1,
+    "example": "Look at the cherry."
+  },
+  {
+    "id": "word-4-10",
+    "word": "mango",
+    "meaning": "芒果",
+    "topic": "美味食物",
+    "level": 1,
+    "example": "Look at the mango."
+  },
+  {
+    "id": "word-4-11",
+    "word": "rice",
+    "meaning": "米饭",
+    "topic": "美味食物",
+    "level": 1,
+    "example": "Let us say \"rice\"."
+  },
+  {
+    "id": "word-4-12",
+    "word": "noodles",
+    "meaning": "面条",
+    "topic": "美味食物",
+    "level": 1,
+    "example": "Let us say \"noodles\"."
+  },
+  {
+    "id": "word-4-13",
+    "word": "bread",
+    "meaning": "面包",
+    "topic": "美味食物",
+    "level": 1,
+    "example": "Look at the bread."
+  },
+  {
+    "id": "word-4-14",
+    "word": "cake",
+    "meaning": "蛋糕",
+    "topic": "美味食物",
+    "level": 1,
+    "example": "Look at the cake."
+  },
+  {
+    "id": "word-4-15",
+    "word": "egg",
+    "meaning": "鸡蛋",
+    "topic": "美味食物",
+    "level": 1,
+    "example": "Look at the egg."
+  },
+  {
+    "id": "word-4-16",
+    "word": "milk",
+    "meaning": "牛奶",
+    "topic": "美味食物",
+    "level": 2,
+    "example": "Let us say \"milk\"."
+  },
+  {
+    "id": "word-4-17",
+    "word": "juice",
+    "meaning": "果汁",
+    "topic": "美味食物",
+    "level": 2,
+    "example": "Let us say \"juice\"."
+  },
+  {
+    "id": "word-4-18",
+    "word": "water",
+    "meaning": "水",
+    "topic": "美味食物",
+    "level": 2,
+    "example": "Let us say \"water\"."
+  },
+  {
+    "id": "word-4-19",
+    "word": "tea",
+    "meaning": "茶",
+    "topic": "美味食物",
+    "level": 2,
+    "example": "Let us say \"tea\"."
+  },
+  {
+    "id": "word-4-20",
+    "word": "soup",
+    "meaning": "汤",
+    "topic": "美味食物",
+    "level": 2,
+    "example": "Let us say \"soup\"."
+  },
+  {
+    "id": "word-4-21",
+    "word": "potato",
+    "meaning": "土豆",
+    "topic": "美味食物",
+    "level": 2,
+    "example": "Look at the potato."
+  },
+  {
+    "id": "word-4-22",
+    "word": "tomato",
+    "meaning": "番茄",
+    "topic": "美味食物",
+    "level": 2,
+    "example": "Look at the tomato."
+  },
+  {
+    "id": "word-4-23",
+    "word": "carrot",
+    "meaning": "胡萝卜",
+    "topic": "美味食物",
+    "level": 2,
+    "example": "Look at the carrot."
+  },
+  {
+    "id": "word-4-24",
+    "word": "meat",
+    "meaning": "肉",
+    "topic": "美味食物",
+    "level": 2,
+    "example": "Let us say \"meat\"."
+  },
+  {
+    "id": "word-4-25",
+    "word": "cheese",
+    "meaning": "奶酪",
+    "topic": "美味食物",
+    "level": 2,
+    "example": "Let us say \"cheese\"."
+  },
+  {
+    "id": "word-5-1",
+    "word": "father",
+    "meaning": "爸爸",
+    "topic": "家人与朋友",
+    "level": 1,
+    "example": "Let us say \"father\"."
+  },
+  {
+    "id": "word-5-2",
+    "word": "mother",
+    "meaning": "妈妈",
+    "topic": "家人与朋友",
+    "level": 1,
+    "example": "Let us say \"mother\"."
+  },
+  {
+    "id": "word-5-3",
+    "word": "brother",
+    "meaning": "兄弟",
+    "topic": "家人与朋友",
+    "level": 1,
+    "example": "Let us say \"brother\"."
+  },
+  {
+    "id": "word-5-4",
+    "word": "sister",
+    "meaning": "姐妹",
+    "topic": "家人与朋友",
+    "level": 1,
+    "example": "Let us say \"sister\"."
+  },
+  {
+    "id": "word-5-5",
+    "word": "grandfather",
+    "meaning": "祖父或外祖父",
+    "topic": "家人与朋友",
+    "level": 1,
+    "example": "Let us say \"grandfather\"."
+  },
+  {
+    "id": "word-5-6",
+    "word": "grandmother",
+    "meaning": "祖母或外祖母",
+    "topic": "家人与朋友",
+    "level": 1,
+    "example": "Let us say \"grandmother\"."
+  },
+  {
+    "id": "word-5-7",
+    "word": "uncle",
+    "meaning": "叔叔或舅舅",
+    "topic": "家人与朋友",
+    "level": 1,
+    "example": "Let us say \"uncle\"."
+  },
+  {
+    "id": "word-5-8",
+    "word": "aunt",
+    "meaning": "姑姑或阿姨",
+    "topic": "家人与朋友",
+    "level": 1,
+    "example": "Let us say \"aunt\"."
+  },
+  {
+    "id": "word-5-9",
+    "word": "cousin",
+    "meaning": "堂兄弟姐妹或表兄弟姐妹",
+    "topic": "家人与朋友",
+    "level": 1,
+    "example": "Let us say \"cousin\"."
+  },
+  {
+    "id": "word-5-10",
+    "word": "baby",
+    "meaning": "婴儿",
+    "topic": "家人与朋友",
+    "level": 1,
+    "example": "Let us say \"baby\"."
+  },
+  {
+    "id": "word-5-11",
+    "word": "family",
+    "meaning": "家庭",
+    "topic": "家人与朋友",
+    "level": 1,
+    "example": "Let us say \"family\"."
+  },
+  {
+    "id": "word-5-12",
+    "word": "friend",
+    "meaning": "朋友",
+    "topic": "家人与朋友",
+    "level": 1,
+    "example": "Let us say \"friend\"."
+  },
+  {
+    "id": "word-5-13",
+    "word": "boy",
+    "meaning": "男孩",
+    "topic": "家人与朋友",
+    "level": 1,
+    "example": "Let us say \"boy\"."
+  },
+  {
+    "id": "word-5-14",
+    "word": "girl",
+    "meaning": "女孩",
+    "topic": "家人与朋友",
+    "level": 1,
+    "example": "Let us say \"girl\"."
+  },
+  {
+    "id": "word-5-15",
+    "word": "man",
+    "meaning": "男人",
+    "topic": "家人与朋友",
+    "level": 1,
+    "example": "Let us say \"man\"."
+  },
+  {
+    "id": "word-5-16",
+    "word": "woman",
+    "meaning": "女人",
+    "topic": "家人与朋友",
+    "level": 2,
+    "example": "Let us say \"woman\"."
+  },
+  {
+    "id": "word-5-17",
+    "word": "child",
+    "meaning": "孩子",
+    "topic": "家人与朋友",
+    "level": 2,
+    "example": "Let us say \"child\"."
+  },
+  {
+    "id": "word-5-18",
+    "word": "people",
+    "meaning": "人们",
+    "topic": "家人与朋友",
+    "level": 2,
+    "example": "Let us say \"people\"."
+  },
+  {
+    "id": "word-5-19",
+    "word": "teacher",
+    "meaning": "老师",
+    "topic": "家人与朋友",
+    "level": 2,
+    "example": "Let us say \"teacher\"."
+  },
+  {
+    "id": "word-5-20",
+    "word": "student",
+    "meaning": "学生",
+    "topic": "家人与朋友",
+    "level": 2,
+    "example": "Let us say \"student\"."
+  },
+  {
+    "id": "word-5-21",
+    "word": "doctor",
+    "meaning": "医生",
+    "topic": "家人与朋友",
+    "level": 2,
+    "example": "Let us say \"doctor\"."
+  },
+  {
+    "id": "word-5-22",
+    "word": "nurse",
+    "meaning": "护士",
+    "topic": "家人与朋友",
+    "level": 2,
+    "example": "Let us say \"nurse\"."
+  },
+  {
+    "id": "word-5-23",
+    "word": "farmer",
+    "meaning": "农民",
+    "topic": "家人与朋友",
+    "level": 2,
+    "example": "Let us say \"farmer\"."
+  },
+  {
+    "id": "word-5-24",
+    "word": "driver",
+    "meaning": "司机",
+    "topic": "家人与朋友",
+    "level": 2,
+    "example": "Let us say \"driver\"."
+  },
+  {
+    "id": "word-5-25",
+    "word": "cook",
+    "meaning": "厨师",
+    "topic": "家人与朋友",
+    "level": 2,
+    "example": "Let us say \"cook\"."
+  },
+  {
+    "id": "word-6-1",
+    "word": "head",
+    "meaning": "头",
+    "topic": "我的身体",
+    "level": 1,
+    "example": "Look at the head."
+  },
+  {
+    "id": "word-6-2",
+    "word": "face",
+    "meaning": "脸",
+    "topic": "我的身体",
+    "level": 1,
+    "example": "Look at the face."
+  },
+  {
+    "id": "word-6-3",
+    "word": "eye",
+    "meaning": "眼睛",
+    "topic": "我的身体",
+    "level": 1,
+    "example": "Look at the eye."
+  },
+  {
+    "id": "word-6-4",
+    "word": "ear",
+    "meaning": "耳朵",
+    "topic": "我的身体",
+    "level": 1,
+    "example": "Look at the ear."
+  },
+  {
+    "id": "word-6-5",
+    "word": "nose",
+    "meaning": "鼻子",
+    "topic": "我的身体",
+    "level": 1,
+    "example": "Look at the nose."
+  },
+  {
+    "id": "word-6-6",
+    "word": "mouth",
+    "meaning": "嘴",
+    "topic": "我的身体",
+    "level": 1,
+    "example": "Look at the mouth."
+  },
+  {
+    "id": "word-6-7",
+    "word": "tooth",
+    "meaning": "牙齿",
+    "topic": "我的身体",
+    "level": 1,
+    "example": "Look at the tooth."
+  },
+  {
+    "id": "word-6-8",
+    "word": "tongue",
+    "meaning": "舌头",
+    "topic": "我的身体",
+    "level": 1,
+    "example": "Look at the tongue."
+  },
+  {
+    "id": "word-6-9",
+    "word": "hair",
+    "meaning": "头发",
+    "topic": "我的身体",
+    "level": 1,
+    "example": "Let us say \"hair\"."
+  },
+  {
+    "id": "word-6-10",
+    "word": "neck",
+    "meaning": "脖子",
+    "topic": "我的身体",
+    "level": 1,
+    "example": "Look at the neck."
+  },
+  {
+    "id": "word-6-11",
+    "word": "shoulder",
+    "meaning": "肩膀",
+    "topic": "我的身体",
+    "level": 1,
+    "example": "Look at the shoulder."
+  },
+  {
+    "id": "word-6-12",
+    "word": "arm",
+    "meaning": "手臂",
+    "topic": "我的身体",
+    "level": 1,
+    "example": "Look at the arm."
+  },
+  {
+    "id": "word-6-13",
+    "word": "hand",
+    "meaning": "手",
+    "topic": "我的身体",
+    "level": 1,
+    "example": "Look at the hand."
+  },
+  {
+    "id": "word-6-14",
+    "word": "finger",
+    "meaning": "手指",
+    "topic": "我的身体",
+    "level": 1,
+    "example": "Look at the finger."
+  },
+  {
+    "id": "word-6-15",
+    "word": "thumb",
+    "meaning": "拇指",
+    "topic": "我的身体",
+    "level": 1,
+    "example": "Look at the thumb."
+  },
+  {
+    "id": "word-6-16",
+    "word": "leg",
+    "meaning": "腿",
+    "topic": "我的身体",
+    "level": 2,
+    "example": "Look at the leg."
+  },
+  {
+    "id": "word-6-17",
+    "word": "knee",
+    "meaning": "膝盖",
+    "topic": "我的身体",
+    "level": 2,
+    "example": "Look at the knee."
+  },
+  {
+    "id": "word-6-18",
+    "word": "foot",
+    "meaning": "脚",
+    "topic": "我的身体",
+    "level": 2,
+    "example": "Look at the foot."
+  },
+  {
+    "id": "word-6-19",
+    "word": "toe",
+    "meaning": "脚趾",
+    "topic": "我的身体",
+    "level": 2,
+    "example": "Look at the toe."
+  },
+  {
+    "id": "word-6-20",
+    "word": "back",
+    "meaning": "背部",
+    "topic": "我的身体",
+    "level": 2,
+    "example": "Look at the back."
+  },
+  {
+    "id": "word-6-21",
+    "word": "body",
+    "meaning": "身体",
+    "topic": "我的身体",
+    "level": 2,
+    "example": "Look at the body."
+  },
+  {
+    "id": "word-6-22",
+    "word": "heart",
+    "meaning": "心脏",
+    "topic": "我的身体",
+    "level": 2,
+    "example": "Look at the heart."
+  },
+  {
+    "id": "word-6-23",
+    "word": "skin",
+    "meaning": "皮肤",
+    "topic": "我的身体",
+    "level": 2,
+    "example": "Look at the skin."
+  },
+  {
+    "id": "word-6-24",
+    "word": "stomach",
+    "meaning": "胃",
+    "topic": "我的身体",
+    "level": 2,
+    "example": "Look at the stomach."
+  },
+  {
+    "id": "word-6-25",
+    "word": "elbow",
+    "meaning": "肘部",
+    "topic": "我的身体",
+    "level": 2,
+    "example": "Look at the elbow."
+  },
+  {
+    "id": "word-7-1",
+    "word": "school",
+    "meaning": "学校",
+    "topic": "快乐校园",
+    "level": 1,
+    "example": "Look at the school."
+  },
+  {
+    "id": "word-7-2",
+    "word": "classroom",
+    "meaning": "教室",
+    "topic": "快乐校园",
+    "level": 1,
+    "example": "Look at the classroom."
+  },
+  {
+    "id": "word-7-3",
+    "word": "desk",
+    "meaning": "课桌",
+    "topic": "快乐校园",
+    "level": 1,
+    "example": "Look at the desk."
+  },
+  {
+    "id": "word-7-4",
+    "word": "chair",
+    "meaning": "椅子",
+    "topic": "快乐校园",
+    "level": 1,
+    "example": "Look at the chair."
+  },
+  {
+    "id": "word-7-5",
+    "word": "book",
+    "meaning": "书",
+    "topic": "快乐校园",
+    "level": 1,
+    "example": "Look at the book."
+  },
+  {
+    "id": "word-7-6",
+    "word": "pen",
+    "meaning": "钢笔",
+    "topic": "快乐校园",
+    "level": 1,
+    "example": "Look at the pen."
+  },
+  {
+    "id": "word-7-7",
+    "word": "pencil",
+    "meaning": "铅笔",
+    "topic": "快乐校园",
+    "level": 1,
+    "example": "Look at the pencil."
+  },
+  {
+    "id": "word-7-8",
+    "word": "eraser",
+    "meaning": "橡皮",
+    "topic": "快乐校园",
+    "level": 1,
+    "example": "Look at the eraser."
+  },
+  {
+    "id": "word-7-9",
+    "word": "ruler",
+    "meaning": "尺子",
+    "topic": "快乐校园",
+    "level": 1,
+    "example": "Look at the ruler."
+  },
+  {
+    "id": "word-7-10",
+    "word": "bag",
+    "meaning": "书包",
+    "topic": "快乐校园",
+    "level": 1,
+    "example": "Look at the bag."
+  },
+  {
+    "id": "word-7-11",
+    "word": "paper",
+    "meaning": "纸",
+    "topic": "快乐校园",
+    "level": 1,
+    "example": "Let us say \"paper\"."
+  },
+  {
+    "id": "word-7-12",
+    "word": "notebook",
+    "meaning": "笔记本",
+    "topic": "快乐校园",
+    "level": 1,
+    "example": "Look at the notebook."
+  },
+  {
+    "id": "word-7-13",
+    "word": "crayon",
+    "meaning": "蜡笔",
+    "topic": "快乐校园",
+    "level": 1,
+    "example": "Look at the crayon."
+  },
+  {
+    "id": "word-7-14",
+    "word": "board",
+    "meaning": "黑板",
+    "topic": "快乐校园",
+    "level": 1,
+    "example": "Look at the board."
+  },
+  {
+    "id": "word-7-15",
+    "word": "library",
+    "meaning": "图书馆",
+    "topic": "快乐校园",
+    "level": 1,
+    "example": "Look at the library."
+  },
+  {
+    "id": "word-7-16",
+    "word": "playground",
+    "meaning": "操场",
+    "topic": "快乐校园",
+    "level": 2,
+    "example": "Look at the playground."
+  },
+  {
+    "id": "word-7-17",
+    "word": "computer",
+    "meaning": "电脑",
+    "topic": "快乐校园",
+    "level": 2,
+    "example": "Look at the computer."
+  },
+  {
+    "id": "word-7-18",
+    "word": "lesson",
+    "meaning": "课",
+    "topic": "快乐校园",
+    "level": 2,
+    "example": "Look at the lesson."
+  },
+  {
+    "id": "word-7-19",
+    "word": "homework",
+    "meaning": "家庭作业",
+    "topic": "快乐校园",
+    "level": 2,
+    "example": "Let us say \"homework\"."
+  },
+  {
+    "id": "word-7-20",
+    "word": "English",
+    "meaning": "英语",
+    "topic": "快乐校园",
+    "level": 2,
+    "example": "Let us say \"English\"."
+  },
+  {
+    "id": "word-7-21",
+    "word": "math",
+    "meaning": "数学",
+    "topic": "快乐校园",
+    "level": 2,
+    "example": "Let us say \"math\"."
+  },
+  {
+    "id": "word-7-22",
+    "word": "music",
+    "meaning": "音乐",
+    "topic": "快乐校园",
+    "level": 2,
+    "example": "Let us say \"music\"."
+  },
+  {
+    "id": "word-7-23",
+    "word": "art",
+    "meaning": "美术",
+    "topic": "快乐校园",
+    "level": 2,
+    "example": "Let us say \"art\"."
+  },
+  {
+    "id": "word-7-24",
+    "word": "science",
+    "meaning": "科学",
+    "topic": "快乐校园",
+    "level": 2,
+    "example": "Let us say \"science\"."
+  },
+  {
+    "id": "word-7-25",
+    "word": "question",
+    "meaning": "问题",
+    "topic": "快乐校园",
+    "level": 2,
+    "example": "Look at the question."
+  },
+  {
+    "id": "word-8-1",
+    "word": "home",
+    "meaning": "家",
+    "topic": "温暖的家",
+    "level": 1,
+    "example": "Look at the home."
+  },
+  {
+    "id": "word-8-2",
+    "word": "house",
+    "meaning": "房子",
+    "topic": "温暖的家",
+    "level": 1,
+    "example": "Look at the house."
+  },
+  {
+    "id": "word-8-3",
+    "word": "room",
+    "meaning": "房间",
+    "topic": "温暖的家",
+    "level": 1,
+    "example": "Look at the room."
+  },
+  {
+    "id": "word-8-4",
+    "word": "bedroom",
+    "meaning": "卧室",
+    "topic": "温暖的家",
+    "level": 1,
+    "example": "Look at the bedroom."
+  },
+  {
+    "id": "word-8-5",
+    "word": "kitchen",
+    "meaning": "厨房",
+    "topic": "温暖的家",
+    "level": 1,
+    "example": "Look at the kitchen."
+  },
+  {
+    "id": "word-8-6",
+    "word": "bathroom",
+    "meaning": "浴室",
+    "topic": "温暖的家",
+    "level": 1,
+    "example": "Look at the bathroom."
+  },
+  {
+    "id": "word-8-7",
+    "word": "door",
+    "meaning": "门",
+    "topic": "温暖的家",
+    "level": 1,
+    "example": "Look at the door."
+  },
+  {
+    "id": "word-8-8",
+    "word": "window",
+    "meaning": "窗户",
+    "topic": "温暖的家",
+    "level": 1,
+    "example": "Look at the window."
+  },
+  {
+    "id": "word-8-9",
+    "word": "wall",
+    "meaning": "墙",
+    "topic": "温暖的家",
+    "level": 1,
+    "example": "Look at the wall."
+  },
+  {
+    "id": "word-8-10",
+    "word": "floor",
+    "meaning": "地板",
+    "topic": "温暖的家",
+    "level": 1,
+    "example": "Look at the floor."
+  },
+  {
+    "id": "word-8-11",
+    "word": "bed",
+    "meaning": "床",
+    "topic": "温暖的家",
+    "level": 1,
+    "example": "Look at the bed."
+  },
+  {
+    "id": "word-8-12",
+    "word": "sofa",
+    "meaning": "沙发",
+    "topic": "温暖的家",
+    "level": 1,
+    "example": "Look at the sofa."
+  },
+  {
+    "id": "word-8-13",
+    "word": "table",
+    "meaning": "桌子",
+    "topic": "温暖的家",
+    "level": 1,
+    "example": "Look at the table."
+  },
+  {
+    "id": "word-8-14",
+    "word": "lamp",
+    "meaning": "台灯",
+    "topic": "温暖的家",
+    "level": 1,
+    "example": "Look at the lamp."
+  },
+  {
+    "id": "word-8-15",
+    "word": "clock",
+    "meaning": "钟",
+    "topic": "温暖的家",
+    "level": 1,
+    "example": "Look at the clock."
+  },
+  {
+    "id": "word-8-16",
+    "word": "mirror",
+    "meaning": "镜子",
+    "topic": "温暖的家",
+    "level": 2,
+    "example": "Look at the mirror."
+  },
+  {
+    "id": "word-8-17",
+    "word": "cup",
+    "meaning": "杯子",
+    "topic": "温暖的家",
+    "level": 2,
+    "example": "Look at the cup."
+  },
+  {
+    "id": "word-8-18",
+    "word": "plate",
+    "meaning": "盘子",
+    "topic": "温暖的家",
+    "level": 2,
+    "example": "Look at the plate."
+  },
+  {
+    "id": "word-8-19",
+    "word": "bowl",
+    "meaning": "碗",
+    "topic": "温暖的家",
+    "level": 2,
+    "example": "Look at the bowl."
+  },
+  {
+    "id": "word-8-20",
+    "word": "spoon",
+    "meaning": "勺子",
+    "topic": "温暖的家",
+    "level": 2,
+    "example": "Look at the spoon."
+  },
+  {
+    "id": "word-8-21",
+    "word": "fork",
+    "meaning": "叉子",
+    "topic": "温暖的家",
+    "level": 2,
+    "example": "Look at the fork."
+  },
+  {
+    "id": "word-8-22",
+    "word": "knife",
+    "meaning": "刀",
+    "topic": "温暖的家",
+    "level": 2,
+    "example": "Look at the knife."
+  },
+  {
+    "id": "word-8-23",
+    "word": "fridge",
+    "meaning": "冰箱",
+    "topic": "温暖的家",
+    "level": 2,
+    "example": "Look at the fridge."
+  },
+  {
+    "id": "word-8-24",
+    "word": "phone",
+    "meaning": "电话",
+    "topic": "温暖的家",
+    "level": 2,
+    "example": "Look at the phone."
+  },
+  {
+    "id": "word-8-25",
+    "word": "key",
+    "meaning": "钥匙",
+    "topic": "温暖的家",
+    "level": 2,
+    "example": "Look at the key."
+  },
+  {
+    "id": "word-9-1",
+    "word": "shirt",
+    "meaning": "衬衫",
+    "topic": "衣服与物品",
+    "level": 1,
+    "example": "Look at the shirt."
+  },
+  {
+    "id": "word-9-2",
+    "word": "T-shirt",
+    "meaning": "T恤",
+    "topic": "衣服与物品",
+    "level": 1,
+    "example": "Look at the t-shirt."
+  },
+  {
+    "id": "word-9-3",
+    "word": "coat",
+    "meaning": "外套",
+    "topic": "衣服与物品",
+    "level": 1,
+    "example": "Look at the coat."
+  },
+  {
+    "id": "word-9-4",
+    "word": "jacket",
+    "meaning": "夹克",
+    "topic": "衣服与物品",
+    "level": 1,
+    "example": "Look at the jacket."
+  },
+  {
+    "id": "word-9-5",
+    "word": "sweater",
+    "meaning": "毛衣",
+    "topic": "衣服与物品",
+    "level": 1,
+    "example": "Look at the sweater."
+  },
+  {
+    "id": "word-9-6",
+    "word": "dress",
+    "meaning": "连衣裙",
+    "topic": "衣服与物品",
+    "level": 1,
+    "example": "Look at the dress."
+  },
+  {
+    "id": "word-9-7",
+    "word": "skirt",
+    "meaning": "裙子",
+    "topic": "衣服与物品",
+    "level": 1,
+    "example": "Look at the skirt."
+  },
+  {
+    "id": "word-9-8",
+    "word": "trousers",
+    "meaning": "裤子",
+    "topic": "衣服与物品",
+    "level": 1,
+    "example": "Let us say \"trousers\"."
+  },
+  {
+    "id": "word-9-9",
+    "word": "shorts",
+    "meaning": "短裤",
+    "topic": "衣服与物品",
+    "level": 1,
+    "example": "Let us say \"shorts\"."
+  },
+  {
+    "id": "word-9-10",
+    "word": "shoes",
+    "meaning": "鞋",
+    "topic": "衣服与物品",
+    "level": 1,
+    "example": "Let us say \"shoes\"."
+  },
+  {
+    "id": "word-9-11",
+    "word": "socks",
+    "meaning": "袜子",
+    "topic": "衣服与物品",
+    "level": 1,
+    "example": "Let us say \"socks\"."
+  },
+  {
+    "id": "word-9-12",
+    "word": "hat",
+    "meaning": "帽子",
+    "topic": "衣服与物品",
+    "level": 1,
+    "example": "Look at the hat."
+  },
+  {
+    "id": "word-9-13",
+    "word": "cap",
+    "meaning": "鸭舌帽",
+    "topic": "衣服与物品",
+    "level": 1,
+    "example": "Look at the cap."
+  },
+  {
+    "id": "word-9-14",
+    "word": "scarf",
+    "meaning": "围巾",
+    "topic": "衣服与物品",
+    "level": 1,
+    "example": "Look at the scarf."
+  },
+  {
+    "id": "word-9-15",
+    "word": "gloves",
+    "meaning": "手套",
+    "topic": "衣服与物品",
+    "level": 1,
+    "example": "Let us say \"gloves\"."
+  },
+  {
+    "id": "word-9-16",
+    "word": "umbrella",
+    "meaning": "雨伞",
+    "topic": "衣服与物品",
+    "level": 2,
+    "example": "Look at the umbrella."
+  },
+  {
+    "id": "word-9-17",
+    "word": "watch",
+    "meaning": "手表",
+    "topic": "衣服与物品",
+    "level": 2,
+    "example": "Look at the watch."
+  },
+  {
+    "id": "word-9-18",
+    "word": "glasses",
+    "meaning": "眼镜",
+    "topic": "衣服与物品",
+    "level": 2,
+    "example": "Let us say \"glasses\"."
+  },
+  {
+    "id": "word-9-19",
+    "word": "ball",
+    "meaning": "球",
+    "topic": "衣服与物品",
+    "level": 2,
+    "example": "Look at the ball."
+  },
+  {
+    "id": "word-9-20",
+    "word": "kite",
+    "meaning": "风筝",
+    "topic": "衣服与物品",
+    "level": 2,
+    "example": "Look at the kite."
+  },
+  {
+    "id": "word-9-21",
+    "word": "toy",
+    "meaning": "玩具",
+    "topic": "衣服与物品",
+    "level": 2,
+    "example": "Look at the toy."
+  },
+  {
+    "id": "word-9-22",
+    "word": "doll",
+    "meaning": "玩偶",
+    "topic": "衣服与物品",
+    "level": 2,
+    "example": "Look at the doll."
+  },
+  {
+    "id": "word-9-23",
+    "word": "robot",
+    "meaning": "机器人",
+    "topic": "衣服与物品",
+    "level": 2,
+    "example": "Look at the robot."
+  },
+  {
+    "id": "word-9-24",
+    "word": "bike",
+    "meaning": "自行车",
+    "topic": "衣服与物品",
+    "level": 2,
+    "example": "Look at the bike."
+  },
+  {
+    "id": "word-9-25",
+    "word": "car",
+    "meaning": "汽车",
+    "topic": "衣服与物品",
+    "level": 2,
+    "example": "Look at the car."
+  },
+  {
+    "id": "word-10-1",
+    "word": "sun",
+    "meaning": "太阳",
+    "topic": "大自然",
+    "level": 1,
+    "example": "Look at the sun."
+  },
+  {
+    "id": "word-10-2",
+    "word": "moon",
+    "meaning": "月亮",
+    "topic": "大自然",
+    "level": 1,
+    "example": "Look at the moon."
+  },
+  {
+    "id": "word-10-3",
+    "word": "star",
+    "meaning": "星星",
+    "topic": "大自然",
+    "level": 1,
+    "example": "Look at the star."
+  },
+  {
+    "id": "word-10-4",
+    "word": "sky",
+    "meaning": "天空",
+    "topic": "大自然",
+    "level": 1,
+    "example": "Look at the sky."
+  },
+  {
+    "id": "word-10-5",
+    "word": "cloud",
+    "meaning": "云",
+    "topic": "大自然",
+    "level": 1,
+    "example": "Look at the cloud."
+  },
+  {
+    "id": "word-10-6",
+    "word": "rain",
+    "meaning": "雨",
+    "topic": "大自然",
+    "level": 1,
+    "example": "Let us say \"rain\"."
+  },
+  {
+    "id": "word-10-7",
+    "word": "snow",
+    "meaning": "雪",
+    "topic": "大自然",
+    "level": 1,
+    "example": "Let us say \"snow\"."
+  },
+  {
+    "id": "word-10-8",
+    "word": "wind",
+    "meaning": "风",
+    "topic": "大自然",
+    "level": 1,
+    "example": "Let us say \"wind\"."
+  },
+  {
+    "id": "word-10-9",
+    "word": "tree",
+    "meaning": "树",
+    "topic": "大自然",
+    "level": 1,
+    "example": "Look at the tree."
+  },
+  {
+    "id": "word-10-10",
+    "word": "flower",
+    "meaning": "花",
+    "topic": "大自然",
+    "level": 1,
+    "example": "Look at the flower."
+  },
+  {
+    "id": "word-10-11",
+    "word": "grass",
+    "meaning": "草",
+    "topic": "大自然",
+    "level": 1,
+    "example": "Let us say \"grass\"."
+  },
+  {
+    "id": "word-10-12",
+    "word": "leaf",
+    "meaning": "树叶",
+    "topic": "大自然",
+    "level": 1,
+    "example": "Look at the leaf."
+  },
+  {
+    "id": "word-10-13",
+    "word": "river",
+    "meaning": "河流",
+    "topic": "大自然",
+    "level": 1,
+    "example": "Look at the river."
+  },
+  {
+    "id": "word-10-14",
+    "word": "lake",
+    "meaning": "湖",
+    "topic": "大自然",
+    "level": 1,
+    "example": "Look at the lake."
+  },
+  {
+    "id": "word-10-15",
+    "word": "sea",
+    "meaning": "海",
+    "topic": "大自然",
+    "level": 1,
+    "example": "Look at the sea."
+  },
+  {
+    "id": "word-10-16",
+    "word": "mountain",
+    "meaning": "山",
+    "topic": "大自然",
+    "level": 2,
+    "example": "Look at the mountain."
+  },
+  {
+    "id": "word-10-17",
+    "word": "forest",
+    "meaning": "森林",
+    "topic": "大自然",
+    "level": 2,
+    "example": "Look at the forest."
+  },
+  {
+    "id": "word-10-18",
+    "word": "island",
+    "meaning": "岛屿",
+    "topic": "大自然",
+    "level": 2,
+    "example": "Look at the island."
+  },
+  {
+    "id": "word-10-19",
+    "word": "beach",
+    "meaning": "海滩",
+    "topic": "大自然",
+    "level": 2,
+    "example": "Look at the beach."
+  },
+  {
+    "id": "word-10-20",
+    "word": "stone",
+    "meaning": "石头",
+    "topic": "大自然",
+    "level": 2,
+    "example": "Look at the stone."
+  },
+  {
+    "id": "word-10-21",
+    "word": "sand",
+    "meaning": "沙子",
+    "topic": "大自然",
+    "level": 2,
+    "example": "Let us say \"sand\"."
+  },
+  {
+    "id": "word-10-22",
+    "word": "earth",
+    "meaning": "地球",
+    "topic": "大自然",
+    "level": 2,
+    "example": "Look at the earth."
+  },
+  {
+    "id": "word-10-23",
+    "word": "rainbow",
+    "meaning": "彩虹",
+    "topic": "大自然",
+    "level": 2,
+    "example": "Look at the rainbow."
+  },
+  {
+    "id": "word-10-24",
+    "word": "weather",
+    "meaning": "天气",
+    "topic": "大自然",
+    "level": 2,
+    "example": "Let us say \"weather\"."
+  },
+  {
+    "id": "word-10-25",
+    "word": "garden",
+    "meaning": "花园",
+    "topic": "大自然",
+    "level": 2,
+    "example": "Look at the garden."
+  },
+  {
+    "id": "word-11-1",
+    "word": "run",
+    "meaning": "跑",
+    "topic": "一起行动",
+    "level": 1,
+    "example": "I can run."
+  },
+  {
+    "id": "word-11-2",
+    "word": "walk",
+    "meaning": "走",
+    "topic": "一起行动",
+    "level": 1,
+    "example": "I can walk."
+  },
+  {
+    "id": "word-11-3",
+    "word": "jump",
+    "meaning": "跳",
+    "topic": "一起行动",
+    "level": 1,
+    "example": "I can jump."
+  },
+  {
+    "id": "word-11-4",
+    "word": "swim",
+    "meaning": "游泳",
+    "topic": "一起行动",
+    "level": 1,
+    "example": "I can swim."
+  },
+  {
+    "id": "word-11-5",
+    "word": "fly",
+    "meaning": "飞",
+    "topic": "一起行动",
+    "level": 1,
+    "example": "I can fly."
+  },
+  {
+    "id": "word-11-6",
+    "word": "read",
+    "meaning": "阅读",
+    "topic": "一起行动",
+    "level": 1,
+    "example": "I can read."
+  },
+  {
+    "id": "word-11-7",
+    "word": "write",
+    "meaning": "写",
+    "topic": "一起行动",
+    "level": 1,
+    "example": "I can write."
+  },
+  {
+    "id": "word-11-8",
+    "word": "draw",
+    "meaning": "画画",
+    "topic": "一起行动",
+    "level": 1,
+    "example": "I can draw."
+  },
+  {
+    "id": "word-11-9",
+    "word": "sing",
+    "meaning": "唱歌",
+    "topic": "一起行动",
+    "level": 1,
+    "example": "I can sing."
+  },
+  {
+    "id": "word-11-10",
+    "word": "dance",
+    "meaning": "跳舞",
+    "topic": "一起行动",
+    "level": 1,
+    "example": "I can dance."
+  },
+  {
+    "id": "word-11-11",
+    "word": "listen",
+    "meaning": "听",
+    "topic": "一起行动",
+    "level": 1,
+    "example": "I can listen."
+  },
+  {
+    "id": "word-11-12",
+    "word": "speak",
+    "meaning": "说话",
+    "topic": "一起行动",
+    "level": 1,
+    "example": "I can speak."
+  },
+  {
+    "id": "word-11-13",
+    "word": "look",
+    "meaning": "看",
+    "topic": "一起行动",
+    "level": 1,
+    "example": "I can look."
+  },
+  {
+    "id": "word-11-14",
+    "word": "see",
+    "meaning": "看见",
+    "topic": "一起行动",
+    "level": 1,
+    "example": "I can see."
+  },
+  {
+    "id": "word-11-15",
+    "word": "eat",
+    "meaning": "吃",
+    "topic": "一起行动",
+    "level": 1,
+    "example": "I can eat."
+  },
+  {
+    "id": "word-11-16",
+    "word": "drink",
+    "meaning": "喝",
+    "topic": "一起行动",
+    "level": 2,
+    "example": "I can drink."
+  },
+  {
+    "id": "word-11-17",
+    "word": "sleep",
+    "meaning": "睡觉",
+    "topic": "一起行动",
+    "level": 2,
+    "example": "I can sleep."
+  },
+  {
+    "id": "word-11-18",
+    "word": "wake",
+    "meaning": "醒来",
+    "topic": "一起行动",
+    "level": 2,
+    "example": "I can wake."
+  },
+  {
+    "id": "word-11-19",
+    "word": "wash",
+    "meaning": "洗",
+    "topic": "一起行动",
+    "level": 2,
+    "example": "I can wash."
+  },
+  {
+    "id": "word-11-20",
+    "word": "play",
+    "meaning": "玩",
+    "topic": "一起行动",
+    "level": 2,
+    "example": "I can play."
+  },
+  {
+    "id": "word-11-21",
+    "word": "open",
+    "meaning": "打开",
+    "topic": "一起行动",
+    "level": 2,
+    "example": "I can open."
+  },
+  {
+    "id": "word-11-22",
+    "word": "close",
+    "meaning": "关闭",
+    "topic": "一起行动",
+    "level": 2,
+    "example": "I can close."
+  },
+  {
+    "id": "word-11-23",
+    "word": "sit",
+    "meaning": "坐",
+    "topic": "一起行动",
+    "level": 2,
+    "example": "I can sit."
+  },
+  {
+    "id": "word-11-24",
+    "word": "stand",
+    "meaning": "站",
+    "topic": "一起行动",
+    "level": 2,
+    "example": "I can stand."
+  },
+  {
+    "id": "word-11-25",
+    "word": "help",
+    "meaning": "帮助",
+    "topic": "一起行动",
+    "level": 2,
+    "example": "I can help."
+  },
+  {
+    "id": "word-12-1",
+    "word": "Monday",
+    "meaning": "星期一",
+    "topic": "时间与方向",
+    "level": 1,
+    "example": "Today is Monday."
+  },
+  {
+    "id": "word-12-2",
+    "word": "Tuesday",
+    "meaning": "星期二",
+    "topic": "时间与方向",
+    "level": 1,
+    "example": "Today is Tuesday."
+  },
+  {
+    "id": "word-12-3",
+    "word": "Wednesday",
+    "meaning": "星期三",
+    "topic": "时间与方向",
+    "level": 1,
+    "example": "Today is Wednesday."
+  },
+  {
+    "id": "word-12-4",
+    "word": "Thursday",
+    "meaning": "星期四",
+    "topic": "时间与方向",
+    "level": 1,
+    "example": "Today is Thursday."
+  },
+  {
+    "id": "word-12-5",
+    "word": "Friday",
+    "meaning": "星期五",
+    "topic": "时间与方向",
+    "level": 1,
+    "example": "Today is Friday."
+  },
+  {
+    "id": "word-12-6",
+    "word": "Saturday",
+    "meaning": "星期六",
+    "topic": "时间与方向",
+    "level": 1,
+    "example": "Today is Saturday."
+  },
+  {
+    "id": "word-12-7",
+    "word": "Sunday",
+    "meaning": "星期日",
+    "topic": "时间与方向",
+    "level": 1,
+    "example": "Today is Sunday."
+  },
+  {
+    "id": "word-12-8",
+    "word": "morning",
+    "meaning": "早晨",
+    "topic": "时间与方向",
+    "level": 1,
+    "example": "Let us say \"morning\"."
+  },
+  {
+    "id": "word-12-9",
+    "word": "afternoon",
+    "meaning": "下午",
+    "topic": "时间与方向",
+    "level": 1,
+    "example": "Let us say \"afternoon\"."
+  },
+  {
+    "id": "word-12-10",
+    "word": "evening",
+    "meaning": "傍晚",
+    "topic": "时间与方向",
+    "level": 1,
+    "example": "Let us say \"evening\"."
+  },
+  {
+    "id": "word-12-11",
+    "word": "night",
+    "meaning": "夜晚",
+    "topic": "时间与方向",
+    "level": 1,
+    "example": "Let us say \"night\"."
+  },
+  {
+    "id": "word-12-12",
+    "word": "today",
+    "meaning": "今天",
+    "topic": "时间与方向",
+    "level": 1,
+    "example": "Let us say \"today\"."
+  },
+  {
+    "id": "word-12-13",
+    "word": "tomorrow",
+    "meaning": "明天",
+    "topic": "时间与方向",
+    "level": 1,
+    "example": "Let us say \"tomorrow\"."
+  },
+  {
+    "id": "word-12-14",
+    "word": "yesterday",
+    "meaning": "昨天",
+    "topic": "时间与方向",
+    "level": 1,
+    "example": "Let us say \"yesterday\"."
+  },
+  {
+    "id": "word-12-15",
+    "word": "spring",
+    "meaning": "春天",
+    "topic": "时间与方向",
+    "level": 1,
+    "example": "Let us say \"spring\"."
+  },
+  {
+    "id": "word-12-16",
+    "word": "summer",
+    "meaning": "夏天",
+    "topic": "时间与方向",
+    "level": 2,
+    "example": "Let us say \"summer\"."
+  },
+  {
+    "id": "word-12-17",
+    "word": "autumn",
+    "meaning": "秋天",
+    "topic": "时间与方向",
+    "level": 2,
+    "example": "Let us say \"autumn\"."
+  },
+  {
+    "id": "word-12-18",
+    "word": "winter",
+    "meaning": "冬天",
+    "topic": "时间与方向",
+    "level": 2,
+    "example": "Let us say \"winter\"."
+  },
+  {
+    "id": "word-12-19",
+    "word": "left",
+    "meaning": "左边",
+    "topic": "时间与方向",
+    "level": 2,
+    "example": "Let us say \"left\"."
+  },
+  {
+    "id": "word-12-20",
+    "word": "right",
+    "meaning": "右边",
+    "topic": "时间与方向",
+    "level": 2,
+    "example": "Let us say \"right\"."
+  },
+  {
+    "id": "word-12-21",
+    "word": "up",
+    "meaning": "上方",
+    "topic": "时间与方向",
+    "level": 2,
+    "example": "Let us say \"up\"."
+  },
+  {
+    "id": "word-12-22",
+    "word": "down",
+    "meaning": "下方",
+    "topic": "时间与方向",
+    "level": 2,
+    "example": "Let us say \"down\"."
+  },
+  {
+    "id": "word-12-23",
+    "word": "in",
+    "meaning": "在里面",
+    "topic": "时间与方向",
+    "level": 2,
+    "example": "Let us say \"in\"."
+  },
+  {
+    "id": "word-12-24",
+    "word": "on",
+    "meaning": "在上面",
+    "topic": "时间与方向",
+    "level": 2,
+    "example": "Let us say \"on\"."
+  },
+  {
+    "id": "word-12-25",
+    "word": "under",
+    "meaning": "在下面",
+    "topic": "时间与方向",
+    "level": 2,
+    "example": "Let us say \"under\"."
+  }
+]

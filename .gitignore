@@ -6,9 +6,12 @@ cloudfunctions/rongrong-game/package-lock.json
 .env*
 !.env.example
 private/
+*.local.json
 artifacts/
 test-results/
 playwright-report/
 .cloudbase/
 .DS_Store
 *.log
+__pycache__/
+*.pyc
