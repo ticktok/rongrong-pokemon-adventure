@@ -1,0 +1,14 @@
+node_modules/
+dist/
+cloudfunctions/rongrong-game/index.js
+cloudfunctions/rongrong-game/node_modules/
+cloudfunctions/rongrong-game/package-lock.json
+.env*
+!.env.example
+private/
+artifacts/
+test-results/
+playwright-report/
+.cloudbase/
+.DS_Store
+*.log
