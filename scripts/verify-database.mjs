@@ -1,0 +1,22 @@
+import {readFile,writeFile} from 'node:fs/promises';
+import {randomUUID} from 'node:crypto';
+import assert from 'node:assert/strict';
+const {apiKey}=JSON.parse(await readFile('private/server.json'));
+const families=JSON.parse(await readFile('private/family-seed.json'));
+const envText=await readFile('.env.local','utf8');
+const publishable=envText.match(/^VITE_PUBLISHABLE_KEY=(.+)$/m)[1].trim();
+const root='https://wind-d7gesdlb779f8214f.api.tcloudbasegateway.com/v1/rdb/rest/';
+async function request(path,key,body){const r=await fetch(root+path,{method:body?'POST':'GET',headers:{Authorization:'Bearer '+key,'Content-Type':'application/json'},...(body?{body:JSON.stringify(body)}:{}),signal:AbortSignal.timeout(20000)});return {status:r.status,ok:r.ok,data:await r.json()};}
+const report=[];
+const anonymous=await request('rr_saves?select=*',publishable);assert(!anonymous.ok);report.push('Anonymous cannot read family saves');
+const bypass=await request('rpc/rr_commit',publishable,{p_family:families.qa,p_operation:randomUUID(),p_revision:0,p_state:{},p_result:{}});assert(!bypass.ok);assert(String(bypass.data.message??'').includes('SERVER_ONLY'));report.push('Anonymous RPC is rejected inside the database function');
+const saved=(await request('rr_saves?select=state,revision&family_id=eq.'+families.qa,apiKey)).data[0];
+const args={p_family:families.qa,p_operation:randomUUID(),p_revision:saved.revision,p_state:saved.state,p_result:{message:'Database concurrency verification'}};
+const second={...args,p_operation:randomUUID()};
+const results=await Promise.all([request('rpc/rr_commit',apiKey,args),request('rpc/rr_commit',apiKey,second)]);
+assert.equal(results.filter(r=>r.ok).length,1);assert(results.some(r=>String(r.data.message).includes('REVISION_CONFLICT')));report.push('Concurrent commits accept one revision and reject the stale writer');
+const winning=results[0].ok?args:second,replayed=await request('rpc/rr_commit',apiKey,winning);
+assert(replayed.ok);assert.equal(replayed.data.revision,saved.revision+1);report.push('Repeated operation ID reuses the result without another state update');
+const home=(await request('rr_saves?select=state&family_id=eq.'+families.home,apiKey)).data[0].state;
+assert.equal(home.started,false);assert.equal(home.partners.length,0);assert.equal(home.npcs.length,40);report.push('Real family still has an untouched starter choice and 40 NPCs');
+await writeFile('artifacts/database-checks.json',JSON.stringify(report,null,2));report.forEach(x=>console.log('PASS',x));

@@ -1,0 +1,6 @@
+{
+  "envId":"wind-d7gesdlb779f8214f",
+  "functionRoot":"cloudfunctions",
+  "functions":[{"name":"rongrong-game","type":"Event","runtime":"Nodejs20.19","handler":"index.main","timeout":30,"memorySize":256,"installDependency":true,"ignore":["node_modules"]}],
+  "app":{"serviceName":"rongrong-pokemon-adventure","framework":"static","root":"dist","installCommand":"","buildCommand":"","outputDir":"./","deployPath":"/rongrong-pokemon-adventure"}
+}

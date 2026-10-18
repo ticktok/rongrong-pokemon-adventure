@@ -1,0 +1,26 @@
+export type Role = 'parent' | 'child';
+export interface Species { id:number; name:string; english:string; types:string[]; stats:Record<string,number>; captureRate:number; generation:string; chainId:number }
+export interface Evolution { from:number; to:number; level:number }
+export interface Move { id:string; name:string; type:string; power:number; accuracy:number; level:number }
+export interface Partner { id:string; speciesId:number; exp:number; level:number; moves:string[]; sealed?:number; acquiredAt:string }
+export interface Word { id:string; word:string; meaning:string; topic:string; level:number; example:string; active?:boolean }
+export interface Npc { id:string; name:string; regionId:string; x:number; y:number; kind:'family'|'classmate'; line:string; quest:string }
+export interface Region { id:string; name:string; subtitle:string; biome:string; color:string; badge:string; leader:string; level:number; gift:number; boss:number[]; requiredBadges:number; description:string }
+export interface Question { id:string; wordId:string; prompt:string; options:{id:string;text:string}[]; correctOptionId:string; wrong:boolean; firstCorrect?:boolean; kind:'daily'|'review'|'battle'|'catch'|'npc'; explanation:string; word:string; example:string; moveId?:string; npcId?:string }
+export type PublicQuestion = Omit<Question,'correctOptionId'|'wordId'|'explanation'|'word'|'example'> & { explanation?:string; word?:string; example?:string };
+export interface Battle { id:string; kind:'wild'|'gym'; regionId:string; enemy:number; enemyLevel:number; enemyHp:number; enemyMaxHp:number; playerId:string; playerHp:number; playerMaxHp:number; teamHp:Record<string,number>; enemyIndex:number; enemies:number[]; combo:number; balls:number; turn:number; log:string[]; status:'active'|'won'|'lost'|'caught'|'fled' }
+export interface Checkin { date:string; taskIds:string[]; status:'pending'|'approved'|'rejected'; submittedAt:string; englishCorrect:number; granted:number; reason?:string; reviewedAt?:string }
+export interface Mastery { correct:number; wrong:number; due:string; stage:number; reviewStarted?:string }
+export interface Daily { date:string; questions:number; correct:number; completedIds:string[]; encounters:number; expGranted:number; practiceFinished:boolean }
+export interface Settings { baseExp:number; dailyCap:number; captureLimit:number; attackBonus:number; comboBonus:number; catchBonus:number; fastMultiplier:number; fastDeadline:string; streakBonus:number; englishPerQuestion:number; sealDays:number; maxWordLevel:number; weekdayPassDate:string; tasks:{id:string;name:string;active:boolean}[] }
+export interface GameState {
+  schemaVersion:1; nickname:string; realName:string; started:boolean; partners:Partner[]; team:string[]; seen:number[]; caught:number[]; badges:string[];
+  position:{regionId:string;x:number;y:number}; battle:Battle|null; question:Question|null; daily:Daily; checkins:Checkin[]; mastery:Record<string,Mastery>;
+  carry:number; carryTargets:string[]; carryByPartner?:Record<string,number>; settings:Settings; npcs:Npc[]; customWords:Word[]; disabledWordIds:string[]; npcCompleted:string[]; events:{date:string;message:string}[];
+}
+export interface PublicState extends Omit<GameState,'question'|'customWords'|'disabledWordIds'|'realName'> {
+  question:PublicQuestion|null; realName?:string; words?:Word[]; reviewWords:Pick<Word,'id'|'word'|'meaning'>[]; wordCount:number; role:Role; revision:number; canBattle:boolean; today:string;
+}
+export interface ActionResult { message:string; effect?:'correct'|'wrong'|'attack'|'catch'|'win'|'lose'|'level'|'evolve'|'approve'|'gift' }
+export interface ApiResponse { ok:boolean; state?:PublicState; result?:ActionResult; error?:string; export?:GameState }
+export interface GameCommand { type:string; operationId:string; payload:Record<string,unknown> }

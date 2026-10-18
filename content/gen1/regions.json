@@ -1,0 +1,145 @@
+[
+  {
+    "id": "home-meadow",
+    "name": "真新草原",
+    "subtitle": "从家门口出发",
+    "biome": "meadow",
+    "color": "#82b878",
+    "badge": "岩石徽章",
+    "leader": "小刚",
+    "level": 8,
+    "gift": 143,
+    "boss": [
+      74,
+      95
+    ],
+    "requiredBadges": 0,
+    "description": "沿着花间小路认识伙伴，森林深处藏着第一座道馆。"
+  },
+  {
+    "id": "blue-river",
+    "name": "华蓝溪谷",
+    "subtitle": "沿溪流寻找新朋友",
+    "biome": "river",
+    "color": "#68b6c5",
+    "badge": "蓝色徽章",
+    "leader": "小霞",
+    "level": 12,
+    "gift": 144,
+    "boss": [
+      120,
+      121
+    ],
+    "requiredBadges": 1,
+    "description": "踏过小桥，听溪水唱歌。水边的草丛里有新的伙伴。"
+  },
+  {
+    "id": "sunny-harbor",
+    "name": "枯叶海港",
+    "subtitle": "海风送来新的挑战",
+    "biome": "coast",
+    "color": "#deb973",
+    "badge": "橙色徽章",
+    "leader": "马志士",
+    "level": 16,
+    "gift": 145,
+    "boss": [
+      100,
+      25,
+      26
+    ],
+    "requiredBadges": 2,
+    "description": "灯塔照亮海岸，小小训练师也能发出大大的光。"
+  },
+  {
+    "id": "leaf-garden",
+    "name": "玉虹花园",
+    "subtitle": "一起收集春天的颜色",
+    "biome": "garden",
+    "color": "#83b595",
+    "badge": "彩虹徽章",
+    "leader": "莉佳",
+    "level": 20,
+    "gift": 146,
+    "boss": [
+      71,
+      114,
+      45
+    ],
+    "requiredBadges": 3,
+    "description": "繁花之间，学习一件新事，就像种下一颗种子。"
+  },
+  {
+    "id": "mist-forest",
+    "name": "浅红秘林",
+    "subtitle": "认真观察，就能找到路",
+    "biome": "forest",
+    "color": "#629d84",
+    "badge": "粉红徽章",
+    "leader": "阿桔",
+    "level": 25,
+    "gift": 150,
+    "boss": [
+      109,
+      89,
+      110
+    ],
+    "requiredBadges": 4,
+    "description": "穿过树影和苔藓小径，和同学一起找出正确的单词。"
+  },
+  {
+    "id": "star-city",
+    "name": "金黄星城",
+    "subtitle": "把好奇心装进背包",
+    "biome": "city",
+    "color": "#ceba6f",
+    "badge": "金色徽章",
+    "leader": "娜姿",
+    "level": 30,
+    "gift": 142,
+    "boss": [
+      64,
+      122,
+      65
+    ],
+    "requiredBadges": 5,
+    "description": "天文小站和高高的钟楼，等待你的每一个为什么。"
+  },
+  {
+    "id": "ember-island",
+    "name": "红莲暖岛",
+    "subtitle": "勇气像小火苗一样亮",
+    "biome": "volcano",
+    "color": "#ce9473",
+    "badge": "深红徽章",
+    "leader": "夏伯",
+    "level": 35,
+    "gift": 151,
+    "boss": [
+      58,
+      78,
+      59
+    ],
+    "requiredBadges": 6,
+    "description": "温暖的火山岛上，试一次，再试一次，就是进步。"
+  },
+  {
+    "id": "evergreen-valley",
+    "name": "常青山谷",
+    "subtitle": "回望来时的每一步",
+    "biome": "mountain",
+    "color": "#82ad94",
+    "badge": "绿色徽章",
+    "leader": "坂木",
+    "level": 40,
+    "gift": 137,
+    "boss": [
+      111,
+      31,
+      34,
+      112
+    ],
+    "requiredBadges": 7,
+    "description": "最后一枚徽章，是你和家人一路坚持的纪念。"
+  }
+]
