@@ -7,7 +7,11 @@ async function state(){const r=await fetch('https://wind-d7gesdlb779f8214f.api.t
 const browser=await chromium.launch({channel:'chrome',headless:true}),context=await browser.newContext({storageState:'private/qa-browser-state.json',viewport:{width:1024,height:768}}),page=await context.newPage();page.setDefaultTimeout(90000);
 const checks=[];
 try{
- await page.goto('http://127.0.0.1:5173/#/learning');await page.locator('.learning-grid').waitFor();
+ await page.goto((process.env.TEST_URL||'http://127.0.0.1:5173/')+'#/learning');
+ const notice=page.getByRole('button',{name:/^确定访问/});if(await notice.count())await notice.click();
+ await page.locator('.learning-grid,.login-form-panel').first().waitFor();
+ if(await page.locator('.login-form-panel').count()){await page.getByLabel('账号',{exact:true}).fill(account.username);await page.getByLabel('密码',{exact:true}).fill(account.password);await page.getByRole('button',{name:'进入冒险',exact:true}).click();}
+ await page.getByRole('button',{name:'学习手册',exact:true}).waitFor();await page.getByRole('button',{name:'学习手册',exact:true}).click();await page.locator('.learning-grid').waitFor();
  const current=await state();
  if(!current.state.question){
    const daily=page.getByRole('button',{name:/^(开始今天的练习|继续练习)$/});await daily.click();
