@@ -25,6 +25,7 @@ React + TypeScript + Vite，Phaser 3.90，CloudBase 用户名登录与 Node.js �
 - [开发、规则与后续世代扩展](docs/DEVELOPMENT.md)
 - [部署、备份与恢复](docs/DEPLOYMENT.md)
 - [版本记录](CHANGELOG.md)
+- [首版验证范围](docs/VALIDATION.md)
 
 常用命令：
 

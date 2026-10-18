@@ -21,6 +21,29 @@ describe('content coverage',()=>{
  });
 });
 describe('questions and rewards',()=>{
+ it('uses 1.25 damage twice, 1.5 on the third correct answer, then resets the combo',()=>{
+   let s=act(started(),'encounter').state;
+   Object.assign(s.battle!,{enemy:10,enemyLevel:4,enemyHp:1000,enemyMaxHp:1000});
+   const losses:number[]=[];
+   for(let i=0;i<3;i++){const before=s.battle!.enemyHp;s=act(s,'battle.move',{moveId:'normal-0'}).state;s=solve(s).state;losses.push(before-s.battle!.enemyHp);}
+   expect(losses).toEqual([8,8,10]);expect(s.battle!.combo).toBe(0);
+ });
+ it('adds fifteen capture percentage points only for a correct first attempt',()=>{
+   let s=act(started(),'encounter').state;Object.assign(s.battle!,{enemy:10,enemyLevel:4,enemyHp:50,enemyMaxHp:50});
+   s=act(s,'battle.catch').state;const q=s.question!;
+   const correct=act(s,'answer',{questionId:q.id,optionId:q.correctOptionId},'child',{...rt,random:()=>0.4});
+   expect(correct.state.battle!.status).toBe('caught');
+   s=solve(s,false).state;expect(s.battle!.balls).toBe(0);
+   const repaired=act(s,'answer',{questionId:q.id,optionId:q.correctOptionId},'child',{...rt,random:()=>0.4});
+   expect(repaired.state.battle!.status).toBe('active');expect(repaired.state.battle!.balls).toBe(1);expect(repaired.state.daily.encounters).toBe(1);
+ });
+ it('uses submission time for fast rewards and unlocks a gift after seven approved days',()=>{
+   let s=started();const gift=makePartner(143,8,rt);gift.sealed=7;gift.acquiredAt='2026-10-13';s.partners.push(gift);
+   s.checkins=['13','14','15','16','17','18'].map(d=>({date:'2026-10-'+d,taskIds:['english'],status:'approved',submittedAt:'2026-10-'+d+'T10:00:00Z',englishCorrect:0,granted:230}));
+   s=act(s,'checkin.submit',{taskIds:['english']},'child',{...rt,now:new Date('2026-10-19T12:00:00Z')}).state;
+   s=act(s,'parent.review',{date:'2026-10-19',approve:true},'parent',{...rt,now:new Date('2026-10-19T14:00:00Z')}).state;
+   expect(s.daily.expGranted).toBe(320);expect(s.carry).toBe(6);expect(s.partners.find(p=>p.id===gift.id)!.sealed).toBe(0);
+ });
  it('does not offer two valid translations for the same Chinese meaning',()=>{
    const s=started();s.disabledWordIds=WORDS.map(w=>w.id);s.customWords=[
      {id:'h1',word:'home',meaning:'家',topic:'测试',level:1,example:'My home.'},

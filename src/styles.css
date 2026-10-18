@@ -21,3 +21,5 @@ html[data-reduced=true] *,html[data-reduced=true] *:before,html[data-reduced=tru
 .dpad{grid-template-columns:44px 44px 44px;grid-template-rows:44px 44px}.dpad button{width:44px;height:44px}.task-list label{min-height:44px}.daily-tasks .primary,.pronounce,.switch-team button{min-height:44px}.switch-team button{min-width:44px}.word-chips small{font-size:12px}.word-chips .english{font-size:19px}
 
 .battle-fx{position:absolute;inset:0;z-index:7;pointer-events:none}.battle-fx canvas{display:block}.npc-completed{display:flex;align-items:center;gap:7px;font-size:12px!important;color:#8baa75!important;margin-top:12px}
+
+.quiz-retry{margin-top:18px;padding:13px 15px;background:#fff0ce;border:1px solid #ebd39c;border-radius:12px;display:flex;align-items:center;gap:12px}.quiz-retry p{font-size:12px;color:#966f45;flex:1}.quiz-retry button{font-size:12px;white-space:nowrap;background:#fff9e8;color:#8e7146}

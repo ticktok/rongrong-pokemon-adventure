@@ -32,6 +32,7 @@ try{
  await page.getByRole('button',{name:'保存家庭规则',exact:true}).click();
  const retained=await page.evaluate(key=>JSON.parse(localStorage.getItem(key)), 'rr-pending-'+account.uid);assert.equal(retained.operationId,pending.operationId);pass('Offline operation is retained and cannot be overwritten by another action');
  await context.setOffline(false);await page.getByRole('button',{name:'重试',exact:true}).click();await page.locator('.connection-banner').waitFor({state:'hidden'});
+ await page.waitForFunction(expected=>{const input=document.querySelector('.toggle-row input');return input&&!input.disabled&&input.checked===expected;},!original);
  assert.equal(await toggle.isChecked(),!original);assert.equal(await page.evaluate(key=>localStorage.getItem(key),'rr-pending-'+account.uid),null);pass('Reconnection retries the original operation successfully');
  await page.getByRole('button',{name:'存档与记录',exact:true}).click();const download=page.waitForEvent('download');await page.getByRole('button',{name:'导出家庭存档',exact:true}).click();await (await download).saveAs('private/qa-admin-export.json');
  const exported=JSON.parse(await readFile('private/qa-admin-export.json'));assert.equal(exported.badges.length,8);assert.equal(exported.nickname,'测试训练师');pass('Parent exports the full eight-gym QA save');
