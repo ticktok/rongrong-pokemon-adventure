@@ -8,11 +8,13 @@ export function safeResponse(value:unknown):ApiResponse{
   if(!v||typeof v!=='object'||!('ok'in v)||typeof v.ok!=='boolean')throw new Error('云端返回了无法识别的结果，请重试');
   return v as ApiResponse;
 }
-export async function request(command:GameCommand):Promise<ApiResponse>{
+export async function request(command:GameCommand,expectedUid?:string):Promise<ApiResponse>{
   if(!navigator.onLine)throw new Error('网络断开了。进度留在云端，连接后点“重试”继续。');
   const {data,error}=await auth.getSession();
   if(error||!data?.session||data.session.user.is_anonymous)throw new Error('登录已过期，请重新登录');
-  const response=await cloud.callFunction({name:'rongrong-game',data:command});
+  const uid=String(data.session.user.id);
+  if(expectedUid&&expectedUid!==uid)throw new Error('账号已切换，请在当前账号重新操作');
+  const response=await cloud.callFunction({name:'rongrong-game',data:{...command,expectedUid:expectedUid??uid}});
   return safeResponse(response.result);
 }
 export function speak(word:string,enabled:boolean){

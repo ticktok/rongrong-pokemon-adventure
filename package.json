@@ -1,6 +1,6 @@
 {
   "name": "rongrong-pokemon-adventure",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "private": true,
   "type": "module",
   "scripts": {
@@ -16,7 +16,9 @@
     "deploy:web": "node scripts/deploy-web.mjs",
     "backup:verify": "node scripts/verify-backup.mjs",
     "backup:restore": "node scripts/restore-backup.mjs",
-    "verify:saves": "node scripts/verify-save-compatibility.mjs"
+    "verify:saves": "node scripts/verify-save-compatibility.mjs",
+    "trial:provision": "node scripts/provision-trial.mjs",
+    "test:trial-ui": "node scripts/verify-trial-ui.mjs"
   },
   "dependencies": {
     "@cloudbase/js-sdk": "latest",
