@@ -24,7 +24,7 @@
 - rr_export_backup 是 service_role 专用 RPC，单条 SQL 读取 rr_saves、rr_members、rr_operations 的一致 MVCC 快照。它不改变三张业务表。
 - 备份包含格式版本、环境、导出时间、备份程序版本、原因以及每个家庭的 revision、schemaVersion 和全部存档。gzip 文件按时间和随机 ID 新建，禁止覆盖或自动清理。
 - 上传后下载、解压、验证结构及引用，再比较全部内容；只有完成后才写 backup_verified 日志。失败抛出错误，使用云函数平台的异步重试和失败日志。
-- 查看近期函数日志确认每日成功记录；超过 26 小时未有成功记录需排查。每日备份的正常恢复点间隔最多约 24 小时，不等于零数据丢失保证。
+- 使用 npm run backup:verify -- --latest 下载并验证最新每日快照；超过 26 小时未有成功记录需排查。当前环境未开通集中日志服务，不自动开通额外付费服务。每日备份的正常恢复点间隔最多约 24 小时，不等于零数据丢失保证。
 
 首次安装时，先使用已有只读导出保存本地 rr_saves，再应用备份 RPC 迁移、创建私有桶、部署函数和权限，完成首次云端备份后才发布网站。现有安全措施保持不变。
 
@@ -47,3 +47,5 @@ npm run backup:restore -- --file private/backups/<备份文件>.json.gz --family
 PG 表和备份 RPC 保持服务端权限，rr_commit 在函数内部检查 service_role。CloudBase 默认网站入口可能先显示平台访问提示页，真实浏览器需等待后点击“确定访问”；不能仅按脚本 HTTP 状态判断站点可用。
 
 家庭名单、账号凭据、服务密钥、备份、浏览器会话位于 private/ 或忽略的本地配置。QA 与正式家庭按 family_id 区分；测试不能依靠昵称选择家庭。QA 写入测试前备份，测试结束后用已授权的 QA 恢复流程还原。
+
+备份函数的客户端限制须同时覆盖 SDK 与 HTTP 调用。HTTP 网关 Rego 不覆盖 SDK 的 Cloud API 通道；当前 PG 环境的 DescribeResourcePermission 接口返回不支持，不能照搬传统环境的函数安全规则。备份函数使用 Node SDK 解析的可信用户身份拒绝所有终端用户（包括匿名身份），HTTP 网关另保留拒绝策略；不能凭 event.Type=Timer 判定权限。验证须包含真实 SDK callFunction、匿名与登录用户的文件/RPC读取，以及管理端和定时器成功执行。

@@ -43,6 +43,12 @@ export class BackupStore{
     if(!/^[a-zA-Z0-9/_\-.]+$/.test(key)||key.split('/').includes('..'))throw new Error('Invalid backup object key');
     return '/v1/storages/object/'+BACKUP_BUCKET+'/'+key;
   }
+  async latestDailyKey(){
+    const response=await this.request('/v1/storages/object/list/'+BACKUP_BUCKET,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({prefix:'daily/',limit:1,with_delimiter:false,sortBy:{column:'name',order:'desc'}})});
+    const data=z.object({objects:z.array(z.object({name:z.string()}))}).parse(await response.json());
+    if(!data.objects.length)throw new Error('No daily backup found');
+    return data.objects[0].name;
+  }
   async download(key:string){return new Uint8Array(await (await this.request(this.objectPath(key))).arrayBuffer());}
   async uploadVerified(backup:Backup){
     const checked=validateBackup(backup,this.envId),date=new Date(checked.exportedAt).toISOString().replaceAll(':','-');
@@ -74,4 +80,8 @@ export async function restoreFamily(store:BackupStore,backup:Backup,familyId:str
   const saved=await store.currentFamily(familyId);
   if(saved.revision!==expectedRevision+1||!isDeepStrictEqual(saved.state,state))throw new Error('Restore readback changed; inspect current save without retrying restore');
   return {revision:saved.revision,safetyBackup:receipt};
+}
+
+export function assertBackupServerCaller(identity:{uid:string;openId:string;customUserId:string;isAnonymous:boolean}){
+  if(identity.uid||identity.openId||identity.customUserId||identity.isAnonymous)throw new Error('BACKUP_SERVER_ONLY');
 }

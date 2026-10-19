@@ -1,8 +1,11 @@
 import {readFile} from 'node:fs/promises';
 import {parseArgs} from 'node:util';
 import {loadOps,settings} from './ops-lib.mjs';
-const {values}=parseArgs({options:{file:{type:'string'},key:{type:'string'}}});
-if(Number(!!values.file)+Number(!!values.key)!==1)throw new Error('Specify exactly one --file or --key');
+const {values}=parseArgs({options:{file:{type:'string'},key:{type:'string'},latest:{type:'boolean',default:false}}});
+if(Number(!!values.file)+Number(!!values.key)+Number(values.latest)!==1)throw new Error('Specify exactly one --file, --key or --latest');
 const {BackupStore,decodeBackup}=await loadOps(),{envId,apiKey}=await settings();
-const backup=decodeBackup(values.file?await readFile(values.file):await new BackupStore(envId,apiKey).download(values.key),envId);
+const store=new BackupStore(envId,apiKey);
+const key=values.latest?await store.latestDailyKey():values.key;
+const backup=decodeBackup(values.file?await readFile(values.file):await store.download(key),envId);
+if(values.latest&&Date.now()-Date.parse(backup.exportedAt)>26*60*60*1000)throw new Error('Latest daily backup is older than 26 hours');
 console.log(JSON.stringify({verified:true,envId,exportedAt:backup.exportedAt,appVersion:backup.appVersion,families:backup.saves.length,operations:backup.operations.length},null,2));
