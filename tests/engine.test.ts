@@ -77,6 +77,19 @@ describe('questions and rewards',()=>{
    let s=started();for(let i=0;i<10;i++){s=act(s,'practice.start').state;if(i===0)s=solve(s,false).state;s=solve(s).state;}
    expect(s.daily.correct).toBe(9);expect(s.daily.questions).toBe(10);expect(()=>act(s,'practice.start')).toThrow('已完成');
  });
+ it('returns teaching feedback only after completing a daily question, without generating the next one',()=>{
+   let s=act(started(),'practice.start').state;const q=s.question!;
+   const wrong=solve(s,false);expect(wrong.result.dailyFeedback).toBeUndefined();
+   s=wrong.state;const done=solve(s);
+   expect(done.state.question).toBeNull();expect(done.result.dailyFeedback).toEqual({questionId:q.id,word:q.word,explanation:q.explanation,example:q.example,completed:1,correct:0,date:s.daily.date});
+   expect(()=>solve(done.state)).toThrow();
+   const next=act(done.state,'practice.start').state;expect(next.question!.id).not.toBe(q.id);expect(next.daily.questions).toBe(1);
+ });
+ it('does not turn a previous-day correction into today’s daily completion feedback',()=>{
+   const s=act(started(),'practice.start').state,q=s.question!;
+   const done=act(s,'answer',{questionId:q.id,optionId:q.correctOptionId},'child',{...rt,now:new Date('2026-10-18T16:01:00Z')});
+   expect(done.state.daily.questions).toBe(0);expect(done.result.dailyFeedback).toBeUndefined();
+ });
  it('does not accept forged answers or nonexistent options',()=>{
    const s=act(started(),'practice.start').state;
    expect(()=>act(s,'answer',{questionId:randomUUID(),optionId:s.question!.correctOptionId})).toThrow('已更新');

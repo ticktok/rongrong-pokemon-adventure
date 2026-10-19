@@ -105,7 +105,7 @@ function answer(s:GameState,p:Record<string,unknown>,rt:Runtime):ActionResult {
   if(q.kind==='daily'){
     s.daily.questions++;s.daily.completedIds.push(q.wordId);if(firstCorrect)s.daily.correct++;
     s.daily.practiceFinished=s.daily.questions>=10;
-    return {message:s.daily.practiceFinished?'今日 10 题完成！首次答对 '+s.daily.correct+' 题，提交打卡后等家长发放奖励。':'记住了！今日进度 '+s.daily.questions+' / 10。',effect:'correct'};
+    return {message:s.daily.practiceFinished?'今日 10 题完成！首次答对 '+s.daily.correct+' 题，提交打卡后等家长发放奖励。':'记住了！今日进度 '+s.daily.questions+' / 10。',effect:'correct',dailyFeedback:{questionId:q.id,word:q.word,explanation:q.explanation,example:q.example,completed:s.daily.questions,correct:s.daily.correct,date:s.daily.date}};
   }
   if(q.kind==='npc'&&q.npcId){
     const key=dayOf(rt.now)+':'+q.npcId;if(!s.npcCompleted.includes(key))s.npcCompleted.push(key);s.npcCompleted=s.npcCompleted.slice(-400);

@@ -73,7 +73,7 @@ try {
    await child.reload({waitUntil:'networkidle'});await child.locator('.word-explanation').waitFor();
    current=(await stored()).state;assert.equal(current.question.wrong,true);passed('Wrong answer and correction survive refresh');
    const right=current.question.options.findIndex(o=>o.id===current.question.correctOptionId);
-   await child.locator('.quiz-options button').nth(right).click();await child.locator('.quiz-dialog').waitFor({state:'hidden'});
+   await child.locator('.quiz-options button').nth(right).click();await child.getByRole('button',{name:'稍后继续',exact:true}).click();await child.locator('.quiz-dialog').waitFor({state:'hidden'});
    assert.equal((await stored()).state.daily.correct,beforeAnswers);passed('Correction completes without first-answer bonus');
  }
  current=(await stored()).state;

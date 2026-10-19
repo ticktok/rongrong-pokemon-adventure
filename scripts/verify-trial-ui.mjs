@@ -26,7 +26,6 @@ export async function request(command,expectedUid){
  return response;
 }
 export const asset=(kind,id)=>'/assets/pokemon/'+kind+'/'+id+'.png';
-export const speak=()=>true;
 export const saveFile=()=>{};
 export const dueWords=s=>Object.values(s.mastery).filter(m=>m.due<=s.today).length;
 `},bundle:true,write:false,platform:'browser',format:'esm'});

@@ -22,6 +22,7 @@ export interface PublicState extends Omit<GameState,'question'|'customWords'|'di
   contentMode?:'own'|'follow';
   question:PublicQuestion|null; realName?:string; words?:Word[]; reviewWords:Pick<Word,'id'|'word'|'meaning'>[]; wordCount:number; role:Role; revision:number; canBattle:boolean; today:string;
 }
-export interface ActionResult { message:string; effect?:'correct'|'wrong'|'attack'|'catch'|'win'|'lose'|'level'|'evolve'|'approve'|'gift' }
+export interface DailyFeedback { questionId:string; word:string; explanation:string; example:string; completed:number; correct:number; date:string }
+export interface ActionResult { message:string; effect?:'correct'|'wrong'|'attack'|'catch'|'win'|'lose'|'level'|'evolve'|'approve'|'gift'; dailyFeedback?:DailyFeedback }
 export interface ApiResponse { ok:boolean; state?:PublicState; result?:ActionResult; error?:string; export?:GameState }
 export interface GameCommand { type:string; operationId:string; payload:Record<string,unknown>; expectedUid?:string }

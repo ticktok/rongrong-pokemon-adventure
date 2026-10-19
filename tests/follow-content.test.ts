@@ -87,6 +87,13 @@ describe('following content without sharing progress',()=>{
   const refreshed=await run(db,'bootstrap');expect(refreshed.ok).toBe(true);expect(db.saves.get(trial)!.state.question).toEqual(q);
   const answered=await run(db,'answer',{questionId:q.id,optionId:q.correctOptionId});expect(answered.ok).toBe(true);expect(answered.state?.daily.questions).toBe(1);
  });
+ it('replays completion feedback without counting the daily answer twice',async()=>{
+  const db=new Store();await run(db,'practice.start');const q=db.saves.get(trial)!.state.question!;
+  const cmd=command('answer',{questionId:q.id,optionId:q.correctOptionId});
+  const first=await gameCommand(cmd,'child',db,rt),replay=await gameCommand(cmd,'child',db,rt);
+  expect(first.result?.dailyFeedback?.completed).toBe(1);expect(replay.result).toEqual(first.result);
+  expect(replay.state?.revision).toBe(first.state?.revision);expect(replay.state?.daily.questions).toBe(1);
+ });
  it('fails closed on missing, chained, self, unavailable or incompatible sources without modifying saves',async()=>{
   for(const variant of ['missing','chain','self','unavailable','references']){
    const db=new Store();
