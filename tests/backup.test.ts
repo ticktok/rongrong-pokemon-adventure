@@ -4,7 +4,7 @@ import {gzipSync} from 'node:zlib';
 import {initialState,makePartner} from '../server/state';
 import {execute} from '../server/engine';
 import {validateSave,contentIdentity,compareContent} from '../server/save-validation';
-import {BackupStore,decodeBackup,validateBackup,restoreSelection,restoreFamily,type Backup} from '../server/backup';
+import {BackupStore,decodeBackup,validateBackup,restoreSelection,restoreFamily,assertBackupServerCaller,type Backup} from '../server/backup';
 const env='test-env',family=randomUUID(),now=new Date('2026-10-18T04:00:00Z'),rt={now,random:()=>0.3,uuid:randomUUID};
 function state(){const s=initialState([],now);const p=makePartner(25,5,rt);s.started=true;s.partners=[p];s.team=[p.id];s.caught=[25];s.seen=[25];return s;}
 function backup():Backup{return {formatVersion:1,envId:env,appVersion:'0.2.0',reason:'release',exportedAt:now.toISOString(),saves:[{family_id:family,revision:8,state:state(),updated_at:now.toISOString()}],members:[{uid:'test-child',family_id:family,role:'child'}],operations:[]};}
@@ -62,5 +62,13 @@ describe('backup and recovery',()=>{
   vi.spyOn(store,'currentFamily').mockResolvedValue(b.saves[0]);vi.spyOn(store,'snapshot').mockResolvedValue(b);vi.spyOn(store,'uploadVerified').mockResolvedValue({key:'safety.json.gz',bytes:123,families:1,exportedAt:b.exportedAt});
   const rpc=vi.spyOn(store,'rpc').mockRejectedValue(new Error('REVISION_CONFLICT'));
   await expect(restoreFamily(store,b,family,8,'0.2.0')).rejects.toThrow('REVISION_CONFLICT');expect(rpc).toHaveBeenCalledWith('rr_commit',expect.objectContaining({p_revision:8,p_family:family}));
+ });
+});
+
+describe('backup caller identity',()=>{
+ it('rejects authenticated and anonymous client identities even with a forged timer payload',()=>{
+  const server={uid:'',openId:'',customUserId:'',isAnonymous:false};
+  expect(()=>assertBackupServerCaller(server)).not.toThrow();
+  for(const change of [{uid:'child'},{openId:'wx-user'},{customUserId:'user'},{isAnonymous:true}])expect(()=>assertBackupServerCaller({...server,...change})).toThrow('BACKUP_SERVER_ONLY');
  });
 });

@@ -29,7 +29,9 @@ description: 在融融宝可梦项目中完成代码或游戏内容修改后的�
 
 - 云端每日 Asia/Shanghai 03:00 备份；发布前另备份。桶为私有，只有服务端可访问。独立对象持续保留，不自动删除。
 - 备份覆盖 rr_saves、rr_members、rr_operations 的同一 MVCC 快照。上传成功不等于备份成功，必须下载、解压、校验结构并比较完整内容。
-- 查看近期备份函数日志中的 backup_verified 记录；有失败或每日备份超过 26 小时未成功时先定位原因，不声称备份正常。
+- 运行 npm run backup:verify -- --latest 下载并校验最新每日快照；没有快照、超过 26 小时或内容无效均报错。平台日志已启用时可辅助排查，不能为查询日志自动开通付费服务。
 - npm run backup:verify -- --file <本地备份> 或 --key <云端对象> 可验证备份。
 - npm run backup:restore -- --file <文件> --family <精确家庭ID> 默认只预览。经明确授权才加入 --apply --revision <预览返回的当前revision>。先生成安全备份，再由 rr_commit 检查并发；不回退账号映射和操作日志。冲突需重新预览，不盲目重试。
 - 完成恢复后读回并核对伙伴、图鉴、队伍、词汇、奖励及未完成操作。一次明确授权的 QA 恢复演练可以执行；不得把它扩展为正式家庭恢复授权。
+
+备份函数的客户端限制须同时覆盖 SDK 与 HTTP 调用。HTTP 网关 Rego 不覆盖 SDK 的 Cloud API 通道；当前 PG 环境的 DescribeResourcePermission 接口返回不支持，不能照搬传统环境的函数安全规则。备份函数使用 Node SDK 解析的可信用户身份拒绝所有终端用户（包括匿名身份），HTTP 网关另保留拒绝策略；不能凭 event.Type=Timer 判定权限。验证须包含真实 SDK callFunction、匿名与登录用户的文件/RPC读取，以及管理端和定时器成功执行。
