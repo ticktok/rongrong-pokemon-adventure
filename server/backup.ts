@@ -5,7 +5,7 @@ import {z} from 'zod';
 import {validateSave} from './save-validation';
 
 export const BACKUP_BUCKET='rongrong-save-backups';
-const rowSchema=z.object({family_id:z.uuid(),revision:z.number().int().nonnegative().safe(),state:z.unknown(),updated_at:z.string().min(1)}).passthrough();
+const rowSchema=z.object({family_id:z.uuid(),revision:z.number().int().nonnegative().safe(),state:z.unknown(),updated_at:z.string().min(1),content_source_family_id:z.uuid().nullable().optional()}).passthrough();
 const snapshotSchema=z.object({exportedAt:z.string().min(1),saves:z.array(rowSchema).min(1),members:z.array(z.object({uid:z.string().min(1),family_id:z.uuid(),role:z.enum(['parent','child'])}).passthrough()),operations:z.array(z.object({family_id:z.uuid(),operation_id:z.uuid(),result:z.record(z.string(),z.unknown()),created_at:z.string().min(1)}).passthrough())}).passthrough();
 const backupSchema=snapshotSchema.extend({formatVersion:z.literal(1),envId:z.string().min(1),appVersion:z.string().min(1),reason:z.enum(['daily','release','manual','pre-restore'])});
 export type Backup=z.infer<typeof backupSchema>&{saves:(z.infer<typeof rowSchema>&{state:ReturnType<typeof validateSave>})[]};
@@ -18,6 +18,11 @@ export function validateBackup(value:unknown,envId:string):Backup{
   if(new Set(b.members.map(m=>m.uid)).size!==b.members.length)throw new Error('Duplicate backup members');
   if(new Set(b.operations.map(o=>o.family_id+':'+o.operation_id)).size!==b.operations.length)throw new Error('Duplicate backup operations');
   if([...b.members,...b.operations].some(r=>!families.has(r.family_id)))throw new Error('Backup references a missing family');
+  for(const save of b.saves){
+    if(!save.content_source_family_id)continue;
+    const source=b.saves.find(s=>s.family_id===save.content_source_family_id);
+    if(!source||source.family_id===save.family_id||source.content_source_family_id)throw new Error('Invalid backup content source');
+  }
   return {...b,saves:b.saves.map(s=>({...s,state:validateSave(s.state)}))};
 }
 export function decodeBackup(bytes:Uint8Array,envId:string){

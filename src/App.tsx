@@ -16,52 +16,65 @@ import {version} from '../package.json';
 const pages=['adventure','partners','pokedex','learning','parent'];
 function pageFromHash(){const value=location.hash.slice(1).replace(/^\//,'');return pages.includes(value)?value:'adventure';}
 export default function App(){
-  const [user,setUser]=useState<string|null>(null),[authReady,setAuthReady]=useState(false),[state,setState]=useState<PublicState|null>(null);
+  const [user,setUser]=useState<string|null>(null),[authReady,setAuthReady]=useState(false),[error,setError]=useState('');
+  const currentUid=useRef<string|null>(null);
+  const isCurrent=useCallback((uid:string)=>currentUid.current===uid,[]);
+  useEffect(()=>{
+    let alive=true,authEvent=false;
+    const accept=(uid:string|null)=>{if(alive){currentUid.current=uid;setUser(uid);setError('');setAuthReady(true);}};
+    const listener=auth.onAuthStateChange((_event,session)=>{authEvent=true;accept(session&&!session.user.is_anonymous?String(session.user.id):null);});
+    auth.getSession().then(({data,error})=>{
+      if(!alive||authEvent)return;
+      if(error){setError(error.message);setAuthReady(true);return;}
+      accept(data?.session&&!data.session.user.is_anonymous?String(data.session.user.id):null);
+    }).catch(e=>{if(alive&&!authEvent){setError(String(e));setAuthReady(true);}});
+    return()=>{alive=false;currentUid.current=null;listener.data.subscription.unsubscribe();};
+  },[]);
+  if(!authReady)return <div className="loading-screen"><div className="pokeball"/><p>正在打开冒险手册…</p></div>;
+  if(!user)return <Login onError={setError} error={error}/>;
+  return <GameSession key={user} user={user} isCurrent={isCurrent}/>;
+}
+function GameSession({user,isCurrent}:{user:string;isCurrent:(uid:string)=>boolean}){
+  const [state,setState]=useState<PublicState|null>(null);
   const [busy,setBusy]=useState(false),[notice,setNotice]=useState(''),[error,setError]=useState(''),[tab,setTab]=useState(pageFromHash),[effect,setEffect]=useState('');
   const [sound,setSound]=useState(localStorage.getItem('rr-sound')!=='off'),[reduced,setReduced]=useState(localStorage.getItem('rr-reduced')==='on'),[npc,setNpc]=useState<Npc|null>(null),[mapOpen,setMapOpen]=useState(false),[pending,setPending]=useState<GameCommand|null>(null),[settingsOpen,setSettingsOpen]=useState(false);
   const [selectedTasks,setSelectedTasks]=useState<string[]>([]),[starter,setStarter]=useState(25);
-  const busyRef=useRef(false),uidRef=useRef<string|null>(null),noticeTimer=useRef<ReturnType<typeof setTimeout>|undefined>(undefined);
+  const busyRef=useRef(false),aliveRef=useRef(true),noticeTimer=useRef<ReturnType<typeof setTimeout>|undefined>(undefined);
   const pendingRef=useRef<GameCommand|null>(null),soundRef=useRef(sound);
-  uidRef.current=user;soundRef.current=sound;
+  soundRef.current=sound;
+  useEffect(()=>{aliveRef.current=true;return()=>{aliveRef.current=false;clearTimeout(noticeTimer.current);};},[]);
   const perform=useCallback(async(command:GameCommand):Promise<ApiResponse|undefined>=>{
-    if(busyRef.current)return;
+    if(!aliveRef.current||!isCurrent(user)||busyRef.current)return;
     if(pendingRef.current&&command.type!=='bootstrap'&&command.operationId!==pendingRef.current.operationId){setError('先重试上次的操作，确认云端结果后再继续吧。');return;}
     busyRef.current=true;setBusy(true);setError('');
-    const uid=uidRef.current,key='rr-pending-'+uid;
+    const key='rr-pending-'+user;
     if(command.type!=='bootstrap'){localStorage.setItem(key,JSON.stringify(command));setPending(command);pendingRef.current=command;}
     try{
-      const result=await request(command);
+      const result=await request(command,user);
+      if(!aliveRef.current||!isCurrent(user))return;
       if(!result.ok){localStorage.removeItem(key);setPending(null);pendingRef.current=null;throw new Error(result.error??'这次操作没有完成');}
-      if(uid!==uidRef.current)return;
       if(result.state)setState(old=>!old||result.state!.revision>=old.revision?result.state!:old);
       if(command.type!=='bootstrap'){localStorage.removeItem(key);setPending(null);pendingRef.current=null;}
       setEffect(result.result?.effect??'');
       if(result.result?.effect)playEffect(result.result.effect,soundRef.current);
       if(result.result?.message){setNotice(result.result.message);clearTimeout(noticeTimer.current);noticeTimer.current=setTimeout(()=>setNotice(''),6500);}
       return result;
-    }catch(e){setError(e instanceof Error?e.message:'暂时连接不上，请稍后重试');}
-    finally{busyRef.current=false;setBusy(false);}
-  },[]);
+    }catch(e){if(aliveRef.current&&isCurrent(user))setError(e instanceof Error?e.message:'暂时连接不上，请稍后重试');}
+    finally{busyRef.current=false;if(aliveRef.current&&isCurrent(user))setBusy(false);}
+  },[user,isCurrent]);
   const run:Run=useCallback((type,payload={})=>perform({type,payload,operationId:crypto.randomUUID()}),[perform]);
-  useEffect(()=>{
-    let alive=true;
-    auth.getSession().then(({data,error})=>{if(!alive)return;if(error)setError(error.message);setUser(data?.session&&!data.session.user.is_anonymous?String(data.session.user.id):null);setAuthReady(true);}).catch(e=>{if(alive){setError(String(e));setAuthReady(true);}});
-    const listener=auth.onAuthStateChange((_event,session)=>{if(alive){setUser(session&&!session.user.is_anonymous?String(session.user.id):null);setAuthReady(true);}});
-    return()=>{alive=false;listener.data.subscription.unsubscribe();};
-  },[]);
-  useEffect(()=>{if(!user){setState(null);setPending(null);pendingRef.current=null;return;}const saved=localStorage.getItem('rr-pending-'+user);if(saved){try{const restored=JSON.parse(saved) as GameCommand;setPending(restored);pendingRef.current=restored;}catch{setError('上次未完成的操作记录无法读取，请刷新云端存档');}}void run('bootstrap');},[user,run]);
+  useEffect(()=>{const saved=localStorage.getItem('rr-pending-'+user);if(saved){try{const restored=JSON.parse(saved) as GameCommand;setPending(restored);pendingRef.current=restored;}catch{setError('上次未完成的操作记录无法读取，请刷新云端存档');}}void run('bootstrap');},[user,run]);
   useEffect(()=>{const handler=()=>setTab(pageFromHash());window.addEventListener('hashchange',handler);return()=>window.removeEventListener('hashchange',handler);},[]);
   useEffect(()=>{document.documentElement.dataset.reduced=String(reduced);localStorage.setItem('rr-reduced',reduced?'on':'off');},[reduced]);
   useEffect(()=>{localStorage.setItem('rr-sound',sound?'on':'off');},[sound]);
   useEffect(()=>{const unlock=()=>{if(soundRef.current)prepareAudio();};window.addEventListener('pointerdown',unlock,{passive:true});return()=>window.removeEventListener('pointerdown',unlock);},[]);
   const navigate=(page:string)=>{setTab(page);location.hash='/'+page;setNpc(null);};
-  if(!authReady)return <div className="loading-screen"><div className="pokeball"/><p>正在打开冒险手册…</p></div>;
-  if(!user)return <Login onError={setError} error={error}/>;
   if(!state)return <div className="loading-screen"><div className="pokeball"/><h2>正在取回云端存档</h2>{error&&<p className="error-text">{error}</p>}<button onClick={()=>run('bootstrap')} disabled={busy}><RefreshCw size={16}/>重新连接</button><button className="text-button" onClick={()=>auth.signOut()}>切换账号</button></div>;
   const region=REGIONS.find(r=>r.id===state.position.regionId)!,today=state.checkins.find(c=>c.date===state.today),nav=[['adventure','去冒险',Compass],['partners','我的伙伴',Heart],['pokedex','发现图鉴',BookOpen],['learning','学习手册',NotebookPen]] as const;
   const renderTasks=()=> <section className="paper-panel daily-tasks"><span className="paper-tape"/><div className="eyebrow">TODAY'S LITTLE STEPS</div><h2>今天的小目标<Sun size={20}/></h2><p>认真做好，再把努力记下来。</p><div className="task-list">{state.settings.tasks.filter(t=>t.active).map(t=><label key={t.id}><input type="checkbox" disabled={busy||today?.status==='pending'||today?.status==='approved'} checked={today&&today.status!=='rejected'?today.taskIds.includes(t.id):selectedTasks.includes(t.id)} onChange={()=>setSelectedTasks(selectedTasks.includes(t.id)?selectedTasks.filter(x=>x!==t.id):[...selectedTasks,t.id])}/><span>{t.name}</span><Check size={14}/></label>)}</div><button className="primary full" disabled={busy||today?.status==='pending'||today?.status==='approved'||!selectedTasks.length} onClick={()=>run('checkin.submit',{taskIds:selectedTasks})}>{today?.status==='approved'?'今天的努力已收到':today?.status==='pending'?'等待家长确认':'完成啦，提交打卡'}<ArrowRight size={16}/></button>{today?.status==='rejected'&&<p className="task-feedback">家长留言：{today.reason}</p>}<div className="tiny-note"><Sparkles size={14}/>每天认真一点，伙伴就长大一点。</div></section>;
   return <div className="app-shell">
     <header className="topbar"><button className="brand" onClick={()=>navigate('adventure')}><img src={import.meta.env.BASE_URL+'icon.svg'} alt=""/><span>融融的宝可梦<span>英语冒险手册</span></span></button><nav aria-label="主导航">{nav.map(([id,label,Icon])=><button key={id} className={tab===id?'active':''} onClick={()=>navigate(id)}><Icon size={18}/>{label}</button>)}</nav><div className="header-tools"><span className="cloud-state" title={'云端存档版本 '+state.revision}>{busy?<LoaderCircle className="spin" size={15}/>:<Cloud size={15}/>}<span>{busy?'保存中':pending?'待重试':'已同步'}</span></span><button className="icon-button" aria-label="设置" onClick={()=>setSettingsOpen(!settingsOpen)}><Settings2 size={19}/></button>{state.role==='parent'&&<button className={'parent-link '+(tab==='parent'?'active':'')} onClick={()=>navigate('parent')}><ShieldCheck size={17}/>家长</button>}</div></header>
+    {state.contentMode==='follow'&&<div className="trial-banner" role="note"><ShieldCheck size={17}/><strong>测试账号 · 进度独立</strong><span>内容与规则自动跟随融融</span></div>}
     {settingsOpen&&<div className="settings-popover"><h3>冒险偏好</h3><label><span>游戏提示音</span><input type="checkbox" checked={sound} onChange={e=>setSound(e.target.checked)}/></label><label><span>减少动画</span><input type="checkbox" checked={reduced} onChange={e=>setReduced(e.target.checked)}/></label><button className="text-button" onClick={()=>{void auth.signOut();setSettingsOpen(false);}}><LogOut size={17}/>退出账号</button></div>}
     {error&&<div className="connection-banner" role="alert"><span>{error}</span><button disabled={busy} onClick={()=>pending?perform(pending):run('bootstrap')}><RefreshCw size={16}/>重试</button><button className="icon-button" aria-label="关闭提示" onClick={()=>setError('')}><X size={16}/></button></div>}
     {pending&&!error&&!busy&&<div className="connection-banner"><span>上次有一项操作尚未收到结果，重试后会核对云端记录。</span><button onClick={()=>perform(pending)}>重试未完成操作</button></div>}

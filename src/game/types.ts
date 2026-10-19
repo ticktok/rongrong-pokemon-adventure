@@ -19,8 +19,9 @@ export interface GameState {
   carry:number; carryTargets:string[]; carryByPartner?:Record<string,number>; settings:Settings; npcs:Npc[]; customWords:Word[]; disabledWordIds:string[]; npcCompleted:string[]; events:{date:string;message:string}[];
 }
 export interface PublicState extends Omit<GameState,'question'|'customWords'|'disabledWordIds'|'realName'> {
+  contentMode?:'own'|'follow';
   question:PublicQuestion|null; realName?:string; words?:Word[]; reviewWords:Pick<Word,'id'|'word'|'meaning'>[]; wordCount:number; role:Role; revision:number; canBattle:boolean; today:string;
 }
 export interface ActionResult { message:string; effect?:'correct'|'wrong'|'attack'|'catch'|'win'|'lose'|'level'|'evolve'|'approve'|'gift' }
 export interface ApiResponse { ok:boolean; state?:PublicState; result?:ActionResult; error?:string; export?:GameState }
-export interface GameCommand { type:string; operationId:string; payload:Record<string,unknown> }
+export interface GameCommand { type:string; operationId:string; payload:Record<string,unknown>; expectedUid?:string }
