@@ -24,7 +24,7 @@ const browser=await chromium.launch({channel:'chrome',headless:true}),errors=[],
 const pass=name=>{checks.push(name);console.log('PASS',name);};
 const base=process.env.TEST_BASE_URL??'http://127.0.0.1:5173/';
 const context=await browser.newContext({viewport:{width:1280,height:900},serviceWorkers:'block'}),page=await context.newPage();page.setDefaultTimeout(60000);page.on('pageerror',e=>errors.push(e.message));
-async function login(role){const a=manifest.accounts.find(a=>a.role===role);await page.getByLabel('账号',{exact:true}).fill(a.username);await page.getByLabel('密码',{exact:true}).fill(a.password);await page.getByRole('button',{name:'进入冒险',exact:true}).click();await page.locator('.trial-banner').waitFor();await page.waitForFunction(()=>!document.querySelector('.cloud-state .spin'));}
+async function login(role){const a=manifest.accounts.find(a=>a.role===role);await page.getByLabel('账号',{exact:true}).fill(a.username);await page.getByLabel('密码',{exact:true}).fill(a.password);await page.getByRole('button',{name:'进入冒险',exact:true}).click();await page.locator('.trial-banner,.form-error,.loading-screen .error-text').first().waitFor();const errors=await page.locator('.form-error,.loading-screen .error-text').allTextContents();assert.deepEqual(errors,[]);await page.locator('.trial-banner').waitFor();await page.waitForFunction(()=>!document.querySelector('.cloud-state .spin'));}
 async function command(type,payload={},operationId=randomUUID()){return page.evaluate(async({type,payload,operationId})=>(await import('/src/lib.ts')).request({type,payload,operationId}),{type,payload,operationId});}
 try{
  await sourceLink(families.qa);
@@ -45,11 +45,11 @@ try{
  result=await command('checkin.submit',{taskIds:[task.id]});assert.equal(result.ok,true,result.error);
  result=await command('parent.review',{date:result.state.today,approve:true});assert.equal(result.ok,false);
  result=await command('bootstrap',{familyId:families.home,content_source_family_id:families.home,role:'parent'});assert.equal(result.state.contentMode,'follow');assert.equal(result.state.role,'child');assert.equal(result.state.nickname,'测试训练师');pass('Child cannot approve or choose another family');
- const parent=manifest.accounts.find(a=>a.role==='parent');
- await page.evaluate(async a=>{const {auth}=await import('/src/lib.ts');const r=await auth.signInWithPassword({username:a.username,password:a.password});if(r.error)throw new Error(r.error.message);},parent);
+ await page.getByRole('button',{name:'设置',exact:true}).click();
+ await page.getByRole('button',{name:'退出账号',exact:true}).click();await page.getByLabel('账号',{exact:true}).waitFor();await login('parent');
  await page.getByRole('button',{name:'家长',exact:true}).waitFor();await page.getByRole('button',{name:'家长',exact:true}).click();await page.locator('.review-card').waitFor();
  const approveId=randomUUID();result=await command('parent.review',{date:own.state.daily.date,approve:true},approveId);assert.equal(result.ok,true,result.error);const awarded=await store.currentFamily(manifest.familyId);
- assert(awarded.state.partners[0].exp>partners[0].exp);result=await command('parent.review',{date:own.state.daily.date,approve:true},approveId);assert.equal(result.state.revision,awarded.revision);pass('Trial parent review awards experience once; direct login switch preserves identity');
+ assert(awarded.state.partners[0].exp>partners[0].exp);result=await command('parent.review',{date:own.state.daily.date,approve:true},approveId);assert.equal(result.state.revision,awarded.revision);pass('Trial parent review awards experience once; logout/login switch preserves identity');
  for(const type of ['parent.settings','parent.tasks','parent.words','parent.word.disable','parent.npc']){result=await command(type,{baseExp:999,role:'parent',familyId:families.home});assert.equal(result.ok,false);assert.match(result.error,/只能查看/);}
  const mismatch=await page.evaluate(async expectedUid=>{const {cloud}=await import('/src/lib.ts');return cloud.callFunction({name:'rongrong-game',data:{type:'bootstrap',operationId:crypto.randomUUID(),payload:{},expectedUid}});},manifest.accounts.find(a=>a.role==='child').uid);
  const mismatchResult=typeof mismatch.result==='string'?JSON.parse(mismatch.result):mismatch.result;assert.equal(mismatchResult.ok,false);pass('All content writes and a request bound to another UID are rejected');
