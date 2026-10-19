@@ -21,7 +21,7 @@
       "handler": "index.main",
       "timeout": 120,
       "memorySize": 256,
-      "installDependency": true,
+      "installDependency": false,
       "ignore": [
         "node_modules"
       ],

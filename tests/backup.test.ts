@@ -4,7 +4,7 @@ import {gzipSync} from 'node:zlib';
 import {initialState,makePartner} from '../server/state';
 import {execute} from '../server/engine';
 import {validateSave,contentIdentity,compareContent} from '../server/save-validation';
-import {BackupStore,decodeBackup,validateBackup,restoreSelection,restoreFamily,assertBackupServerCaller,type Backup} from '../server/backup';
+import {BackupStore,decodeBackup,validateBackup,restoreSelection,restoreFamily,assertBackupServerCaller,backupInvocation,type Backup} from '../server/backup';
 const env='test-env',family=randomUUID(),now=new Date('2026-10-18T04:00:00Z'),rt={now,random:()=>0.3,uuid:randomUUID};
 function state(){const s=initialState([],now);const p=makePartner(25,5,rt);s.started=true;s.partners=[p];s.team=[p.id];s.caught=[25];s.seen=[25];return s;}
 function backup():Backup{return {formatVersion:1,envId:env,appVersion:'0.2.0',reason:'release',exportedAt:now.toISOString(),saves:[{family_id:family,revision:8,state:state(),updated_at:now.toISOString()}],members:[{uid:'test-child',family_id:family,role:'child'}],operations:[]};}
@@ -70,5 +70,22 @@ describe('backup caller identity',()=>{
   const server={uid:'',openId:'',customUserId:'',isAnonymous:false};
   expect(()=>assertBackupServerCaller(server)).not.toThrow();
   for(const change of [{uid:'child'},{openId:'wx-user'},{customUserId:'user'},{isAnonymous:true}])expect(()=>assertBackupServerCaller({...server,...change})).toThrow('BACKUP_SERVER_ONLY');
+ });
+});
+
+describe('per-request SCF authorization',()=>{
+ it('does not carry a client identity into a subsequent admin or timer invocation',()=>{
+  const context=(extra:Record<string,unknown>={})=>({namespace:env,environment:JSON.stringify({SCF_NAMESPACE:env,...extra})});
+  expect(()=>backupInvocation(context({TCB_UUID:'child'}))).toThrow('BACKUP_SERVER_ONLY');
+  vi.stubEnv('TCB_UUID','previous-client');vi.stubEnv('TCB_CONTEXT_KEYS','TCB_UUID');
+  try{
+    expect(backupInvocation(context())).toEqual({envId:env,reason:'manual'});
+    expect(backupInvocation(context({TRIGGER_SRC:'timer'}))).toEqual({envId:env,reason:'daily'});
+  }finally{vi.unstubAllEnvs();}
+ });
+ it('rejects absent or malformed trusted context instead of trusting request data',()=>{
+  expect(()=>backupInvocation({Type:'Timer'})).toThrow();
+  expect(()=>backupInvocation({namespace:env,environment:'{}'})).toThrow();
+  expect(()=>backupInvocation({namespace:env,environment:'not json'})).toThrow();
  });
 });

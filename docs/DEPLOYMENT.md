@@ -48,4 +48,4 @@ PG 表和备份 RPC 保持服务端权限，rr_commit 在函数内部检查 serv
 
 家庭名单、账号凭据、服务密钥、备份、浏览器会话位于 private/ 或忽略的本地配置。QA 与正式家庭按 family_id 区分；测试不能依靠昵称选择家庭。QA 写入测试前备份，测试结束后用已授权的 QA 恢复流程还原。
 
-备份函数的客户端限制须同时覆盖 SDK 与 HTTP 调用。HTTP 网关 Rego 不覆盖 SDK 的 Cloud API 通道；当前 PG 环境的 DescribeResourcePermission 接口返回不支持，不能照搬传统环境的函数安全规则。备份函数使用 Node SDK 解析的可信用户身份拒绝所有终端用户（包括匿名身份），HTTP 网关另保留拒绝策略；不能凭 event.Type=Timer 判定权限。验证须包含真实 SDK callFunction、匿名与登录用户的文件/RPC读取，以及管理端和定时器成功执行。
+备份函数的客户端限制须同时覆盖 SDK 与 HTTP 调用。HTTP 网关 Rego 不覆盖 SDK 的 Cloud API 通道；当前 PG 环境的 DescribeResourcePermission 接口返回不支持，不能照搬传统环境的函数安全规则。备份函数从平台每次传入的 context.environment 解析可信用户身份，拒绝所有终端用户（包括匿名身份）；不从 process.env 或仅依赖 SDK 的进程全局身份判断，以免函数热复用残留前一次用户身份，HTTP 网关另保留拒绝策略；不能凭 event.Type=Timer 判定权限。验证须包含真实 SDK callFunction、匿名与登录用户的文件/RPC读取，以及管理端和定时器成功执行。
