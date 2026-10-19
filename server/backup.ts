@@ -85,3 +85,16 @@ export async function restoreFamily(store:BackupStore,backup:Backup,familyId:str
 export function assertBackupServerCaller(identity:{uid:string;openId:string;customUserId:string;isAnonymous:boolean}){
   if(identity.uid||identity.openId||identity.customUserId||identity.isAnonymous)throw new Error('BACKUP_SERVER_ONLY');
 }
+
+export function backupInvocation(context:unknown):{envId:string;reason:'daily'|'manual'}{
+  const invocation=z.object({namespace:z.string().min(1),environment:z.string()}).parse(context);
+  const environment=z.record(z.string(),z.unknown()).parse(JSON.parse(invocation.environment));
+  if(environment.SCF_NAMESPACE!==invocation.namespace)throw new Error('Invalid invocation environment');
+  assertBackupServerCaller({
+    uid:typeof environment.TCB_UUID==='string'?environment.TCB_UUID:'',
+    openId:typeof environment.WX_OPENID==='string'?environment.WX_OPENID:'',
+    customUserId:typeof environment.TCB_CUSTOM_USER_ID==='string'?environment.TCB_CUSTOM_USER_ID:'',
+    isAnonymous:environment.TCB_ISANONYMOUS_USER==='true'||environment.TCB_ISANONYMOUS_USER===true,
+  });
+  return {envId:invocation.namespace,reason:environment.TRIGGER_SRC==='timer'?'daily':'manual'};
+}

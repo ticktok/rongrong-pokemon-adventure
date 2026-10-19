@@ -34,4 +34,4 @@ description: 在融融宝可梦项目中完成代码或游戏内容修改后的�
 - npm run backup:restore -- --file <文件> --family <精确家庭ID> 默认只预览。经明确授权才加入 --apply --revision <预览返回的当前revision>。先生成安全备份，再由 rr_commit 检查并发；不回退账号映射和操作日志。冲突需重新预览，不盲目重试。
 - 完成恢复后读回并核对伙伴、图鉴、队伍、词汇、奖励及未完成操作。一次明确授权的 QA 恢复演练可以执行；不得把它扩展为正式家庭恢复授权。
 
-备份函数的客户端限制须同时覆盖 SDK 与 HTTP 调用。HTTP 网关 Rego 不覆盖 SDK 的 Cloud API 通道；当前 PG 环境的 DescribeResourcePermission 接口返回不支持，不能照搬传统环境的函数安全规则。备份函数使用 Node SDK 解析的可信用户身份拒绝所有终端用户（包括匿名身份），HTTP 网关另保留拒绝策略；不能凭 event.Type=Timer 判定权限。验证须包含真实 SDK callFunction、匿名与登录用户的文件/RPC读取，以及管理端和定时器成功执行。
+备份函数的客户端限制须同时覆盖 SDK 与 HTTP 调用。HTTP 网关 Rego 不覆盖 SDK 的 Cloud API 通道；当前 PG 环境的 DescribeResourcePermission 接口返回不支持，不能照搬传统环境的函数安全规则。备份函数从平台每次传入的 context.environment 解析可信用户身份，拒绝所有终端用户（包括匿名身份）；不从 process.env 或仅依赖 SDK 的进程全局身份判断，以免函数热复用残留前一次用户身份，HTTP 网关另保留拒绝策略；不能凭 event.Type=Timer 判定权限。验证须包含真实 SDK callFunction、匿名与登录用户的文件/RPC读取，以及管理端和定时器成功执行。
