@@ -60,4 +60,19 @@ END $$;`;
 cli(['api','tcb','ExecutePGSql','--body',JSON.stringify({EnvId:envId,Sql:sql})]);
 const saved=await store.currentFamily(manifest.familyId);
 if(saved.content_source_family_id!==manifest.sourceFamilyId)throw new Error('Trial relation verification failed');
+// This existing gateway rule only controls rongrong-game. Keep every other policy byte unchanged.
+const policy=cli(['policy','get']).data?.Item?.Value;
+if(typeof policy!=='string')throw new Error('Cannot read the existing game gateway policy');
+const memberRule=/rongrong_member if \{\s*input\.subject\.user_id in \{([^}]*)\}\s*\}/;
+const match=policy.match(memberRule);
+if(!match||[...policy.matchAll(/\brongrong_member\b/g)].length!==3||[...policy.matchAll(/input\.request\.path == "\/v1\/functions\/rongrong-game"/g)].length!==2)throw new Error('Review the changed gateway policy before adding trial access');
+const members=JSON.parse('['+match[1]+']');
+if(!Array.isArray(members)||!members.every(id=>typeof id==='string'))throw new Error('Invalid existing game member list');
+const added=manifest.accounts.map(a=>a.uid).filter(uid=>!members.includes(uid));
+if(added.length){
+ const next=policy.replace(match[0],match[0].replace(match[1],[...members,...added].map(id=>JSON.stringify(id)).join(', ')));
+ await writeFile('private/backups/game-policy-'+randomUUID()+'.json',JSON.stringify({envId,policy,trialMemberCount:added.length}),{mode:0o600,flag:'wx'});
+ cli(['policy','set',next,'--yes']);
+ if(cli(['policy','get']).data?.Item?.Value!==next)throw new Error('Game gateway policy readback mismatch');
+}
 console.log('Trial family and both accounts verified. Credentials saved privately; existing progress was not reset.');
