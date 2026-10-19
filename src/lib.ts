@@ -17,10 +17,6 @@ export async function request(command:GameCommand,expectedUid?:string):Promise<A
   const response=await cloud.callFunction({name:'rongrong-game',data:{...command,expectedUid:expectedUid??uid}});
   return safeResponse(response.result);
 }
-export function speak(word:string,enabled:boolean){
-  if(!enabled||!('speechSynthesis'in window))return false;
-  speechSynthesis.cancel();const voice=new SpeechSynthesisUtterance(word);voice.lang='en-US';voice.rate=0.8;voice.volume=0.9;speechSynthesis.speak(voice);return true;
-}
 export function saveFile(name:string,value:unknown){
   const url=URL.createObjectURL(new Blob([JSON.stringify(value,null,2)],{type:'application/json'}));
   const a=document.createElement('a');a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);

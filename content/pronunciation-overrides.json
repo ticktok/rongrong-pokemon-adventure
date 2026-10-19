@@ -1,0 +1,57 @@
+{
+  "evening": {
+    "title": "File:En-us-evening (noun).ogg",
+    "accent": "US",
+    "evidence": "https://en.wiktionary.org/wiki/evening"
+  },
+  "black": {
+    "title": "File:En-Black.ogg",
+    "accent": "US",
+    "evidence": "https://en.wiktionary.org/wiki/black"
+  },
+  "orange": {
+    "title": "File:LL-Q1860 (eng)-Aquild-orange.wav",
+    "accent": "Pacific Northwest",
+    "evidence": "https://en.wiktionary.org/wiki/orange"
+  },
+  "lemon": {
+    "title": "File:LL-Q1860 (eng)-Simplificationalizer-lemon.wav",
+    "accent": "New Jersey",
+    "evidence": "https://en.wiktionary.org/wiki/lemon"
+  },
+  "homework": {
+    "title": "File:LL-Q1860 (eng)-Flame, not lame-homework.wav",
+    "accent": "US",
+    "evidence": "https://en.wiktionary.org/wiki/homework"
+  },
+  "house": {
+    "title": "File:En-us-house-noun.ogg",
+    "accent": "US",
+    "evidence": "https://en.wiktionary.org/wiki/house"
+  },
+  "school": {
+    "title": "File:LL-Q1860 (eng)-Qwertygiy-school.wav",
+    "accent": "US",
+    "evidence": "https://en.wiktionary.org/wiki/school"
+  },
+  "t-shirt": {
+    "title": "File:LL-Q1860 (eng)-Persent101-T-shirt.wav",
+    "accent": "US",
+    "evidence": "https://en.wiktionary.org/wiki/t-shirt"
+  },
+  "gloves": {
+    "title": "File:LL-Q1860 (eng)-Persent101-gloves.wav",
+    "accent": "US",
+    "evidence": "https://en.wiktionary.org/wiki/gloves"
+  },
+  "wind": {
+    "title": "File:En-us-wind-air.ogg",
+    "accent": "GA",
+    "evidence": "https://en.wiktionary.org/wiki/wind"
+  },
+  "close": {
+    "title": "File:En-us-close-verb.ogg",
+    "accent": "US",
+    "evidence": "https://en.wiktionary.org/wiki/close"
+  }
+}

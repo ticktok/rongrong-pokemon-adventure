@@ -27,7 +27,11 @@ try{
  await context.setOffline(false);await page.getByRole('button',{name:'重试这一步',exact:true}).click();
  await page.waitForFunction(key=>localStorage.getItem(key)===null,'rr-pending-'+account.uid);
  const after=await state();assert.equal(after.revision,before.revision+1);checks.push('Retry inside the quiz settles the original answer exactly once');
- if(after.state.question){const q=after.state.question;await page.locator('.quiz-options button').nth(q.options.findIndex(o=>o.id===q.correctOptionId)).click();await page.locator('.quiz-dialog').waitFor({state:'hidden'});}
+ if(after.state.question){const q=after.state.question;await page.locator('.quiz-options button').nth(q.options.findIndex(o=>o.id===q.correctOptionId)).click();}
+ await page.waitForFunction(()=>!document.querySelector('.quiz-options'));
+ await page.waitForFunction(()=>!document.querySelector('.cloud-state .spin'));
+ if(await page.locator('.quiz-complete-actions').count())await page.getByRole('button',{name:/^(稍后继续|完成挑战)$/}).click();
+ await page.locator('.quiz-dialog').waitFor({state:'hidden'});
  await page.getByRole('button',{name:'去冒险',exact:true}).click();await page.locator('.world-canvas canvas').waitFor();checks.push('Adventure can resume after recovery and correction');
  checks.forEach(x=>console.log('PASS',x));
 }catch(e){checks.push('FAILED: '+e);console.error(e);process.exitCode=1;}

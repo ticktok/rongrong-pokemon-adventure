@@ -1,0 +1,2892 @@
+{
+  "red": {
+    "path": "assets/word-audio/word-1-1.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-red.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-red.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "blue": {
+    "path": "assets/word-audio/word-1-2.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-blue.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-blue.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "green": {
+    "path": "assets/word-audio/word-1-3.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-green.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-green.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "yellow": {
+    "path": "assets/word-audio/word-1-4.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-yellow.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-yellow.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "black": {
+    "path": "assets/word-audio/word-1-5.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-Black.ogg",
+    "author": "Atcovi",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "accent": "US",
+    "accentEvidence": "https://en.wiktionary.org/wiki/black",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "white": {
+    "path": "assets/word-audio/word-1-6.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-white.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-white.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "orange": {
+    "path": "assets/word-audio/word-1-7.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:LL-Q1860_(eng)-Aquild-orange.wav",
+    "author": "Speaker: Aquild\nRecorder: Aquild",
+    "license": "CC BY 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/4.0",
+    "accent": "Pacific Northwest",
+    "accentEvidence": "https://en.wiktionary.org/wiki/orange",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "purple": {
+    "path": "assets/word-audio/word-1-9.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-purple.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-purple.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "brown": {
+    "path": "assets/word-audio/word-1-10.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-brown.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-brown.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "grey": {
+    "path": "assets/word-audio/word-1-11.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-grey.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-grey.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "happy": {
+    "path": "assets/word-audio/word-1-12.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-happy.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-happy.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "sad": {
+    "path": "assets/word-audio/word-1-13.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-sad.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-sad.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "angry": {
+    "path": "assets/word-audio/word-1-14.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-angry.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-angry.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "tired": {
+    "path": "assets/word-audio/word-1-15.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-tired.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-tired.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "hungry": {
+    "path": "assets/word-audio/word-1-16.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-hungry.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-hungry.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "thirsty": {
+    "path": "assets/word-audio/word-1-17.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-thirsty.ogg",
+    "author": "No machine-readable author provided. Neoglitch assumed (based on copyright claims).",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-thirsty.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "hot": {
+    "path": "assets/word-audio/word-1-18.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-hot.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-hot.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "cold": {
+    "path": "assets/word-audio/word-1-19.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-cold.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-cold.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "warm": {
+    "path": "assets/word-audio/word-1-20.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-warm.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-warm.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "good": {
+    "path": "assets/word-audio/word-1-22.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-good.ogg",
+    "author": "未署名（公有领域录音）",
+    "license": "Public domain",
+    "licenseUrl": "https://commons.wikimedia.org/wiki/Commons:Public_domain",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-good.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "bad": {
+    "path": "assets/word-audio/word-1-23.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-bad.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-bad.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "nice": {
+    "path": "assets/word-audio/word-1-24.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-nice.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-nice.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "beautiful": {
+    "path": "assets/word-audio/word-1-25.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-beautiful.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-beautiful.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "one": {
+    "path": "assets/word-audio/word-2-1.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-one.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-one.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "two": {
+    "path": "assets/word-audio/word-2-2.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-two.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-two.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "three": {
+    "path": "assets/word-audio/word-2-3.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-three.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-three.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "four": {
+    "path": "assets/word-audio/word-2-4.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-four.ogg",
+    "author": "Dvortygirl",
+    "license": "Public domain",
+    "licenseUrl": "https://commons.wikimedia.org/wiki/Commons:Public_domain",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-four.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "five": {
+    "path": "assets/word-audio/word-2-5.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-five.ogg",
+    "author": "Dvortygirl",
+    "license": "Public domain",
+    "licenseUrl": "https://commons.wikimedia.org/wiki/Commons:Public_domain",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-five.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "six": {
+    "path": "assets/word-audio/word-2-6.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-six.ogg",
+    "author": "No machine-readable author provided. TheDaveRoss assumed (based on copyright claims).",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-six.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "seven": {
+    "path": "assets/word-audio/word-2-7.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-seven.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-seven.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "eight": {
+    "path": "assets/word-audio/word-2-8.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-eight.ogg",
+    "author": "recorded by TheDaveRoss",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-eight.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "nine": {
+    "path": "assets/word-audio/word-2-9.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-nine.ogg",
+    "author": "No machine-readable author provided. TheDaveRoss assumed (based on copyright claims).",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-nine.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "ten": {
+    "path": "assets/word-audio/word-2-10.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-ten.ogg",
+    "author": "No machine-readable author provided. TheDaveRoss assumed (based on copyright claims).",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-ten.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "eleven": {
+    "path": "assets/word-audio/word-2-11.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-eleven.ogg",
+    "author": "No machine-readable author provided. TheDaveRoss assumed (based on copyright claims).",
+    "license": "Public domain",
+    "licenseUrl": "https://commons.wikimedia.org/wiki/Commons:Public_domain",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-eleven.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "twelve": {
+    "path": "assets/word-audio/word-2-12.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-twelve.ogg",
+    "author": "No machine-readable author provided. TheDaveRoss assumed (based on copyright claims).",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-twelve.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "thirteen": {
+    "path": "assets/word-audio/word-2-13.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-thirteen.ogg",
+    "author": "No machine-readable author provided. TheDaveRoss assumed (based on copyright claims).",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-thirteen.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "fourteen": {
+    "path": "assets/word-audio/word-2-14.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-fourteen.ogg",
+    "author": "No machine-readable author provided. TheDaveRoss assumed (based on copyright claims).",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-fourteen.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "fifteen": {
+    "path": "assets/word-audio/word-2-15.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-fifteen.ogg",
+    "author": "No machine-readable author provided. TheDaveRoss assumed (based on copyright claims).",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-fifteen.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "sixteen": {
+    "path": "assets/word-audio/word-2-16.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-sixteen.ogg",
+    "author": "No machine-readable author provided. TheDaveRoss assumed (based on copyright claims).",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-sixteen.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "seventeen": {
+    "path": "assets/word-audio/word-2-17.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-seventeen.ogg",
+    "author": "No machine-readable author provided. TheDaveRoss assumed (based on copyright claims).",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-seventeen.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "eighteen": {
+    "path": "assets/word-audio/word-2-18.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-eighteen.ogg",
+    "author": "No machine-readable author provided. TheDaveRoss assumed (based on copyright claims).",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-eighteen.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "nineteen": {
+    "path": "assets/word-audio/word-2-19.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-nineteen.ogg",
+    "author": "No machine-readable author provided. TheDaveRoss assumed (based on copyright claims).",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-nineteen.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "twenty": {
+    "path": "assets/word-audio/word-2-20.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-twenty.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-twenty.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "hundred": {
+    "path": "assets/word-audio/word-2-21.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-hundred.ogg",
+    "author": "No machine-readable author provided. TheDaveRoss assumed (based on copyright claims).",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-hundred.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "circle": {
+    "path": "assets/word-audio/word-2-22.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-circle.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-circle.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "square": {
+    "path": "assets/word-audio/word-2-23.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-square.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-square.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "triangle": {
+    "path": "assets/word-audio/word-2-24.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-triangle.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-triangle.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "rectangle": {
+    "path": "assets/word-audio/word-2-25.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-rectangle.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-rectangle.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "cat": {
+    "path": "assets/word-audio/word-3-1.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-cat.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-cat.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "dog": {
+    "path": "assets/word-audio/word-3-2.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-dog.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-dog.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "bird": {
+    "path": "assets/word-audio/word-3-3.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-bird.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-bird.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "fish": {
+    "path": "assets/word-audio/word-3-4.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-fish.ogg",
+    "author": "未署名（公有领域录音）",
+    "license": "Public domain",
+    "licenseUrl": "https://commons.wikimedia.org/wiki/Commons:Public_domain",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-fish.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "rabbit": {
+    "path": "assets/word-audio/word-3-5.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-rabbit.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-rabbit.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "duck": {
+    "path": "assets/word-audio/word-3-6.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-duck.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-duck.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "chicken": {
+    "path": "assets/word-audio/word-3-7.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-chicken.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-chicken.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "cow": {
+    "path": "assets/word-audio/word-3-8.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-cow.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-cow.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "horse": {
+    "path": "assets/word-audio/word-3-9.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-horse.ogg",
+    "author": "No machine-readable author provided. Dvortygirl assumed (based on copyright claims).",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-horse.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "sheep": {
+    "path": "assets/word-audio/word-3-10.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-sheep.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-sheep.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "pig": {
+    "path": "assets/word-audio/word-3-11.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-pig.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-pig.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "goat": {
+    "path": "assets/word-audio/word-3-12.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-goat.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-goat.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "mouse": {
+    "path": "assets/word-audio/word-3-13.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-mouse.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-mouse.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "lion": {
+    "path": "assets/word-audio/word-3-14.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-lion.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-lion.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "tiger": {
+    "path": "assets/word-audio/word-3-15.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-tiger.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-tiger.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "elephant": {
+    "path": "assets/word-audio/word-3-16.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-elephant.ogg",
+    "author": "未署名（公有领域录音）",
+    "license": "Public domain",
+    "licenseUrl": "https://commons.wikimedia.org/wiki/Commons:Public_domain",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-elephant.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "monkey": {
+    "path": "assets/word-audio/word-3-17.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-monkey.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-monkey.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "panda": {
+    "path": "assets/word-audio/word-3-18.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-panda.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-panda.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "bear": {
+    "path": "assets/word-audio/word-3-19.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-bear.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-bear.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "giraffe": {
+    "path": "assets/word-audio/word-3-20.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-giraffe.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-giraffe.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "zebra": {
+    "path": "assets/word-audio/word-3-21.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-zebra.ogg",
+    "author": "No machine-readable author provided. Dvortygirl assumed (based on copyright claims).",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-zebra.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "snake": {
+    "path": "assets/word-audio/word-3-22.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-snake.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-snake.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "frog": {
+    "path": "assets/word-audio/word-3-23.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-frog.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-frog.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "turtle": {
+    "path": "assets/word-audio/word-3-24.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-turtle.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-turtle.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "apple": {
+    "path": "assets/word-audio/word-4-1.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-apple.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-apple.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "banana": {
+    "path": "assets/word-audio/word-4-2.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-banana.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-banana.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "pear": {
+    "path": "assets/word-audio/word-4-3.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-pear.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-pear.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "peach": {
+    "path": "assets/word-audio/word-4-4.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-peach.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-peach.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "grape": {
+    "path": "assets/word-audio/word-4-5.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-grape.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-grape.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "watermelon": {
+    "path": "assets/word-audio/word-4-6.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-watermelon.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-watermelon.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "strawberry": {
+    "path": "assets/word-audio/word-4-7.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-strawberry.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-strawberry.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "lemon": {
+    "path": "assets/word-audio/word-4-8.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:LL-Q1860_(eng)-Simplificationalizer-lemon.wav",
+    "author": "Speaker: Simplificationalizer\nRecorder: Simplificationalizer",
+    "license": "CC0",
+    "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/deed.en",
+    "accent": "New Jersey",
+    "accentEvidence": "https://en.wiktionary.org/wiki/lemon",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "cherry": {
+    "path": "assets/word-audio/word-4-9.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-cherry.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-cherry.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "mango": {
+    "path": "assets/word-audio/word-4-10.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-mango.ogg",
+    "author": "Sylvanmoon",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-mango.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "rice": {
+    "path": "assets/word-audio/word-4-11.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-rice.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-rice.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "noodles": {
+    "path": "assets/word-audio/word-4-12.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-noodles.ogg",
+    "author": "Dvortygirl",
+    "license": "Public domain",
+    "licenseUrl": "https://commons.wikimedia.org/wiki/Commons:Public_domain",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-noodles.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "bread": {
+    "path": "assets/word-audio/word-4-13.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-bread.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-bread.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "cake": {
+    "path": "assets/word-audio/word-4-14.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-cake.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-cake.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "egg": {
+    "path": "assets/word-audio/word-4-15.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-egg.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-egg.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "milk": {
+    "path": "assets/word-audio/word-4-16.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-milk.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-milk.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "juice": {
+    "path": "assets/word-audio/word-4-17.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-juice.ogg",
+    "author": "No machine-readable author provided. Dominic assumed (based on copyright claims).",
+    "license": "Public domain",
+    "licenseUrl": "https://commons.wikimedia.org/wiki/Commons:Public_domain",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-juice.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "water": {
+    "path": "assets/word-audio/word-4-18.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-water.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-water.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "tea": {
+    "path": "assets/word-audio/word-4-19.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-tea.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-tea.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "soup": {
+    "path": "assets/word-audio/word-4-20.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-soup.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-soup.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "potato": {
+    "path": "assets/word-audio/word-4-21.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-potato.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-potato.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "tomato": {
+    "path": "assets/word-audio/word-4-22.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-tomato.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-tomato.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "carrot": {
+    "path": "assets/word-audio/word-4-23.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-carrot.ogg",
+    "author": "No machine-readable author provided. Dvortygirl assumed (based on copyright claims).",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-carrot.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "meat": {
+    "path": "assets/word-audio/word-4-24.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-meat.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-meat.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "cheese": {
+    "path": "assets/word-audio/word-4-25.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-cheese.ogg",
+    "author": "No machine-readable author provided. Dvortygirl assumed (based on copyright claims).",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-cheese.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "father": {
+    "path": "assets/word-audio/word-5-1.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-father.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-father.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "mother": {
+    "path": "assets/word-audio/word-5-2.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-mother.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-mother.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "brother": {
+    "path": "assets/word-audio/word-5-3.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-brother.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-brother.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "sister": {
+    "path": "assets/word-audio/word-5-4.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-sister.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-sister.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "grandfather": {
+    "path": "assets/word-audio/word-5-5.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-grandfather.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-grandfather.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "grandmother": {
+    "path": "assets/word-audio/word-5-6.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-grandmother.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-grandmother.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "uncle": {
+    "path": "assets/word-audio/word-5-7.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-uncle.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-uncle.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "aunt": {
+    "path": "assets/word-audio/word-5-8.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-aunt.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-aunt.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "cousin": {
+    "path": "assets/word-audio/word-5-9.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-cousin.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-cousin.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "baby": {
+    "path": "assets/word-audio/word-5-10.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-baby.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-baby.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "family": {
+    "path": "assets/word-audio/word-5-11.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-family.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-family.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "friend": {
+    "path": "assets/word-audio/word-5-12.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-friend.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-friend.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "boy": {
+    "path": "assets/word-audio/word-5-13.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-boy.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-boy.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "girl": {
+    "path": "assets/word-audio/word-5-14.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-girl.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-girl.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "man": {
+    "path": "assets/word-audio/word-5-15.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-man.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-man.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "woman": {
+    "path": "assets/word-audio/word-5-16.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-woman.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-woman.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "child": {
+    "path": "assets/word-audio/word-5-17.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-child.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-child.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "people": {
+    "path": "assets/word-audio/word-5-18.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-people.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-people.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "teacher": {
+    "path": "assets/word-audio/word-5-19.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-teacher.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-teacher.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "student": {
+    "path": "assets/word-audio/word-5-20.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-student.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-student.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "doctor": {
+    "path": "assets/word-audio/word-5-21.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-doctor.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-doctor.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "nurse": {
+    "path": "assets/word-audio/word-5-22.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-nurse.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-nurse.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "farmer": {
+    "path": "assets/word-audio/word-5-23.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-farmer.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-farmer.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "driver": {
+    "path": "assets/word-audio/word-5-24.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-driver.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-driver.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "cook": {
+    "path": "assets/word-audio/word-5-25.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-cook.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-cook.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "head": {
+    "path": "assets/word-audio/word-6-1.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-head.ogg",
+    "author": "No machine-readable author provided. Dvortygirl assumed (based on copyright claims).",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-head.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "face": {
+    "path": "assets/word-audio/word-6-2.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-face.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-face.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "eye": {
+    "path": "assets/word-audio/word-6-3.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-eye.ogg",
+    "author": "No machine-readable author provided. Muke assumed (based on copyright claims).",
+    "license": "Public domain",
+    "licenseUrl": "https://commons.wikimedia.org/wiki/Commons:Public_domain",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-eye.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "ear": {
+    "path": "assets/word-audio/word-6-4.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-ear.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-ear.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "nose": {
+    "path": "assets/word-audio/word-6-5.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-nose.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-nose.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "mouth": {
+    "path": "assets/word-audio/word-6-6.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-mouth.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-mouth.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "tooth": {
+    "path": "assets/word-audio/word-6-7.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-tooth.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-tooth.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "tongue": {
+    "path": "assets/word-audio/word-6-8.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-tongue.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-tongue.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "hair": {
+    "path": "assets/word-audio/word-6-9.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-hair.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-hair.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "neck": {
+    "path": "assets/word-audio/word-6-10.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-neck.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-neck.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "shoulder": {
+    "path": "assets/word-audio/word-6-11.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-shoulder.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-shoulder.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "arm": {
+    "path": "assets/word-audio/word-6-12.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-arm.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-arm.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "hand": {
+    "path": "assets/word-audio/word-6-13.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-hand.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-hand.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "finger": {
+    "path": "assets/word-audio/word-6-14.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-finger.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-finger.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "thumb": {
+    "path": "assets/word-audio/word-6-15.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-thumb.ogg",
+    "author": "Dvortygirl",
+    "license": "Public domain",
+    "licenseUrl": "https://commons.wikimedia.org/wiki/Commons:Public_domain",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-thumb.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "leg": {
+    "path": "assets/word-audio/word-6-16.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-leg.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-leg.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "knee": {
+    "path": "assets/word-audio/word-6-17.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-knee.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-knee.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "foot": {
+    "path": "assets/word-audio/word-6-18.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-foot.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-foot.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "toe": {
+    "path": "assets/word-audio/word-6-19.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-toe.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-toe.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "back": {
+    "path": "assets/word-audio/word-6-20.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-back.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-back.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "body": {
+    "path": "assets/word-audio/word-6-21.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-body.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-body.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "heart": {
+    "path": "assets/word-audio/word-6-22.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-heart.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-heart.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "skin": {
+    "path": "assets/word-audio/word-6-23.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-skin.ogg",
+    "author": "No machine-readable author provided. Dvortygirl assumed (based on copyright claims).",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-skin.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "stomach": {
+    "path": "assets/word-audio/word-6-24.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-stomach.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-stomach.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "elbow": {
+    "path": "assets/word-audio/word-6-25.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-elbow.ogg",
+    "author": "No machine-readable author provided. Dvortygirl assumed (based on copyright claims).",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-elbow.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "school": {
+    "path": "assets/word-audio/word-7-1.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:LL-Q1860_(eng)-Qwertygiy-school.wav",
+    "author": "Speaker: Qwertygiy\nRecorder: Qwertygiy",
+    "license": "CC0",
+    "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/deed.en",
+    "accent": "US",
+    "accentEvidence": "https://en.wiktionary.org/wiki/school",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "desk": {
+    "path": "assets/word-audio/word-7-3.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-desk.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-desk.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "chair": {
+    "path": "assets/word-audio/word-7-4.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-chair.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-chair.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "book": {
+    "path": "assets/word-audio/word-7-5.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-book.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-book.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "pen": {
+    "path": "assets/word-audio/word-7-6.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-pen.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-pen.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "pencil": {
+    "path": "assets/word-audio/word-7-7.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-pencil.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-pencil.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "ruler": {
+    "path": "assets/word-audio/word-7-9.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-ruler.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-ruler.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "bag": {
+    "path": "assets/word-audio/word-7-10.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-bag.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-bag.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "paper": {
+    "path": "assets/word-audio/word-7-11.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-paper.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-paper.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "crayon": {
+    "path": "assets/word-audio/word-7-13.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-crayon.ogg",
+    "author": "Paul2520",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-crayon.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "board": {
+    "path": "assets/word-audio/word-7-14.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-board.ogg",
+    "author": "Dvortygirl",
+    "license": "Public domain",
+    "licenseUrl": "https://commons.wikimedia.org/wiki/Commons:Public_domain",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-board.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "library": {
+    "path": "assets/word-audio/word-7-15.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-library.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-library.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "playground": {
+    "path": "assets/word-audio/word-7-16.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-playground.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-playground.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "computer": {
+    "path": "assets/word-audio/word-7-17.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-computer.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-computer.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "lesson": {
+    "path": "assets/word-audio/word-7-18.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-lesson.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-lesson.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "homework": {
+    "path": "assets/word-audio/word-7-19.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:LL-Q1860_(eng)-Flame,_not_lame-homework.wav",
+    "author": "Speaker: Flame, not lame\nRecorder: Flame, not lame",
+    "license": "CC0",
+    "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/deed.en",
+    "accent": "US",
+    "accentEvidence": "https://en.wiktionary.org/wiki/homework",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "english": {
+    "path": "assets/word-audio/word-7-20.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-English.ogg",
+    "author": "No machine-readable author provided. Muke assumed (based on copyright claims).",
+    "license": "Public domain",
+    "licenseUrl": "https://commons.wikimedia.org/wiki/Commons:Public_domain",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-English.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "math": {
+    "path": "assets/word-audio/word-7-21.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-math.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-math.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "music": {
+    "path": "assets/word-audio/word-7-22.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-music.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-music.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "art": {
+    "path": "assets/word-audio/word-7-23.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-art.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-art.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "science": {
+    "path": "assets/word-audio/word-7-24.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-science.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-science.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "question": {
+    "path": "assets/word-audio/word-7-25.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-question.ogg",
+    "author": "No machine-readable author provided. Dvortygirl assumed (based on copyright claims).",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-question.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "home": {
+    "path": "assets/word-audio/word-8-1.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-home.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-home.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "house": {
+    "path": "assets/word-audio/word-8-2.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-house-noun.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://en.wiktionary.org/wiki/house",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "room": {
+    "path": "assets/word-audio/word-8-3.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-room.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-room.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "bedroom": {
+    "path": "assets/word-audio/word-8-4.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-bedroom.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-bedroom.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "kitchen": {
+    "path": "assets/word-audio/word-8-5.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-kitchen.ogg",
+    "author": "EncycloPetey",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-kitchen.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "bathroom": {
+    "path": "assets/word-audio/word-8-6.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-bathroom.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-bathroom.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "door": {
+    "path": "assets/word-audio/word-8-7.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-door.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-door.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "window": {
+    "path": "assets/word-audio/word-8-8.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-window.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-window.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "wall": {
+    "path": "assets/word-audio/word-8-9.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-wall.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-wall.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "floor": {
+    "path": "assets/word-audio/word-8-10.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-floor.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-floor.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "bed": {
+    "path": "assets/word-audio/word-8-11.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-bed.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-bed.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "sofa": {
+    "path": "assets/word-audio/word-8-12.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-sofa.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-sofa.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "table": {
+    "path": "assets/word-audio/word-8-13.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-table.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-table.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "lamp": {
+    "path": "assets/word-audio/word-8-14.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-lamp.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-lamp.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "clock": {
+    "path": "assets/word-audio/word-8-15.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-clock.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-clock.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "mirror": {
+    "path": "assets/word-audio/word-8-16.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-mirror.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-mirror.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "cup": {
+    "path": "assets/word-audio/word-8-17.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-cup.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-cup.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "plate": {
+    "path": "assets/word-audio/word-8-18.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-plate.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-plate.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "bowl": {
+    "path": "assets/word-audio/word-8-19.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-bowl.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-bowl.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "spoon": {
+    "path": "assets/word-audio/word-8-20.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-spoon.ogg",
+    "author": "No machine-readable author provided. Dvortygirl assumed (based on copyright claims).",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-spoon.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "fork": {
+    "path": "assets/word-audio/word-8-21.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-fork.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-fork.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "knife": {
+    "path": "assets/word-audio/word-8-22.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-knife.ogg",
+    "author": "Dvortygirl",
+    "license": "Public domain",
+    "licenseUrl": "https://commons.wikimedia.org/wiki/Commons:Public_domain",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-knife.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "phone": {
+    "path": "assets/word-audio/word-8-24.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-phone.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-phone.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "key": {
+    "path": "assets/word-audio/word-8-25.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-key.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-key.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "shirt": {
+    "path": "assets/word-audio/word-9-1.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-shirt.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-shirt.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "t-shirt": {
+    "path": "assets/word-audio/word-9-2.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:LL-Q1860_(eng)-Persent101-T-shirt.wav",
+    "author": "Speaker: Persent101\nRecorder: Persent101",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "accent": "US",
+    "accentEvidence": "https://en.wiktionary.org/wiki/t-shirt",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "coat": {
+    "path": "assets/word-audio/word-9-3.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-coat.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-coat.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "jacket": {
+    "path": "assets/word-audio/word-9-4.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-jacket.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-jacket.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "sweater": {
+    "path": "assets/word-audio/word-9-5.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-sweater.ogg",
+    "author": "Spacecat2",
+    "license": "Public domain",
+    "licenseUrl": "https://commons.wikimedia.org/wiki/Commons:Public_domain",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-sweater.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "dress": {
+    "path": "assets/word-audio/word-9-6.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-dress.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-dress.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "skirt": {
+    "path": "assets/word-audio/word-9-7.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-skirt.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-skirt.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "trousers": {
+    "path": "assets/word-audio/word-9-8.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-trousers.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-trousers.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "shorts": {
+    "path": "assets/word-audio/word-9-9.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-shorts.ogg",
+    "author": "Persent101",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-shorts.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "shoes": {
+    "path": "assets/word-audio/word-9-10.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-shoes.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-shoes.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "hat": {
+    "path": "assets/word-audio/word-9-12.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-hat.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-hat.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "cap": {
+    "path": "assets/word-audio/word-9-13.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-cap.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-cap.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "gloves": {
+    "path": "assets/word-audio/word-9-15.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:LL-Q1860_(eng)-Persent101-gloves.wav",
+    "author": "Speaker: Persent101\nRecorder: Persent101",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "accent": "US",
+    "accentEvidence": "https://en.wiktionary.org/wiki/gloves",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "umbrella": {
+    "path": "assets/word-audio/word-9-16.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-umbrella.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-umbrella.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "watch": {
+    "path": "assets/word-audio/word-9-17.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-watch.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-watch.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "ball": {
+    "path": "assets/word-audio/word-9-19.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-ball.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-ball.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "kite": {
+    "path": "assets/word-audio/word-9-20.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-kite.ogg",
+    "author": "Mx. Granger",
+    "license": "CC0",
+    "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/deed.en",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-kite.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "toy": {
+    "path": "assets/word-audio/word-9-21.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-toy.ogg",
+    "author": "Dvortygirl",
+    "license": "Public domain",
+    "licenseUrl": "https://commons.wikimedia.org/wiki/Commons:Public_domain",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-toy.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "doll": {
+    "path": "assets/word-audio/word-9-22.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-doll.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-doll.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "robot": {
+    "path": "assets/word-audio/word-9-23.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-robot.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-robot.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "bike": {
+    "path": "assets/word-audio/word-9-24.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-bike.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-bike.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "car": {
+    "path": "assets/word-audio/word-9-25.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-car.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-car.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "sun": {
+    "path": "assets/word-audio/word-10-1.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-Sun.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-Sun.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "moon": {
+    "path": "assets/word-audio/word-10-2.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-moon.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-moon.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "star": {
+    "path": "assets/word-audio/word-10-3.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-star.ogg",
+    "author": "No machine-readable author provided. Dvortygirl assumed (based on copyright claims).",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-star.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "sky": {
+    "path": "assets/word-audio/word-10-4.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-sky.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-sky.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "cloud": {
+    "path": "assets/word-audio/word-10-5.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-cloud.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-cloud.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "rain": {
+    "path": "assets/word-audio/word-10-6.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-rain.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-rain.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "snow": {
+    "path": "assets/word-audio/word-10-7.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-snow.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-snow.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "wind": {
+    "path": "assets/word-audio/word-10-8.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-wind-air.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "GA",
+    "accentEvidence": "https://en.wiktionary.org/wiki/wind",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "tree": {
+    "path": "assets/word-audio/word-10-9.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-tree.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-tree.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "flower": {
+    "path": "assets/word-audio/word-10-10.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-flower.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-flower.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "grass": {
+    "path": "assets/word-audio/word-10-11.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-grass.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-grass.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "leaf": {
+    "path": "assets/word-audio/word-10-12.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-leaf.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-leaf.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "river": {
+    "path": "assets/word-audio/word-10-13.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-river.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-river.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "lake": {
+    "path": "assets/word-audio/word-10-14.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-lake.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-lake.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "sea": {
+    "path": "assets/word-audio/word-10-15.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-sea.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-sea.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "mountain": {
+    "path": "assets/word-audio/word-10-16.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-mountain.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-mountain.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "forest": {
+    "path": "assets/word-audio/word-10-17.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-forest.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-forest.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "island": {
+    "path": "assets/word-audio/word-10-18.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-island.ogg",
+    "author": "stalker of Amanda T and Amanda found out Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-island.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "beach": {
+    "path": "assets/word-audio/word-10-19.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-beach.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-beach.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "stone": {
+    "path": "assets/word-audio/word-10-20.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-stone.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-stone.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "sand": {
+    "path": "assets/word-audio/word-10-21.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-sand.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-sand.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "earth": {
+    "path": "assets/word-audio/word-10-22.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-earth.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-earth.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "rainbow": {
+    "path": "assets/word-audio/word-10-23.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-rainbow.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-rainbow.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "weather": {
+    "path": "assets/word-audio/word-10-24.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-weather.ogg",
+    "author": "No machine-readable author provided. Dvortygirl assumed (based on copyright claims).",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-weather.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "garden": {
+    "path": "assets/word-audio/word-10-25.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-garden.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-garden.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "run": {
+    "path": "assets/word-audio/word-11-1.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-run.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-run.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "walk": {
+    "path": "assets/word-audio/word-11-2.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-walk.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-walk.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "jump": {
+    "path": "assets/word-audio/word-11-3.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-jump.ogg",
+    "author": "TreeMama",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-jump.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "swim": {
+    "path": "assets/word-audio/word-11-4.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-swim.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-swim.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "fly": {
+    "path": "assets/word-audio/word-11-5.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-fly.ogg",
+    "author": "Dvortygirl",
+    "license": "Public domain",
+    "licenseUrl": "https://commons.wikimedia.org/wiki/Commons:Public_domain",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-fly.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "read": {
+    "path": "assets/word-audio/word-11-6.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-read.ogg",
+    "author": "Dvortygirl",
+    "license": "Public domain",
+    "licenseUrl": "https://commons.wikimedia.org/wiki/Commons:Public_domain",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-read.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "write": {
+    "path": "assets/word-audio/word-11-7.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-write.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-write.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "draw": {
+    "path": "assets/word-audio/word-11-8.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-draw.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-draw.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "sing": {
+    "path": "assets/word-audio/word-11-9.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-sing.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-sing.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "dance": {
+    "path": "assets/word-audio/word-11-10.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-dance.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-dance.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "listen": {
+    "path": "assets/word-audio/word-11-11.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-listen.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-listen.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "speak": {
+    "path": "assets/word-audio/word-11-12.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-speak.ogg",
+    "author": "Dvortygirl",
+    "license": "Public domain",
+    "licenseUrl": "https://commons.wikimedia.org/wiki/Commons:Public_domain",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-speak.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "see": {
+    "path": "assets/word-audio/word-11-14.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-see.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-see.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "eat": {
+    "path": "assets/word-audio/word-11-15.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-eat.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-eat.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "drink": {
+    "path": "assets/word-audio/word-11-16.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-drink.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-drink.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "sleep": {
+    "path": "assets/word-audio/word-11-17.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-sleep.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-sleep.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "wake": {
+    "path": "assets/word-audio/word-11-18.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-wake.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-wake.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "wash": {
+    "path": "assets/word-audio/word-11-19.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-wash.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-wash.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "play": {
+    "path": "assets/word-audio/word-11-20.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-play.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-play.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "open": {
+    "path": "assets/word-audio/word-11-21.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-open.ogg",
+    "author": "No machine-readable author provided. TheDaveRoss assumed (based on copyright claims).",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-open.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "close": {
+    "path": "assets/word-audio/word-11-22.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-close-verb.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://en.wiktionary.org/wiki/close",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "sit": {
+    "path": "assets/word-audio/word-11-23.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-sit.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-sit.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "stand": {
+    "path": "assets/word-audio/word-11-24.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-stand.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-stand.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "help": {
+    "path": "assets/word-audio/word-11-25.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-help.ogg",
+    "author": "No machine-readable author provided. Dvortygirl assumed (based on copyright claims).",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-help.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "monday": {
+    "path": "assets/word-audio/word-12-1.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-Monday.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-Monday.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "tuesday": {
+    "path": "assets/word-audio/word-12-2.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-Tuesday.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-Tuesday.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "wednesday": {
+    "path": "assets/word-audio/word-12-3.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-Wednesday.ogg",
+    "author": "No machine-readable author provided. Dvortygirl assumed (based on copyright claims).",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-Wednesday.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "thursday": {
+    "path": "assets/word-audio/word-12-4.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-Thursday.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-Thursday.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "friday": {
+    "path": "assets/word-audio/word-12-5.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-Friday.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-Friday.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "saturday": {
+    "path": "assets/word-audio/word-12-6.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-Saturday.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-Saturday.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "sunday": {
+    "path": "assets/word-audio/word-12-7.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-Sunday.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-Sunday.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "morning": {
+    "path": "assets/word-audio/word-12-8.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-morning.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-morning.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "afternoon": {
+    "path": "assets/word-audio/word-12-9.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-afternoon.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-afternoon.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "evening": {
+    "path": "assets/word-audio/word-12-10.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-evening_(noun).ogg",
+    "author": "No machine-readable author provided. Muke assumed (based on copyright claims).",
+    "license": "Public domain",
+    "licenseUrl": "https://commons.wikimedia.org/wiki/Commons:Public_domain",
+    "accent": "US",
+    "accentEvidence": "https://en.wiktionary.org/wiki/evening",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "night": {
+    "path": "assets/word-audio/word-12-11.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-night.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-night.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "today": {
+    "path": "assets/word-audio/word-12-12.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-today.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-today.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "tomorrow": {
+    "path": "assets/word-audio/word-12-13.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-tomorrow.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-tomorrow.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "yesterday": {
+    "path": "assets/word-audio/word-12-14.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-yesterday.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-yesterday.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "spring": {
+    "path": "assets/word-audio/word-12-15.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-spring.ogg",
+    "author": "Dvortygirl",
+    "license": "Public domain",
+    "licenseUrl": "https://commons.wikimedia.org/wiki/Commons:Public_domain",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-spring.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "summer": {
+    "path": "assets/word-audio/word-12-16.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-summer.ogg",
+    "author": "No machine-readable author provided. Dvortygirl assumed (based on copyright claims).",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-summer.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "autumn": {
+    "path": "assets/word-audio/word-12-17.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-autumn.ogg",
+    "author": "未署名（公有领域录音）",
+    "license": "Public domain",
+    "licenseUrl": "https://commons.wikimedia.org/wiki/Commons:Public_domain",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-autumn.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "winter": {
+    "path": "assets/word-audio/word-12-18.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-winter.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-winter.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "left": {
+    "path": "assets/word-audio/word-12-19.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-left.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-left.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "right": {
+    "path": "assets/word-audio/word-12-20.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-right.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-right.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "up": {
+    "path": "assets/word-audio/word-12-21.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-up.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-up.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "down": {
+    "path": "assets/word-audio/word-12-22.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-down.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-down.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "in": {
+    "path": "assets/word-audio/word-12-23.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-in.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-in.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "on": {
+    "path": "assets/word-audio/word-12-24.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-on.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-on.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  },
+  "under": {
+    "path": "assets/word-audio/word-12-25.mp3",
+    "source": "https://commons.wikimedia.org/wiki/File:En-us-under.ogg",
+    "author": "Dvortygirl",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "accent": "US",
+    "accentEvidence": "https://commons.wikimedia.org/wiki/File:En-us-under.ogg",
+    "changes": "Converted to mono MP3, normalized loudness; playback at 0.9× speed."
+  }
+}
