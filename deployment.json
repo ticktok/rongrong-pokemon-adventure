@@ -1,17 +1,9 @@
 {
-  "version": "0.1.0",
   "envId": "wind-d7gesdlb779f8214f",
   "region": "ap-shanghai",
   "serviceName": "rongrong-pokemon-adventure",
-  "webVersion": "rongrong-pokemon-adventure-002",
-  "buildId": "2608919986",
   "url": "https://rongrong-pokemon-adventure-wind-d7gesdlb779f8214f.webapps.tcloudbase.com/",
-  "deployedAt": "2026-10-18T16:52:37.651Z",
   "functionName": "rongrong-game",
-  "migrationVersion": "20261018152000",
-  "plan": "baas_trial",
-  "planExpiresAt": "2027-04-18 23:59:59 Asia/Shanghai",
-  "browserVerification": "passed-after-standard-cloudbase-access-notice",
-  "deploymentMode": "default-domain-preview",
-  "functionVersion": "2"
+  "backupFunctionName": "rongrong-backup",
+  "backupBucket": "rongrong-save-backups"
 }

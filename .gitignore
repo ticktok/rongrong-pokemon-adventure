@@ -15,3 +15,7 @@ playwright-report/
 *.log
 __pycache__/
 *.pyc
+
+cloudfunctions/rongrong-backup/index.js
+cloudfunctions/rongrong-backup/node_modules/
+cloudfunctions/rongrong-backup/package-lock.json

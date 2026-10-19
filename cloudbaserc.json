@@ -1,6 +1,46 @@
 {
-  "envId":"wind-d7gesdlb779f8214f",
-  "functionRoot":"cloudfunctions",
-  "functions":[{"name":"rongrong-game","type":"Event","runtime":"Nodejs20.19","handler":"index.main","timeout":30,"memorySize":256,"installDependency":true,"ignore":["node_modules"]}],
-  "app":{"serviceName":"rongrong-pokemon-adventure","framework":"static","root":"dist","installCommand":"","buildCommand":"","outputDir":"./","deployPath":"/rongrong-pokemon-adventure"}
+  "envId": "wind-d7gesdlb779f8214f",
+  "functionRoot": "cloudfunctions",
+  "functions": [
+    {
+      "name": "rongrong-game",
+      "type": "Event",
+      "runtime": "Nodejs20.19",
+      "handler": "index.main",
+      "timeout": 30,
+      "memorySize": 256,
+      "installDependency": true,
+      "ignore": [
+        "node_modules"
+      ]
+    },
+    {
+      "name": "rongrong-backup",
+      "type": "Event",
+      "runtime": "Nodejs20.19",
+      "handler": "index.main",
+      "timeout": 120,
+      "memorySize": 256,
+      "installDependency": false,
+      "ignore": [
+        "node_modules"
+      ],
+      "triggers": [
+        {
+          "name": "rongrong-daily-backup",
+          "type": "timer",
+          "config": "0 0 3 * * * *"
+        }
+      ]
+    }
+  ],
+  "app": {
+    "serviceName": "rongrong-pokemon-adventure",
+    "framework": "static",
+    "root": "dist",
+    "installCommand": "",
+    "buildCommand": "",
+    "outputDir": "./",
+    "deployPath": "/rongrong-pokemon-adventure"
+  }
 }

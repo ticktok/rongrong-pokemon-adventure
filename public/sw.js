@@ -1,4 +1,4 @@
-const CACHE='rongrong-assets-v0.1.0';
+const CACHE='rongrong-assets-v__APP_VERSION__';
 self.addEventListener('install',()=>self.skipWaiting());
 self.addEventListener('activate',event=>event.waitUntil(self.clients.claim()));
 self.addEventListener('fetch',event=>{

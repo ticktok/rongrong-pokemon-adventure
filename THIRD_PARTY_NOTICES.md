@@ -9,6 +9,7 @@
 ## 宝可梦素材与数据
 
 - 图片：[PokeAPI/sprites](https://github.com/PokeAPI/sprites)。
+- 属性图标：同一仓库的 [Scarlet/Violet 符号素材](https://github.com/PokeAPI/sprites/tree/master/sprites/types/generation-ix/scarlet-violet/small)，使用 ID 1—18 的 60×60 PNG 原图，保存在 `public/assets/pokemon/types/`；界面以圆形裁切显示，保留原色与图形。
 - 物种、中文名称、能力、捕获率与进化关系：[PokéAPI](https://pokeapi.co/docs/v2)。
 - sprites 仓库的 LICENCE.txt 明确说明图片内容版权属于 The Pokémon Company。仓库对其其他可授权内容使用 CC0，并不改变宝可梦图片的权利归属。
 - 宝可梦、角色及相关商标的权利属于各自权利人。本站不代表 Nintendo、Game Freak 或 The Pokémon Company。

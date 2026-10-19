@@ -1,10 +1,11 @@
 import {useEffect,useRef,useState} from 'react';
 import {ArrowLeft,BookOpen,Sparkles,Target} from 'lucide-react';
-import {REGIONS,MOVES,TYPE_NAMES,effectiveness} from '../../content/world';
+import {REGIONS,MOVES,effectiveness} from '../../content/world';
 import {pokemon} from '../game/catalog';
 import type {PublicState} from '../game/types';
 import {asset,type Run} from '../lib';
 import BattleFx from './BattleFx';
+import {TypeIcon} from './TypeIcon';
 export default function Battle({state,run,busy,effect}:{state:PublicState;run:Run;busy:boolean;effect:string}){
   const b=state.battle!,p=state.partners.find(p=>p.id===b.playerId)!,enemy=pokemon(b.enemy),own=pokemon(p.speciesId),r=REGIONS.find(r=>r.id===b.regionId)!;
   const [pulse,setPulse]=useState(false),turn=useRef(b.turn);
@@ -25,7 +26,7 @@ export default function Battle({state,run,busy,effect}:{state:PublicState;run:Ru
     </div>
     <div className="battle-console"><div className="battle-log" aria-live="polite">{b.log.slice(-2).map((line,i)=><p key={b.turn+'-'+i}>{line}</p>)}</div>
       {done?<button className="primary" disabled={busy} onClick={()=>run('battle.leave')}>带着这份勇气，继续出发<ArrowLeft className="reverse" size={18}/></button>:<>
-        <div className="move-grid">{p.moves.map(id=>{const move=MOVES.find(m=>m.id===id)!,factor=effectiveness(move.type,enemy.types);return <button key={id} className={'move-button type-'+move.type} disabled={busy} onClick={()=>run('battle.move',{moveId:id})}><span className="type-pill">{TYPE_NAMES[move.type]}</span><strong>{move.name}</strong><small>{factor===0?'无效':factor>1?'效果拔群 ×'+factor:factor<1?'效果较弱':'威力 '+move.power}<BookOpen size={14}/></small></button>;})}</div>
+        <div className="move-grid">{p.moves.map(id=>{const move=MOVES.find(m=>m.id===id)!,factor=effectiveness(move.type,enemy.types);return <button key={id} className={'move-button type-'+move.type} disabled={busy} onClick={()=>run('battle.move',{moveId:id})}><TypeIcon type={move.type}/><strong>{move.name}</strong><small>{factor===0?'无效':factor>1?'效果拔群 ×'+factor:factor<1?'效果较弱':'威力 '+move.power}<BookOpen size={14}/></small></button>;})}</div>
         <div className="battle-actions"><div className="switch-team">{state.team.map(id=>{const partner=state.partners.find(p=>p.id===id)!;return <button title={'换上'+pokemon(partner.speciesId).name} key={id} disabled={busy||id===b.playerId||(b.teamHp[id]??0)<=0} onClick={()=>run('battle.switch',{partnerId:id})}><img src={asset('front',partner.speciesId)} alt={pokemon(partner.speciesId).name}/><span>{b.teamHp[id]??0} HP</span></button>;})}</div>{b.kind==='wild'&&<button className="capture-button" disabled={busy} onClick={()=>run('battle.catch')}><Target size={23}/><span>抛出精灵球<small>剩余 {3-b.balls} 球 · 答词助攻</small></span></button>}</div>
       </>}
     </div>
