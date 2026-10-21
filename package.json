@@ -1,6 +1,6 @@
 {
   "name": "rongrong-pokemon-adventure",
-  "version": "0.3.1",
+  "version": "0.4.0",
   "private": true,
   "type": "module",
   "scripts": {
@@ -22,7 +22,10 @@
     "test:learning-ui": "node scripts/verify-learning-ui.mjs",
     "test:learning-live": "node scripts/verify-learning-live.mjs",
     "test:audio": "node scripts/verify-pronunciation-assets.mjs && node scripts/verify-pronunciation-ui.mjs",
-    "test:audio-cache": "node scripts/verify-audio-cache.mjs"
+    "test:audio-cache": "node scripts/verify-audio-cache.mjs",
+    "pokedex:prepare": "node scripts/prepare-pokedex.mjs",
+    "test:pokedex-ui": "node scripts/verify-pokedex-ui.mjs",
+    "test:pokedex-live": "node scripts/verify-pokedex-live.mjs"
   },
   "dependencies": {
     "@cloudbase/js-sdk": "latest",
@@ -44,6 +47,7 @@
     "@types/react-dom": "^19.2.0",
     "@vitejs/plugin-react": "5.0.4",
     "esbuild": "latest",
+    "pinyin-pro": "^3.29.5",
     "typescript": "^5.9.0",
     "vite": "^7.1.0",
     "vitest": "5.0.5"

@@ -35,6 +35,16 @@ CloudBase Node SDK 3.18.3 提供云函数身份读取，但安装版本没有 rd
 4. 增加内容覆盖、进化分支和旧存档兼容测试。需要新机制时，扩展 ruleset 和规则实现。
 5. 通过功能分支、PR、版本标签发布。普通内容扩展不会重置伙伴、徽章或单词进度。
 
+## 全国图鉴预览
+
+`content/pokedex/species.json` 是独立的物种展示资料，覆盖 #001—#1025，按首次登场世代归类；地区形态与 Mega 不重复计数。来源为 [PokéAPI 数据仓库](https://github.com/PokeAPI/pokeapi/tree/master/data/v2/csv) 的物种、多语言名称、默认形态和属性表。第一世代名称及属性沿用已发布内容包，旧游戏 ID 与英文身份不改动。
+
+`npm run pokedex:prepare` 读取上游 CSV 并生成中文、英文、全拼及首字母索引。原始资料缓存于被忽略的 `private/pokedex-source/`；显式刷新使用 `npm run pokedex:prepare -- --refresh`。网络需要系统代理时，在 Node.js 24 下使用 `NODE_USE_ENV_PROXY=1 npm run pokedex:prepare -- --refresh`。脚本不下载图片、不注册玩法内容包；拼音转换只在准备资料时执行，多音字修正保存在脚本中。提交前检查生成差异并运行数据与检索测试。
+
+`src/game/pokedex.ts` 的 `DEX_DISPLAY` 分别配置默认打开的世代与可显示图片的世代；卡片和详情使用 `dexPresentation()` 解析同源图片路径。以后补齐一个世代的本地图片，再将其加入 `artworkGenerations`。游戏区域、进化、遭遇和完整能力仍须按“加入后续世代”流程独立发布；浏览某个标签不会解锁玩法。当前只有 gen1 显示图片，gen2—gen9 不请求宝可梦图片，所有搜索建议均使用文字。
+
+本地启动开发服务器后执行 `npm run test:pokedex-ui`，默认端口 5176，可通过 `TEST_BASE_URL` 覆盖。脚本使用合成存档与隔离浏览器，覆盖五种宽度、筛选、输入法、键盘、详情焦点、无图片请求和无游戏操作；不登录云端。
+
 ## 首版规则
 
 - 同一谱系按当前已发布内容包的进化关系判定，不使用包含未来世代的上游 chainId 判定重复。
