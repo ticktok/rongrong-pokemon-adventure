@@ -3,7 +3,7 @@ import {Search,Check,Lock,X,ChevronDown,ArrowDown,BookOpen,SlidersHorizontal} fr
 import {TypeIcon,TypeIcons} from './TypeIcon';
 import {TYPE_NAMES} from '../../content/world';
 import {catalog,acquisition} from '../game/catalog';
-import {DEX_DISPLAY,DEX_GENERATIONS,dexCatalog,dexEntry,dexNumber,dexPresentation,dexSuggestions,filterDex,generationLabel,matchesDexStatus,type DexEntry,type DexStatus,type GenerationId} from '../game/pokedex';
+import {DEX_DISPLAY,DEX_GENERATIONS,dexCatalog,dexEntry,dexNumber,dexPresentation,dexSuggestions,filterDex,toggleDexType,generationLabel,matchesDexStatus,type DexEntry,type DexStatus,type GenerationId} from '../game/pokedex';
 import type {PublicState} from '../game/types';
 import './Pokedex.css';
 
@@ -22,12 +22,12 @@ function DexTypes({types}:{types:readonly string[]}){
 
 export default function Pokedex({state}:{state:PublicState}){
  const [generation,setGeneration]=useState<GenerationId|'all'>(DEX_DISPLAY.activeGeneration);
- const [type,setType]=useState(''),[status,setStatus]=useState<DexStatus>('all');
+ const [types,setTypes]=useState<string[]>([]),[status,setStatus]=useState<DexStatus>('all');
  const [input,setInput]=useState(''),[query,setQuery]=useState(''),[open,setOpen]=useState(false),[active,setActive]=useState(-1);
  const [typesOpen,setTypesOpen]=useState(false),[limit,setLimit]=useState(60),[selected,setSelected]=useState<number|null>(null);
  const composing=useRef(false),dialog=useRef<HTMLDialogElement>(null),tabs=useRef<HTMLDivElement>(null),search=useRef<HTMLInputElement>(null);
  const suggestions=useMemo(()=>dexSuggestions(query),[query]);
- const list=useMemo(()=>filterDex({generation,type,status,query},state),[generation,type,status,query,state]);
+ const list=useMemo(()=>filterDex({generation,types,status,query},state),[generation,types,status,query,state]);
  const visible=generation==='all'?list.slice(0,limit):list;
  const detail=selected===null?null:dexEntry(selected),playable=detail?catalog.find(p=>p.id===detail.id):undefined;
  const currentEntries=dexCatalog.filter(e=>e.generation===DEX_DISPLAY.activeGeneration);
@@ -37,7 +37,7 @@ export default function Pokedex({state}:{state:PublicState}){
  const preview=generation!=='all'&&!DEX_DISPLAY.artworkGenerations.includes(generation);
  const reduced=()=>document.documentElement.dataset.reduced==='true'||matchMedia('(prefers-reduced-motion: reduce)').matches;
 
- useEffect(()=>{setLimit(60);},[generation,type,status,query]);
+ useEffect(()=>{setLimit(60);},[generation,types,status,query]);
  useEffect(()=>{
   if(open&&active>=0&&suggestions[active])document.getElementById('dex-option-'+suggestions[active].id)?.scrollIntoView({block:'nearest'});
  },[open,active,suggestions]);
@@ -47,10 +47,10 @@ export default function Pokedex({state}:{state:PublicState}){
  },[generation]);
  useEffect(()=>{if(selected!==null&&!dialog.current?.open)dialog.current?.showModal();},[selected]);
  function clearSearch(){setInput('');setQuery('');setOpen(false);setActive(-1);}
- function clearFilters(){clearSearch();setType('');setStatus('all');}
+ function clearFilters(){clearSearch();setTypes([]);setStatus('all');}
  function choose(entry:DexEntry){
   setGeneration(entry.generation);clearSearch();
-  if(type&&!entry.types.includes(type))setType('');
+  setTypes(previous=>previous.filter(type=>entry.types.includes(type)));
   if(!matchesDexStatus(entry,status,state))setStatus('all');
   setSelected(entry.id);
  }
@@ -89,8 +89,8 @@ export default function Pokedex({state}:{state:PublicState}){
    <div className="segmented" role="group" aria-label="收录状态">{statusOptions.map(([id,label])=><button type="button" aria-pressed={status===id} className={status===id?'active':''} key={id} onClick={()=>setStatus(id)}>{label}</button>)}</div>
   </div>
   <div className={'dex-type-section'+(typesOpen?' expanded':'')}>
-   <button type="button" className="dex-type-toggle" aria-expanded={typesOpen} aria-controls="dex-type-options" onClick={()=>setTypesOpen(!typesOpen)}><SlidersHorizontal size={16}/><span>属性筛选</span><b>{type?TYPE_NAMES[type]:'全部属性'}</b><ChevronDown size={16}/></button>
-   <div className="dex-type-options" id="dex-type-options" role="group" aria-label="选择一个属性"><span className="dex-type-caption">属性</span><button type="button" aria-pressed={!type} onClick={()=>setType('')}>全部属性</button>{Object.entries(TYPE_NAMES).map(([id,name])=><button type="button" aria-pressed={type===id} key={id} onClick={()=>setType(type===id?'':id)}><TypeIcon type={id}/>{name}</button>)}</div>
+   <button type="button" className="dex-type-toggle" aria-expanded={typesOpen} aria-controls="dex-type-options" onClick={()=>setTypesOpen(!typesOpen)}><SlidersHorizontal size={16}/><span>属性筛选</span><b>{types.length?types.map(type=>TYPE_NAMES[type]).join(' + '):'全部属性'}</b><ChevronDown size={16}/></button>
+   <div className="dex-type-options" id="dex-type-options" role="group" aria-label="选择最多两个属性，同时匹配"><span className="dex-type-caption">最多两个 · 同时具备</span><button type="button" aria-pressed={!types.length} onClick={()=>setTypes([])}>全部属性</button>{Object.entries(TYPE_NAMES).map(([id,name])=><button type="button" aria-pressed={types.includes(id)} key={id} onClick={()=>setTypes(previous=>toggleDexType(previous,id))}><TypeIcon type={id}/>{name}</button>)}</div>
   </div>
   <div className="dex-result-heading"><div><strong>{title}</strong>{preview?<span className="dex-preview-label"><Lock size={12}/>预览中</span>:<span className="dex-region-note">{generation==='all'?'九个世代，慢慢发现':'当前开放世代'}</span>}</div><span role="status" aria-live="polite">{list.length} 只{generation==='all'&&visible.length<list.length?' · 已显示 '+visible.length:''}</span></div>
   {preview&&<p className="dex-preview-note">先认识名字和属性，图片将在图鉴升级后解锁。</p>}
@@ -100,7 +100,7 @@ export default function Pokedex({state}:{state:PublicState}){
     <span className="dex-number">{dexNumber(entry.id)}</span><DexArtwork entry={entry}/><strong>{entry.name}</strong><DexTypes types={entry.types}/><span className="dex-card-state">{!available?<><Lock size={11}/>未解锁</>:isCaught?'已收录':seen?'已遇见':'未遇见'}</span>{available&&isCaught&&<Check className="caught-check" size={16}/>}
    </button>;
   })}</div>
-  {!list.length&&<div className="empty-state"><Search size={28}/><h2>这里还没有找到</h2><p>{title} · {type?TYPE_NAMES[type]+'属性':'全部属性'} · {statusOptions.find(([id])=>id===status)?.[1]}{query?' · “'+query+'”':''}</p><p>搜索下拉可以帮你找到其他世代的宝可梦。</p><button type="button" onClick={clearFilters}>清除筛选</button></div>}
+  {!list.length&&<div className="empty-state"><Search size={28}/><h2>这里还没有找到</h2><p>{title} · {types.length?types.map(type=>TYPE_NAMES[type]).join(' + ')+'属性':'全部属性'} · {statusOptions.find(([id])=>id===status)?.[1]}{query?' · “'+query+'”':''}</p><p>搜索下拉可以帮你找到其他世代的宝可梦。</p><button type="button" onClick={clearFilters}>清除筛选</button></div>}
   {generation==='all'&&visible.length<list.length&&<div className="dex-load-more"><button type="button" onClick={()=>setLimit(n=>n+60)}>加载更多<ArrowDown size={16}/></button><span>已显示 {visible.length} / {list.length} 只</span></div>}
   {detail&&<dialog ref={dialog} className="dialog dex-detail dex-native-dialog" aria-labelledby="dex-detail-title" onCancel={e=>{e.preventDefault();closeDetail();}} onClick={e=>{if(e.target===e.currentTarget){const rect=e.currentTarget.getBoundingClientRect();if(e.clientX<rect.left||e.clientX>rect.right||e.clientY<rect.top||e.clientY>rect.bottom)closeDetail();}}}>
    <button type="button" className="close" aria-label="关闭详情" onClick={closeDetail}><X/></button><DexArtwork key={detail.id} entry={detail} large/><span className="eyebrow">全国图鉴 {dexNumber(detail.id)}</span><h2 id="dex-detail-title">{detail.name}</h2>

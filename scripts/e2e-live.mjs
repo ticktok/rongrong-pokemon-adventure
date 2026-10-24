@@ -88,8 +88,8 @@ try {
  await child.reload({waitUntil:'networkidle'});await child.locator('.learning-grid').waitFor();
  current=(await stored()).state;
  if(!current.checkins.some(c=>c.date===current.daily.date&&c.status!=='rejected')){
-   await child.getByLabel('英语练习',{exact:true}).check();
-   await child.getByRole('button',{name:'完成啦，提交打卡',exact:true}).click();
+   for(const checkbox of await child.locator('.daily-tasks').getByRole('checkbox').all())await checkbox.check();
+   await child.getByRole('button',{name:/^提交 \d+ 项任务$/}).click();
    await child.getByRole('button',{name:'等待家长确认',exact:true}).waitFor();
  }
  passed('Child submits homework in the UI');
@@ -97,7 +97,7 @@ try {
  await parent.getByRole('button',{name:'家长',exact:true}).click();await parent.locator('.parent-page').waitFor();
  const old=(await stored()).state;
  if(old.checkins.some(c=>c.date===old.daily.date&&c.status==='pending')){
-   await parent.getByRole('button',{name:'确认完成，发放奖励',exact:true}).click();
+   await parent.getByRole('button',{name:/^通过 \d+ 项，退回 0 项$/}).click();
    await parent.getByRole('heading',{name:'今天没有待审核的打卡',exact:true}).waitFor();
    const approved=await stored();assert.equal(approved.state.checkins.find(c=>c.date===old.daily.date).status,'approved');
    assert(approved.state.partners[0].exp>old.partners[0].exp);passed('Parent approves, experience is awarded and partner levels up');

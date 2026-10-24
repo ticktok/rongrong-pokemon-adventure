@@ -1,10 +1,10 @@
 import type { GameState, Question, Word } from '../src/game/types';
 import type { Runtime } from './state';
 import { dayOf,dateShift } from './state';
-import { wordsFor } from './game-data';
+import { questionWords,questionDecoys,wordsFor } from './game-data';
 export function shuffled<T>(items:T[],rt:Runtime):T[]{ const out=[...items];for(let i=out.length-1;i>0;i--){const j=Math.floor(rt.random()*(i+1));[out[i],out[j]]=[out[j],out[i]];}return out;}
 export function makeQuestion(s:GameState,kind:Question['kind'],rt:Runtime,extra:Partial<Question>={}):Question {
-  const words=wordsFor(s),today=dayOf(rt.now);
+  const words=questionWords(s),today=dayOf(rt.now);
   let pool=words;
   if(kind==='daily')pool=words.filter(w=>!s.daily.completedIds.includes(w.id));
   if(kind==='review')pool=words.filter(w=>s.mastery[w.id]?.due<=today);
@@ -13,10 +13,7 @@ export function makeQuestion(s:GameState,kind:Question['kind'],rt:Runtime,extra:
   const word=shuffled(due.length&&rt.random()<0.6?due:pool,rt)[0];
   const reverse=rt.random()<0.4;
   const value=(w:Word)=>reverse?w.word:w.meaning;
-  const ambiguousGroups=[['look','see','watch'],['good','nice'],['home','house'],['hat','cap'],['coat','jacket'],['cup','glasses'],['blue','sad']];
-  const related=new Set(ambiguousGroups.filter(group=>group.includes(word.word.toLowerCase())).flat());
-  const decoys=shuffled(words.filter(w=>w.id!==word.id&&w.meaning!==word.meaning&&!related.has(w.word.toLowerCase())&&value(w)!==value(word)),rt);
-  const distinct=decoys.filter((w,i,a)=>a.findIndex(x=>value(x)===value(w))===i).slice(0,3);
+  const distinct=shuffled(questionDecoys(word,wordsFor(s),reverse),rt).slice(0,3);
   if(distinct.length<3)throw new Error('至少需要四组不同词义的单词才能练习');
   const choices=shuffled([word,...distinct],rt).map(w=>({id:rt.uuid(),text:value(w),correct:w.id===word.id}));
   return {id:rt.uuid(),wordId:word.id,prompt:reverse?'“'+word.meaning+'”用英语怎么说？':'“'+word.word+'”是什么意思？',options:choices.map(({id,text})=>({id,text})),correctOptionId:choices.find(c=>c.correct)!.id,wrong:false,kind,word:word.word,explanation:word.word+' · '+word.meaning,example:word.example,...extra};

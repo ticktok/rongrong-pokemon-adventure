@@ -49,10 +49,14 @@ export function dexSuggestions(query:string,limit=8):DexEntry[]{
  return dexCatalog.map(entry=>({entry,rank:dexMatchRank(entry,query)})).filter(x=>Number.isFinite(x.rank)).sort((a,b)=>a.rank-b.rank||a.entry.id-b.entry.id).slice(0,limit).map(x=>x.entry);
 }
 export type DexStatus='all'|'seen'|'caught';
-export interface DexFilters {generation:GenerationId|'all';type:string;status:DexStatus;query:string}
+export interface DexFilters {generation:GenerationId|'all';types:readonly string[];status:DexStatus;query:string}
 export function matchesDexStatus(entry:DexEntry,status:DexStatus,state:Pick<PublicState,'seen'|'caught'>){
  return status==='all'||state[status].includes(entry.id);
 }
 export function filterDex(filters:DexFilters,state:Pick<PublicState,'seen'|'caught'>):DexEntry[]{
- return dexCatalog.filter(e=>(filters.generation==='all'||e.generation===filters.generation)&&(!filters.type||e.types.includes(filters.type))&&matchesDexStatus(e,filters.status,state)&&Number.isFinite(dexMatchRank(e,filters.query)));
+ return dexCatalog.filter(e=>(filters.generation==='all'||e.generation===filters.generation)&&filters.types.every(type=>e.types.includes(type))&&matchesDexStatus(e,filters.status,state)&&Number.isFinite(dexMatchRank(e,filters.query)));
+}
+
+export function toggleDexType(selected:readonly string[],type:string):string[]{
+ return selected.includes(type)?selected.filter(t=>t!==type):[...selected,type].slice(-2);
 }

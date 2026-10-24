@@ -2,9 +2,10 @@ import { MOVES } from '../content/world';
 import {STARTERS,NPC_GIFTS} from '../content/packs';
 import {isWalkable} from '../content/geometry';
 import type { GameState, GameCommand, ActionResult, Role, Word, Npc, Question, Partner } from '../src/game/types';
-import { species, region, hp, damage, captureChance, wildPool, availableMoves, defaultMoves, EVOLUTIONS, wordsFor,wordBank,sameLineage } from './game-data';
-import { dayOf, isWeekend, rollover, canBattle, grant, makePartner, addEvent, streak, updateSeals, type Runtime } from './state';
+import { species, region, hp, damage, captureChance, wildPool, availableMoves, defaultMoves, EVOLUTIONS, wordsFor,wordBank,sameLineage,dailyGoal,syncLearning } from './game-data';
+import { dayOf, rollover, canBattle, grant, makePartner, addEvent, updateSeals,initializeRewardProgress, type Runtime } from './state';
 import { makeQuestion, recordFirst } from './quiz';
+import {reviewRules,ensureReview,updateCheckinStatus,settleCheckin,claimReward} from './checkins';
 const text=(p:Record<string,unknown>,key:string,max=200)=>{const v=p[key];if(typeof v!=='string'||!v.trim().length||v.length>max)throw new Error('请检查填写内容');return v.trim();};
 const number=(p:Record<string,unknown>,key:string,min:number,max:number)=>{const v=p[key];if(typeof v!=='number'||!Number.isFinite(v)||v<min||v>max)throw new Error('数值超出可用范围');return v;};
 const ids=(p:Record<string,unknown>,key:string,max=20)=>{const v=p[key];if(!Array.isArray(v)||v.length>max||!v.every(x=>typeof x==='string'))throw new Error('请选择有效项目');return [...new Set(v)] as string[];};
@@ -50,7 +51,7 @@ function win(s:GameState,rt:Runtime):ActionResult {
   const b=s.battle!,r=region(b.regionId);b.status='won';
   if(b.kind==='gym'&&!s.badges.includes(r.id)){
     s.badges.push(r.id);
-    const gift=makePartner(r.gift,r.level,rt);gift.sealed=s.settings.sealDays;s.partners.push(gift);addCaught(s,r.gift);
+    const gift=makePartner(r.gift,r.level,rt);gift.sealed=s.settings.sealDays;gift.sealCountedDates=[];s.partners.push(gift);addCaught(s,r.gift);updateSeals(s,dayOf(rt.now),rt);
     const message='获得'+r.badge+'！'+species(r.gift).name+'也来了，坚持打卡唤醒它吧。';
     addEvent(s,rt,message);return {message,effect:'gift'};
   }
@@ -104,8 +105,11 @@ function answer(s:GameState,p:Record<string,unknown>,rt:Runtime):ActionResult {
   if(q.kind==='battle'||q.kind==='catch')return settleAction(s,q,firstCorrect,rt);
   if(q.kind==='daily'){
     s.daily.questions++;s.daily.completedIds.push(q.wordId);if(firstCorrect)s.daily.correct++;
-    s.daily.practiceFinished=s.daily.questions>=10;
-    return {message:s.daily.practiceFinished?'今日 10 题完成！首次答对 '+s.daily.correct+' 题，提交打卡后等家长发放奖励。':'记住了！今日进度 '+s.daily.questions+' / 10。',effect:'correct',dailyFeedback:{questionId:q.id,word:q.word,explanation:q.explanation,example:q.example,completed:s.daily.questions,correct:s.daily.correct,date:s.daily.date}};
+    syncLearning(s);
+    const checkin=s.checkins.find(c=>c.date===s.daily.date);
+    let reward='';
+    if(checkin?.review){checkin.englishCorrect=s.daily.correct;const settled=settleCheckin(s,checkin,rt);if(settled.total){reward=settled.message;addEvent(s,rt,'英语加成补足。'+reward);}}
+    return {message:(s.daily.practiceFinished?'今日 '+s.daily.goal+' 题完成！首次答对 '+s.daily.correct+' 题。':'记住了！今日进度 '+s.daily.questions+' / '+s.daily.goal+'。')+reward,effect:'correct',dailyFeedback:{questionId:q.id,word:q.word,explanation:q.explanation,example:q.example,completed:s.daily.questions,correct:s.daily.correct,date:s.daily.date,goal:s.daily.goal,...(reward?{rewardMessage:reward}:{})}};
   }
   if(q.kind==='npc'&&q.npcId){
     const key=dayOf(rt.now)+':'+q.npcId;if(!s.npcCompleted.includes(key))s.npcCompleted.push(key);s.npcCompleted=s.npcCompleted.slice(-400);
@@ -115,7 +119,7 @@ function answer(s:GameState,p:Record<string,unknown>,rt:Runtime):ActionResult {
   return {message:'记住这个词了，下次遇见它试着自己读出来！',effect:'correct'};
 }
 export function execute(input:GameState,cmd:GameCommand,role:Role,rt:Runtime):{state:GameState;result:ActionResult}{
-  const s=structuredClone(input);rollover(s,rt);const p=cmd.payload,day=dayOf(rt.now);
+  const s=structuredClone(input);initializeRewardProgress(s);rollover(s,rt);syncLearning(s);const p=cmd.payload,day=dayOf(rt.now);
   let result:ActionResult={message:''};
   if(cmd.type.startsWith('parent.'))requireParent(role);
   switch(cmd.type){
@@ -129,7 +133,11 @@ export function execute(input:GameState,cmd:GameCommand,role:Role,rt:Runtime):{s
     case 'practice.start':{
       noQuestion(s);noBattle(s);
       const mode=p.mode==='review'?'review':'daily';
-      if(mode==='daily'&&s.daily.questions>=10)throw new Error('今天的 10 题已完成，可以去复习单词');
+      if(mode==='daily'){
+        s.daily.goal=dailyGoal(s);
+        if(!s.daily.goal)throw new Error('可出题单词不足，请家长准备至少四组不同词义的单词');
+        if(s.daily.questions>=s.daily.goal)throw new Error('今天的 '+s.daily.goal+' 题已完成，可以去复习单词');
+      }
       s.question=makeQuestion(s,mode,rt);break;
     }
     case 'npc.challenge':{
@@ -140,27 +148,45 @@ export function execute(input:GameState,cmd:GameCommand,role:Role,rt:Runtime):{s
     case 'answer':result=answer(s,p,rt);break;
     case 'checkin.submit':{
       if(!s.started)throw new Error('先选择初始伙伴吧');
+      if('date'in p&&p.date!==day)throw new Error('只能提交今天的任务，历史记录仅供查看');
       const taskIds=ids(p,'taskIds');
-      if(!taskIds.length||taskIds.some(id=>!s.settings.tasks.some(t=>t.id===id&&t.active)))throw new Error('勾选今天实际完成的任务吧');
-      const existing=s.checkins.find(c=>c.date===day);
-      if(existing&&existing.status!=='rejected')throw new Error('今天已经提交过了');
-      if(existing)s.checkins=s.checkins.filter(c=>c!==existing);
-      s.checkins.push({date:day,taskIds,status:'pending',submittedAt:rt.now.toISOString(),englishCorrect:s.daily.correct,granted:0});
+      if(!taskIds.length)throw new Error('勾选今天实际完成的任务吧');
+      let c=s.checkins.find(c=>c.date===day);
+      if(c?.status==='pending')throw new Error('还有任务等待家长确认，确认后再补交');
+      if(c?.status==='approved')throw new Error('今天的任务已经全部通过了');
+      if(!c){c={date:day,taskIds:[],status:'pending',submittedAt:rt.now.toISOString(),englishCorrect:s.daily.correct,granted:0};s.checkins.push(c);}
+      if(!c.review)c.review={tasks:s.settings.tasks.filter(t=>t.active).map(({id,name})=>({id,name,status:'unsubmitted'})),rules:reviewRules(s),submissionVersion:0,settled:0,streakReward:0};
+      if(taskIds.some(id=>!c.review!.tasks.some(t=>t.id===id&&(t.status==='unsubmitted'||t.status==='rejected'))))throw new Error('只能提交尚未通过的当天任务');
+      const submittedAt=rt.now.toISOString();
+      for(const task of c.review.tasks)if(taskIds.includes(task.id)){task.status='pending';task.submittedAt=submittedAt;delete task.reason;delete task.reviewedAt;}
+      c.taskIds=[...new Set([...c.taskIds,...taskIds])];c.review.submissionVersion++;c.submittedAt=submittedAt;c.englishCorrect=s.daily.correct;delete c.reason;
+      updateCheckinStatus(c);
       result={message:'已送给家长，等待确认。你今天的努力已经记下来了！'};break;
     }
     case 'parent.review':{
       const c=s.checkins.find(c=>c.date===text(p,'date'));
       if(!c||c.status!=='pending')throw new Error('这条打卡已处理，请刷新查看');
-      if(p.approve!==true){c.status='rejected';c.reason=typeof p.reason==='string'?p.reason.slice(0,200):'请补充完成后重新提交';result={message:'已退回，孩子可以补充后重新提交'};break;}
-      c.status='approved';c.reviewedAt=rt.now.toISOString();
-      const localTime=new Intl.DateTimeFormat('en-GB',{timeZone:'Asia/Shanghai',hour:'2-digit',minute:'2-digit',hour12:false}).format(new Date(c.submittedAt));
-      const quick=!isWeekend(c.date)&&localTime<=s.settings.fastDeadline;
-      const bonus=Math.round(s.settings.baseExp*s.settings.englishPerQuestion*c.englishCorrect);
-      const total=s.settings.baseExp+bonus+(quick?Math.round(s.settings.baseExp*(s.settings.fastMultiplier-1)):0)+(streak(s,c.date)%7===0?s.settings.streakBonus:0);
-      const old=s.partners.map(p=>p.level);c.granted=grant(s,total);updateSeals(s,c.date,rt);
-      result={message:'打卡通过！发放 '+c.granted+' 经验'+(total>c.granted?'，其余 '+(total-c.granted)+' 顺延':'')+'。',effect:s.partners.some((p,i)=>p.level>old[i])?'level':'approve'};
+      const review=ensureReview(s,c),pending=review.tasks.filter(t=>t.status==='pending');
+      let approved:string[];
+      if('approvedTaskIds'in p){
+        if(p.submissionVersion!==review.submissionVersion)throw new Error('提交批次已更新，请刷新后重新审核');
+        approved=ids(p,'approvedTaskIds');
+      }else{
+        // Old clients may handle only the first untouched batch, never a later resubmission.
+        if(typeof p.approve!=='boolean'||review.submissionVersion>1||review.tasks.some(t=>t.status==='approved'))throw new Error('请刷新页面后逐项审核');
+        approved=p.approve?pending.map(t=>t.id):[];
+      }
+      if(approved.some(id=>!pending.some(t=>t.id===id)))throw new Error('只能审核本批次待确认的任务');
+      c.reviewedAt=rt.now.toISOString();
+      const reason=typeof p.reason==='string'&&p.reason.trim()?p.reason.trim().slice(0,200):'再检查一下，完成后当天可以重新提交。';
+      for(const task of pending){task.status=approved.includes(task.id)?'approved':'rejected';task.reviewedAt=c.reviewedAt;if(task.status==='rejected')task.reason=reason;}
+      if(pending.length>approved.length)c.reason=reason;else delete c.reason;
+      updateCheckinStatus(c);
+      const old=s.partners.map(p=>p.level),settled=settleCheckin(s,c,rt,true);
+      result={message:`通过 ${approved.length} 项，退回 ${pending.length-approved.length} 项。`+(settled.total?settled.message:''),effect:s.partners.some((p,i)=>p.level>old[i])?'level':'approve'};
       addEvent(s,rt,result.message);break;
     }
+    case 'reward.claim':noBattle(s);noQuestion(s);result=claimReward(s);addEvent(s,rt,result.message);break;
     case 'world.position':{
       noBattle(s);noQuestion(s);
       const id=text(p,'regionId'),r=region(id);if(s.badges.length<r.requiredBadges)throw new Error('先获得上一座道馆的徽章吧');
@@ -239,5 +265,6 @@ export function execute(input:GameState,cmd:GameCommand,role:Role,rt:Runtime):{s
     }
     default:throw new Error('不支持的操作，请刷新页面');
   }
+  syncLearning(s);
   return {state:s,result};
 }
