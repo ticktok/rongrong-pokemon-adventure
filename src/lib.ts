@@ -21,5 +21,5 @@ export function saveFile(name:string,value:unknown){
   const url=URL.createObjectURL(new Blob([JSON.stringify(value,null,2)],{type:'application/json'}));
   const a=document.createElement('a');a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
 }
-export function dueWords(state:PublicState){return Object.entries(state.mastery).filter(([,m])=>m.due<=state.today).length;}
+export function dueWords(state:PublicState){return state.reviewCount??state.reviewWords.filter(w=>w.reviewable!==false&&state.mastery[w.id]?.due<=state.today).length;}
 export type Run=(type:string,payload?:Record<string,unknown>)=>Promise<ApiResponse|undefined>;

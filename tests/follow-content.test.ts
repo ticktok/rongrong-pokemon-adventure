@@ -70,6 +70,19 @@ describe('following content without sharing progress',()=>{
   const exported=await run(db,'parent.export',{},'parent');expect(exported.export).toEqual(db.saves.get(trial)!.state);
   expect(db.saves.get(home)).toEqual(before);expect((await run(db,'parent.export')).ok).toBe(false);
  });
+ it('commits only one competing itemized review and preserves pending rules across source edits',async()=>{
+  const db=new Store();await run(db,'starter',{speciesId:25});await run(db,'checkin.submit',{taskIds:['english','math']});
+  const source=structuredClone(db.saves.get(home));
+  db.saves.get(home)!.state.settings.tasks=[{id:'new',name:'新任务',active:true}];db.saves.get(home)!.state.settings.baseExp=999;
+  const a=command('parent.review',{date:'2026-10-19',approvedTaskIds:['english'],submissionVersion:1});
+  const b=command('parent.review',{date:'2026-10-19',approvedTaskIds:['math'],submissionVersion:1});
+  const results=await Promise.all([gameCommand(a,'parent',db,rt),gameCommand(b,'parent',db,rt)]);
+  expect(results.filter(r=>r.ok)).toHaveLength(1);
+  const state=db.saves.get(trial)!.state;expect(state.checkins[0].review!.settled).toBe(69);expect(state.checkins[0].review!.rules.baseExp).toBe(230);
+  const winner=results[0].ok?a:b,revision=db.saves.get(trial)!.revision;
+  expect((await gameCommand(winner,'parent',db,rt)).state!.revision).toBe(revision);expect(state.daily.expGranted).toBe(69);
+  expect(db.saves.get(home)!.revision).toBe(source!.revision);
+ });
  it.each(['parent.settings','parent.tasks','parent.words','parent.word.disable','parent.npc'])('rejects %s for both follower roles',async(type)=>{
   const db=new Store();for(const uid of ['parent','child']){const result=await run(db,type,{baseExp:999,familyId:home},uid);expect(result.ok).toBe(false);expect(result.error).toContain('只能查看');}
   expect(db.writes).toHaveLength(0);

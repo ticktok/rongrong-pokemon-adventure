@@ -44,3 +44,29 @@ export function wordBank(state:GameState):Word[] {
   return [...WORDS.filter(w=>!customNames.has(w.word.toLowerCase())&&!customIds.has(w.id)),...state.customWords];
 }
 export function wordsFor(state:GameState):Word[]{return wordBank(state).filter(w=>!state.disabledWordIds.includes(w.id)&&w.level<=state.settings.maxWordLevel);}
+
+const ambiguousGroups=[['look','see','watch'],['good','nice'],['home','house'],['hat','cap'],['coat','jacket'],['cup','glasses'],['blue','sad']];
+export function questionDecoys(word:Word,words:Word[],reverse:boolean):Word[]{
+  const related=new Set(ambiguousGroups.filter(group=>group.includes(word.word.toLowerCase())).flat());
+  const values=new Set<string>();
+  return words.filter(w=>{
+    const value=reverse?w.word:w.meaning;
+    if(w.id===word.id||w.meaning===word.meaning||related.has(w.word.toLowerCase())||value===(reverse?word.word:word.meaning)||values.has(value))return false;
+    values.add(value);return true;
+  });
+}
+export function questionWords(s:GameState):Word[]{
+  const words=wordsFor(s);
+  return words.filter(w=>questionDecoys(w,words,false).length>=3&&questionDecoys(w,words,true).length>=3);
+}
+export function dailyGoal(s:GameState,words=questionWords(s)):number{
+  const remaining=words.filter(w=>!s.daily.completedIds.includes(w.id));
+  const q=s.question;
+  const held=q?.kind==='daily'&&!s.daily.completedIds.includes(q.wordId)&&!remaining.some(w=>w.id===q.wordId)?1:0;
+  return Math.max(s.daily.questions,Math.min(s.daily.goal??10,s.daily.questions+remaining.length+held));
+}
+export function syncLearning(s:GameState){
+  if(s.daily.goal!==undefined||s.daily.questions>0||s.question?.kind==='daily'){
+    s.daily.goal=dailyGoal(s);s.daily.practiceFinished=s.daily.questions>=s.daily.goal;
+  }
+}

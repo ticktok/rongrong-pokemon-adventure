@@ -38,9 +38,9 @@ describe('questions and rewards',()=>{
    expect(repaired.state.battle!.status).toBe('active');expect(repaired.state.battle!.balls).toBe(1);expect(repaired.state.daily.encounters).toBe(1);
  });
  it('uses submission time for fast rewards and unlocks a gift after seven approved days',()=>{
-   let s=started();const gift=makePartner(143,8,rt);gift.sealed=7;gift.acquiredAt='2026-10-13';s.partners.push(gift);
+   let s=started();const gift=makePartner(143,8,rt);gift.sealed=1;gift.acquiredAt='2026-10-13';s.partners.push(gift);
    s.checkins=['13','14','15','16','17','18'].map(d=>({date:'2026-10-'+d,taskIds:['english'],status:'approved',submittedAt:'2026-10-'+d+'T10:00:00Z',englishCorrect:0,granted:230}));
-   s=act(s,'checkin.submit',{taskIds:['english']},'child',{...rt,now:new Date('2026-10-19T12:00:00Z')}).state;
+   s=act(s,'checkin.submit',{taskIds:s.settings.tasks.map(t=>t.id)},'child',{...rt,now:new Date('2026-10-19T12:00:00Z')}).state;
    s=act(s,'parent.review',{date:'2026-10-19',approve:true},'parent',{...rt,now:new Date('2026-10-19T14:00:00Z')}).state;
    expect(s.daily.expGranted).toBe(320);expect(s.carry).toBe(6);expect(s.partners.find(p=>p.id===gift.id)!.sealed).toBe(0);
  });
@@ -81,7 +81,7 @@ describe('questions and rewards',()=>{
    let s=act(started(),'practice.start').state;const q=s.question!;
    const wrong=solve(s,false);expect(wrong.result.dailyFeedback).toBeUndefined();
    s=wrong.state;const done=solve(s);
-   expect(done.state.question).toBeNull();expect(done.result.dailyFeedback).toEqual({questionId:q.id,word:q.word,explanation:q.explanation,example:q.example,completed:1,correct:0,date:s.daily.date});
+   expect(done.state.question).toBeNull();expect(done.result.dailyFeedback).toEqual({questionId:q.id,word:q.word,explanation:q.explanation,example:q.example,completed:1,correct:0,date:s.daily.date,goal:10});
    expect(()=>solve(done.state)).toThrow();
    const next=act(done.state,'practice.start').state;expect(next.question!.id).not.toBe(q.id);expect(next.daily.questions).toBe(1);
  });
@@ -96,7 +96,7 @@ describe('questions and rewards',()=>{
    expect(()=>act(s,'answer',{questionId:s.question!.id,optionId:'fake'})).toThrow('选项');
  });
  it('applies approval once and respects the shared cap and carry',()=>{
-   let s=started();s.daily.correct=10;s=act(s,'checkin.submit',{taskIds:['english']}).state;s.daily.expGranted=300;
+   let s=started();s.daily.correct=10;s=act(s,'checkin.submit',{taskIds:s.settings.tasks.map(t=>t.id)}).state;s.daily.expGranted=300;
    const reviewed=act(s,'parent.review',{date:s.daily.date,approve:true},'parent');
    expect(reviewed.state.daily.expGranted).toBe(320);expect(reviewed.state.carry).toBe(256);
    expect(()=>act(reviewed.state,'parent.review',{date:s.daily.date,approve:true},'parent')).toThrow('已处理');

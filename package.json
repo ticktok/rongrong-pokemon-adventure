@@ -1,6 +1,6 @@
 {
   "name": "rongrong-pokemon-adventure",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "private": true,
   "type": "module",
   "scripts": {
@@ -25,7 +25,9 @@
     "test:audio-cache": "node scripts/verify-audio-cache.mjs",
     "pokedex:prepare": "node scripts/prepare-pokedex.mjs",
     "test:pokedex-ui": "node scripts/verify-pokedex-ui.mjs",
-    "test:pokedex-live": "node scripts/verify-pokedex-live.mjs"
+    "test:pokedex-live": "node scripts/verify-pokedex-live.mjs",
+    "test:rewards-ui": "node scripts/verify-rewards-ui.mjs",
+    "test:rewards-live": "node scripts/verify-rewards-live.mjs"
   },
   "dependencies": {
     "@cloudbase/js-sdk": "latest",

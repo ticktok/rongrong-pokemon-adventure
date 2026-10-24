@@ -1,6 +1,6 @@
 import {describe,it,expect} from 'vitest';
 import {catalog} from '../src/game/catalog';
-import {DEX_GENERATIONS,DEX_DISPLAY,dexCatalog,dexEntry,dexMatchRank,dexNumber,dexPresentation,dexSuggestions,filterDex,normalizeDexQuery} from '../src/game/pokedex';
+import {DEX_GENERATIONS,DEX_DISPLAY,dexCatalog,dexEntry,dexMatchRank,dexNumber,dexPresentation,dexSuggestions,filterDex,toggleDexType,normalizeDexQuery} from '../src/game/pokedex';
 import {TYPE_NAMES} from '../content/world';
 
 describe('National Pokédex preview',()=>{
@@ -38,14 +38,21 @@ describe('National Pokédex preview',()=>{
   expect(dexSuggestions('a')).toHaveLength(8);
   expect(dexSuggestions('  ')).toEqual([]);expect(dexSuggestions('not-a-pokemon')).toEqual([]);expect(dexSuggestions('0')).toEqual([]);expect(dexSuggestions('1026')).toEqual([]);
  });
+ it('keeps the latest two selected types and matches their intersection',()=>{
+  expect(toggleDexType(['fire','flying'],'water')).toEqual(['flying','water']);
+  expect(toggleDexType(['fire','flying'],'fire')).toEqual(['flying']);
+  const results=filterDex({generation:'gen1',types:['fire','flying'],status:'all',query:''},{seen:[],caught:[]});
+  expect(results.map(p=>p.id)).toEqual([6,146]);
+  expect(filterDex({generation:'gen1',types:['fire','water'],status:'all',query:''},{seen:[],caught:[]})).toEqual([]);
+ });
  it('intersects generation, type, status and query without mutating saved progress',()=>{
   const state={seen:[1,4,6,25],caught:[1,6,25]},before=structuredClone(state);
-  expect(filterDex({generation:'gen1',type:'fire',status:'caught',query:''},state).map(p=>p.id)).toEqual([6]);
-  expect(filterDex({generation:'gen1',type:'flying',status:'caught',query:'喷'},state).map(p=>p.id)).toEqual([6]);
-  expect(filterDex({generation:'gen9',type:'',status:'seen',query:''},state)).toEqual([]);
-  expect(filterDex({generation:'gen1',type:'',status:'all',query:'xinyemiao'},state)).toEqual([]);
+  expect(filterDex({generation:'gen1',types:['fire'],status:'caught',query:''},state).map(p=>p.id)).toEqual([6]);
+  expect(filterDex({generation:'gen1',types:['flying'],status:'caught',query:'喷'},state).map(p=>p.id)).toEqual([6]);
+  expect(filterDex({generation:'gen9',types:[],status:'seen',query:''},state)).toEqual([]);
+  expect(filterDex({generation:'gen1',types:[],status:'all',query:'xinyemiao'},state)).toEqual([]);
   expect(dexSuggestions('xinyemiao')[0].id).toBe(906);
-  expect(filterDex({generation:'all',type:'',status:'all',query:''},state)).toHaveLength(1025);
+  expect(filterDex({generation:'all',types:[],status:'all',query:''},state)).toHaveLength(1025);
   expect(state).toEqual(before);
  });
 });
