@@ -4,13 +4,20 @@ import {build} from 'esbuild';
 import {readFile,writeFile,mkdir} from 'node:fs/promises';
 import {gzipSync} from 'node:zlib';
 import {randomUUID} from 'node:crypto';
-import {execFile} from 'node:child_process';
-import {promisify} from 'node:util';
+import cloudbase from '@cloudbase/node-sdk';
+import {homedir} from 'node:os';
+import {join,resolve} from 'node:path';
 import assert from 'node:assert/strict';
 import {loadOps,settings} from './ops-lib.mjs';
-const {BackupStore,restoreFamily,execute,initialState,makePartner,validateSave}=await loadOps(),{envId,apiKey,version}=await settings(),store=new BackupStore(envId,apiKey);
+const {BackupStore,restoreFamily,execute,initialState,makePartner,validateSave,decodeBackup}=await loadOps(),{envId,apiKey,version}=await settings(),store=new BackupStore(envId,apiKey);
 const families=JSON.parse(await readFile('private/family-seed.json','utf8')),accounts=JSON.parse(await readFile('private/account-identities.json','utf8'));
 assert.notEqual(families.qa,families.home);
+// CLI's direct SCF Invoke is not supported by this environment's scoped credential.
+// Reuse the existing CLI project credential with the native CloudBase invocation API.
+const credentialFile=process.env.QA_CLOUDBASE_CREDENTIAL_FILE??join(homedir(),'.config','.cloudbase','projects',resolve('.').replace(/[^a-zA-Z0-9]/g,'-'),'auth.json');
+const {credential}=JSON.parse(await readFile(credentialFile,'utf8'));assert.equal(credential.envId,envId);
+assert(credential.secretId&&credential.secretKey&&credential.token,'Refresh the project CloudBase CLI credential before live QA');
+const management=cloudbase.init({env:envId,region:'ap-shanghai',secretId:credential.secretId,secretKey:credential.secretKey,sessionToken:credential.token});
 const before=await store.snapshot(version,'manual'),original=before.saves.find(s=>s.family_id===families.qa);
 assert(original&&!original.content_source_family_id);
 await mkdir('private/backups',{recursive:true});await mkdir('artifacts',{recursive:true});
@@ -47,9 +54,9 @@ try{
  assert.equal((await command(child,'parent.review',{date:state.daily.date,approvedTaskIds:['qa-task-0'],submissionVersion:1})).ok,false);
  await parent.reload();await parent.getByRole('checkbox',{name:'通过英语练习',exact:true}).uncheck();await parent.getByRole('textbox',{name:'给孩子的留言'}).fill('英语练习补充后今天再交');await parent.getByRole('button',{name:'通过 2 项，退回 1 项',exact:true}).click();await parent.getByText('今天没有待审核的打卡').waitFor();
  let saved=await current();assert.equal(saved.state.checkins[0].status,'partial');assert.equal(saved.state.checkins[0].review.settled,92);validateSave(saved.state);
- const invocation=await promisify(execFile)(process.execPath,['node_modules/@cloudbase/cli/bin/tcb','fn','invoke','rongrong-backup','--env-id',envId,'--json'],{timeout:60000,maxBuffer:1024*1024});
- await writeFile('private/backups/rewards-backup-invoke-'+randomUUID()+'.json',invocation.stdout,{mode:0o600,flag:'wx'});
- assert(/backup_verified/.test(invocation.stdout)||/\\?"ok\\?"\s*:\s*true/.test(invocation.stdout),'Backup function must confirm a verified snapshot of partial state');
+ const invocation=await management.callFunction({name:'rongrong-backup',data:{}});assert.equal(invocation.result?.ok,true,'Backup function must confirm a verified snapshot of partial state');
+ const verified=decodeBackup(await store.download(invocation.result.key),envId);assert.equal(verified.appVersion,version);assert.deepEqual(verified.saves.find(row=>row.family_id===families.qa)?.state,saved.state);
+ await writeFile('private/backups/rewards-backup-invoke-'+randomUUID()+'.json',JSON.stringify(invocation),{mode:0o600,flag:'wx'});
  pass('Deployed parent partially approves real QA submission; child role cannot approve; backup function accepts and verifies the new state.');
  await child.reload();await child.locator('.task-rejected').waitFor();assert.equal(await child.locator('.task-approved').count(),2);
  for(const name of ['英语练习','阅读','整理书包'])await child.locator('.daily-tasks').getByRole('checkbox',{name:new RegExp(name)}).check();await child.getByRole('button',{name:'提交 3 项任务',exact:true}).click();await child.getByRole('button',{name:'等待家长确认',exact:true}).waitFor();
