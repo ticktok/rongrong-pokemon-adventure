@@ -82,3 +82,12 @@ CloudBase Node SDK 的旧 NoSQL 依赖在 npm audit 中仍有上游警报。本�
 `Checkin.review`、伙伴计数日期、每日 `goal`、待分配余额和连续奖励次数均为兼容性新增字段；根 schemaVersion 保持 1。旧待审记录以原提交项目作为分母，保留原整单奖励口径。旧已审批记录不重算。两个函数均包含存档校验，发布先更新备份函数，再更新游戏函数和网页。
 
 本地运行开发服务器后，用 `TEST_BASE_URL=http://127.0.0.1:5176/ npm run test:rewards-ui` 验证分项审批、丢失响应重试、英语补奖和四种屏幕宽度。`npm run test:rewards-live` 仅使用独立 QA 家庭，先备份并读回验证，结束恢复 QA；其他家庭逐一只读对照。旧 `test:e2e` 会初始化 QA，不用于此次发布验收。
+
+
+## 道馆节奏与收藏（v0.6.0）
+
+新存档从创建时记录 gymProgress；旧存档首次执行命令时追加兼容字段，保留按旧徽章数量已开放的地区。首次获徽章事件可以恢复 firstWins 日期；缺失时只使用 initializedOn 作为冷却起点，不伪造获得日期。首次通关按北京时间记录，相邻馆加 7 个自然日，下一地图在通关所在周的下一周六开放。重赛不改变日期或奖励；daily.gymStarts 每天最多 1 次，开战成功扣除，失败退出不退还。旧进行中道馆战可以继续并计入适配当天。家长工作日放行不绕过上述限制。
+
+PublicState.adventureAccess 是地图、出口和道馆的统一展示来源，实际命令仍由服务端验证。日期计算只使用服务端时钟。新字段以可选形式加入旧存档验证器，schemaVersion 仍为 1。
+
+徽章收藏由 GenerationPack 的 collectionLabel、badgeImages 与 regions 生成，路由为 #/collection?generation=gen1；新增世代追加内容包及素材即可，不能重用已有 ID。此配置仅管理收藏展示，跨世代进度规则需要单独设计。徽章素材位于 assets/badges/<packId>/；缺失图片保留文字状态，不影响收藏判定。

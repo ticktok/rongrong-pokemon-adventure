@@ -1,3 +1,4 @@
+import {adventureAccess,initializeGymProgress} from './gym-progress';
 import { MOVES } from '../content/world';
 import {STARTERS,NPC_GIFTS} from '../content/packs';
 import {isWalkable} from '../content/geometry';
@@ -20,16 +21,18 @@ function startBattle(s:GameState,kind:'wild'|'gym',rt:Runtime):ActionResult {
   if(!s.started||!s.team.length)throw new Error('先邀请一位宝可梦伙伴吧');
   if(!canBattle(s,dayOf(rt.now)))throw new Error('对战与捕捉周末开放，也可以请家长临时放行');
   const r=region(s.position.regionId);
-  if(s.badges.length<r.requiredBadges)throw new Error('先获得上一座道馆的徽章吧');
+  const access=adventureAccess(s,dayOf(rt.now))[r.id];
+  if(!access.regionOpen)throw new Error(access.regionReason);
   let enemy:number,level:number,enemies:number[];
   if(kind==='wild'){
     if(s.daily.encounters>=s.settings.captureLimit)throw new Error('今天的捕捉冒险已完成，下次再来看看吧');
     const pool=wildPool(r.id).flatMap(p=>Array(s.caught.includes(p.id)?1:5).fill(p.id) as number[]);
     enemy=pool[Math.floor(rt.random()*pool.length)];level=Math.max(3,r.level-4+Math.floor(rt.random()*3));enemies=[enemy];
     s.daily.encounters++;
-  }else{enemy=r.boss[0];level=r.level;enemies=r.boss;}
+  }else{if(!access.gymAvailable)throw new Error(access.gymReason);enemy=r.boss[0];level=r.level;enemies=r.boss;}
   const team=s.partners.filter(p=>s.team.includes(p.id)&&!p.sealed);
   if(!team.length)throw new Error('出战伙伴还没有准备好');
+  if(kind==='gym')s.daily.gymStarts=(s.daily.gymStarts??0)+1;
   const p=team[0],ph=hp(p.speciesId,p.level),eh=hp(enemy,level);
   s.battle={id:rt.uuid(),kind,regionId:r.id,enemy,enemyLevel:level,enemyHp:eh,enemyMaxHp:eh,playerId:p.id,playerHp:ph,playerMaxHp:ph,teamHp:Object.fromEntries(team.map(p=>[p.id,hp(p.speciesId,p.level)])),enemyIndex:0,enemies,combo:0,balls:0,turn:1,log:[kind==='gym'?r.leader+'：准备好了吗？一起认真打一场！':'野生的'+species(enemy).name+'出现了！'],status:'active'};
   if(!s.seen.includes(enemy))s.seen.push(enemy);
@@ -50,7 +53,7 @@ function enemyTurn(s:GameState):ActionResult|undefined {
 function win(s:GameState,rt:Runtime):ActionResult {
   const b=s.battle!,r=region(b.regionId);b.status='won';
   if(b.kind==='gym'&&!s.badges.includes(r.id)){
-    s.badges.push(r.id);
+    s.badges.push(r.id);s.gymProgress!.firstWins[r.id]=dayOf(rt.now);
     const gift=makePartner(r.gift,r.level,rt);gift.sealed=s.settings.sealDays;gift.sealCountedDates=[];s.partners.push(gift);addCaught(s,r.gift);updateSeals(s,dayOf(rt.now),rt);
     const message='获得'+r.badge+'！'+species(r.gift).name+'也来了，坚持打卡唤醒它吧。';
     addEvent(s,rt,message);return {message,effect:'gift'};
@@ -119,7 +122,7 @@ function answer(s:GameState,p:Record<string,unknown>,rt:Runtime):ActionResult {
   return {message:'记住这个词了，下次遇见它试着自己读出来！',effect:'correct'};
 }
 export function execute(input:GameState,cmd:GameCommand,role:Role,rt:Runtime):{state:GameState;result:ActionResult}{
-  const s=structuredClone(input);initializeRewardProgress(s);rollover(s,rt);syncLearning(s);const p=cmd.payload,day=dayOf(rt.now);
+  const s=structuredClone(input);initializeRewardProgress(s);rollover(s,rt);initializeGymProgress(s,dayOf(rt.now));syncLearning(s);const p=cmd.payload,day=dayOf(rt.now);
   let result:ActionResult={message:''};
   if(cmd.type.startsWith('parent.'))requireParent(role);
   switch(cmd.type){
@@ -189,7 +192,7 @@ export function execute(input:GameState,cmd:GameCommand,role:Role,rt:Runtime):{s
     case 'reward.claim':noBattle(s);noQuestion(s);result=claimReward(s);addEvent(s,rt,result.message);break;
     case 'world.position':{
       noBattle(s);noQuestion(s);
-      const id=text(p,'regionId'),r=region(id);if(s.badges.length<r.requiredBadges)throw new Error('先获得上一座道馆的徽章吧');
+      const id=text(p,'regionId'),r=region(id);const access=adventureAccess(s,day)[r.id];if(!access.regionOpen)throw new Error(access.regionReason);
       const x=Math.round(number(p,'x',1,38)),y=Math.round(number(p,'y',1,24));
       if(!isWalkable(x,y,r.biome))throw new Error('这里暂时无法停留，请选择附近的空地');
       s.position={regionId:id,x,y};break;

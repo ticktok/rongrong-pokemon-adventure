@@ -1,0 +1,28 @@
+import {describe,it,expect} from 'vitest';
+import {randomUUID} from 'node:crypto';
+import {initialState,publicState,dayOf} from '../server/state';
+import {execute} from '../server/engine';
+import {nextWeekend} from '../server/gym-progress';
+import {validateSave} from '../server/save-validation';
+import {badgeCollections,collectionId} from '../src/game/badges';
+import {PACKS,REGIONS} from '../content/packs';
+import type {GameState} from '../src/game/types';
+const start='2026-10-31T04:00:00Z';
+function act(s:GameState,type:string,payload:Record<string,unknown>={},time=start){return execute(s,{type,payload,operationId:randomUUID()},'child',{now:new Date(time),random:()=>.3,uuid:randomUUID}).state;}
+function fresh(){return act(initialState([],new Date(start)),'starter',{speciesId:25});}
+function win(s:GameState,time=start){s=act(s,'gym.start',{},time);Object.assign(s.battle!,{enemy:10,enemyHp:1,enemies:[10],enemyIndex:0});s=act(s,'battle.move',{moveId:s.partners[0].moves[0]},time);return act(s,'answer',{questionId:s.question!.id,optionId:s.question!.correctOptionId},time);}
+function access(s:GameState,time:string){return publicState(act(s,'bootstrap',{},time),'child',0,new Date(time));}
+describe('gym pacing',()=>{
+ it.each([['2026-10-31','2026-11-07'],['2026-11-01','2026-11-07'],['2026-11-02','2026-11-14'],['2026-12-31','2027-01-09']])('next week Saturday from %s', (day,next)=>expect(nextWeekend(day)).toBe(next));
+ it('records first win and independently enforces region and gym dates',()=>{let s=win(fresh());expect(s.gymProgress!.firstWins['home-meadow']).toBe('2026-10-31');expect(()=>act(s,'world.position',{regionId:'blue-river',x:19,y:18})).toThrow('11-07');s=act(s,'battle.leave');expect(access(s,'2026-11-06T15:59:59Z').adventureAccess['blue-river'].regionOpen).toBe(false);const ready=access(s,'2026-11-06T16:00:00Z');expect(ready.adventureAccess['blue-river'].gymAvailable).toBe(true);validateSave(s);});
+ it('Sunday win opens region Saturday but next gym Sunday',()=>{const s=win(fresh(),'2026-11-01T04:00:00Z');const a=access(s,'2026-11-07T04:00:00Z').adventureAccess['blue-river'];expect(a.regionOpen).toBe(true);expect(a.gymReason).toContain('11-08');expect(access(s,'2026-11-08T04:00:00Z').adventureAccess['blue-river'].gymAvailable).toBe(true);});
+ it('consumes one start on exit or loss, never on rejected requests; refresh retains battle',()=>{const original=fresh();let s=act(original,'gym.start');expect(original.daily.gymStarts).toBe(0);const refreshed=act(s,'bootstrap');expect(refreshed.battle).toEqual(s.battle);expect(refreshed.daily.gymStarts).toBe(1);expect(()=>act(s,'gym.start')).toThrow();s=act(s,'battle.leave');expect(()=>act(s,'gym.start')).toThrow('已用完');expect(s.daily.gymStarts).toBe(1);s.daily.gymStarts=0;s=act(s,'gym.start');s.battle!.status='lost';expect(()=>act(s,'gym.start')).toThrow('已用完');expect(access(s,'2026-11-01T04:00:00Z').gymRemaining).toBe(1);});
+ it('parent weekday pass cannot bypass cooldown or quota',()=>{let s=win(fresh());s=act(s,'battle.leave');s.settings.weekdayPassDate='2026-11-02';expect(()=>act(s,'world.position',{regionId:'blue-river',x:19,y:18},'2026-11-02T04:00:00Z')).toThrow('11-07');s=act(s,'gym.start',{},'2026-11-02T04:00:00Z');s=act(s,'battle.leave',{},'2026-11-02T04:00:00Z');expect(()=>act(s,'gym.start',{},'2026-11-02T04:00:00Z')).toThrow('已用完');});
+ it('replay does not add gifts or reset first win',()=>{let s=win(fresh());const count=s.partners.length;s=act(s,'battle.leave');s=win(s,'2026-11-01T04:00:00Z');expect(s.partners).toHaveLength(count);expect(s.badges).toHaveLength(1);expect(s.gymProgress!.firstWins['home-meadow']).toBe('2026-10-31');});
+ it('preserves old unlocked regions and uses event date without inventing missing dates',()=>{let s=fresh();delete s.gymProgress;s.badges=['home-meadow'];s.events=[{date:'2026-10-30T16:01:00Z',message:'获得岩石徽章！卡比兽也来了，坚持打卡唤醒它吧。'}];s=act(s,'bootstrap');expect(s.gymProgress!.firstWins['home-meadow']).toBe('2026-10-31');expect(access(s,start).adventureAccess['blue-river'].regionOpen).toBe(true);expect(access(s,start).adventureAccess['blue-river'].gymAvailable).toBe(false);delete s.gymProgress;s.events=[];s=act(s,'bootstrap');expect(s.gymProgress!.firstWins).toEqual({});const later=act(s,'bootstrap',{},'2026-11-01T04:00:00Z');expect(later.gymProgress!.initializedOn).toBe(dayOf(new Date(start)));expect(access(later,'2026-11-07T04:00:00Z').adventureAccess['blue-river'].gymAvailable).toBe(true);});
+ it('grandfathers active legacy battle and counts it today',()=>{let s=act(fresh(),'gym.start');delete s.gymProgress;delete s.daily.gymStarts;s=act(s,'bootstrap',{},'2026-11-01T04:00:00Z');expect(s.battle!.status).toBe('active');expect(s.daily.gymStarts).toBe(1);});
+ it('server blocks direct start from a locked region',()=>{let s=win(fresh());s=act(s,'battle.leave');s.position.regionId='blue-river';expect(()=>act(s,'gym.start')).toThrow('11-07');});
+});
+describe('generation-driven badge collections',()=>{
+ it('supports a second generation with its own denominator and stable route',()=>{const packs=[PACKS[0],{...PACKS[0],id:'test-gen',collectionLabel:'测试世代',regions:[{...REGIONS[0],id:'test-region'}],badgeImages:{'test-region':'test'}}];const collections=badgeCollections(packs);expect(collections.map(p=>p.badges.length)).toEqual([8,1]);expect(collectionId('#/collection?generation=test-gen',collections)).toBe('test-gen');expect(collectionId('#/collection?generation=unknown',collections)).toBe('gen1');expect(collectionId('#/collection',collections)).toBe('gen1');expect(collections[1].badges[0].image).toBe('assets/badges/test-gen/test.png');});
+});

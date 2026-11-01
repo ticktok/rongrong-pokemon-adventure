@@ -15,13 +15,14 @@ const word=z.object({id,word:id,meaning:id,topic:id,level:z.number().int().posit
 const question=z.object({id,wordId:id,prompt:id,options:z.array(z.object({id,text:id}).passthrough()).min(2),correctOptionId:id,wrong:z.boolean(),firstCorrect:z.boolean().optional(),kind:z.enum(['daily','review','battle','catch','npc']),explanation:z.string(),word:id,example:z.string(),moveId:id.optional(),npcId:id.optional()}).passthrough();
 // passthrough preserves future additive fields when a backup is restored.
 export const saveSchema:z.ZodType<GameState>=z.object({
+  gymProgress:z.object({initializedOn:day,firstWins:z.record(id,day),legacyOpenRegions:ids}).passthrough().optional(),
   schemaVersion:z.literal(1),nickname:id,realName:z.string(),started:z.boolean(),
   partners:z.array(z.object({id,speciesId:z.number().int().positive(),exp:count,level:z.number().int().min(1).max(50),moves:ids.min(1).max(4),sealed:count.optional(),sealCountedDates:z.array(day).optional(),acquiredAt:day}).passthrough()),
   team:ids.max(3),seen:numbers,caught:numbers,badges:ids,
   position:z.object({regionId:id,x:z.number().int(),y:z.number().int()}).passthrough(),
   battle:z.object({id,kind:z.enum(['wild','gym']),regionId:id,enemy:z.number().int().positive(),enemyLevel:count,enemyHp:count,enemyMaxHp:count,playerId:id,playerHp:count,playerMaxHp:count,teamHp:z.record(id,count),enemyIndex:count,enemies:numbers,combo:count,balls:count,turn:count,log:z.array(z.string()),status:z.enum(['active','won','lost','caught','fled'])}).passthrough().nullable(),
   question:question.nullable(),
-  daily:z.object({date:day,questions:count,correct:count,completedIds:ids,encounters:count,expGranted:count,practiceFinished:z.boolean(),goal:count.optional()}).passthrough(),
+  daily:z.object({date:day,questions:count,correct:count,completedIds:ids,encounters:count,expGranted:count,practiceFinished:z.boolean(),goal:count.optional(),gymStarts:count.optional()}).passthrough(),
   checkins:z.array(z.object({date:day,taskIds:ids,status:z.enum(['pending','partial','approved','rejected']),submittedAt:id,englishCorrect:count,granted:count,reason:z.string().optional(),reviewedAt:id.optional(),review:checkinReview.optional()}).passthrough()),
   mastery:z.record(id,z.object({correct:count,wrong:count,due:day,stage:count,reviewStarted:day.optional()}).passthrough()),
   carry:count,carryTargets:ids,carryByPartner:z.record(id,count).optional(),unallocatedExp:count.optional(),streakRewardsSettled:count.optional(),
@@ -73,6 +74,7 @@ export function validateSave(value:unknown,content=contentIdentity()):GameState{
   for(const p of [...s.team,...s.carryTargets,...Object.keys(s.carryByPartner??{})])requireRef(partners.has(p),'partner ID');
   requireRef(!s.started||s.team.length>0,'started team');
   [...s.caught,...s.seen].forEach(n=>species(n,'Pokedex'));s.badges.forEach(n=>region(n,'badges'));region(s.position.regionId,'position');
+  if(s.gymProgress){Object.keys(s.gymProgress.firstWins).forEach(n=>{region(n,'gym first win');requireRef(s.badges.includes(n),'gym badge');});s.gymProgress.legacyOpenRegions.forEach(n=>region(n,'legacy region'));}
   s.npcs.forEach(n=>region(n.regionId,'NPC region'));
   for(const n of s.npcCompleted)requireRef(npcs.has(n.slice(n.indexOf(':')+1)),'completed NPC');
   for(const w of [...Object.keys(s.mastery),...s.disabledWordIds,...s.daily.completedIds])requireRef(wordIds.has(w),'word ID');

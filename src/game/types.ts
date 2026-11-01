@@ -14,15 +14,19 @@ export interface CheckinRules { baseExp:number; fastMultiplier:number; fastDeadl
 export interface CheckinReview { tasks:CheckinTask[]; rules:CheckinRules; submissionVersion:number; settled:number; streakReward:number }
 export interface Checkin { date:string; taskIds:string[]; status:'pending'|'partial'|'approved'|'rejected'; submittedAt:string; englishCorrect:number; granted:number; reason?:string; reviewedAt?:string; review?:CheckinReview }
 export interface Mastery { correct:number; wrong:number; due:string; stage:number; reviewStarted?:string }
-export interface Daily { date:string; questions:number; correct:number; completedIds:string[]; encounters:number; expGranted:number; practiceFinished:boolean; goal?:number }
+export interface Daily { date:string; questions:number; correct:number; completedIds:string[]; encounters:number; expGranted:number; practiceFinished:boolean; goal?:number; gymStarts?:number }
 export interface Settings { baseExp:number; dailyCap:number; captureLimit:number; attackBonus:number; comboBonus:number; catchBonus:number; fastMultiplier:number; fastDeadline:string; streakBonus:number; englishPerQuestion:number; sealDays:number; maxWordLevel:number; weekdayPassDate:string; tasks:{id:string;name:string;active:boolean}[] }
+export interface AdventureAccess { regionOpen:boolean; regionOpensOn?:string; regionReason:string; gymAvailable:boolean; gymEligibleOn?:string; gymReason:string }
+export interface GymProgress { initializedOn:string; firstWins:Record<string,string>; legacyOpenRegions:string[] }
 export interface GameState {
+  gymProgress?:GymProgress;
   schemaVersion:1; nickname:string; realName:string; started:boolean; partners:Partner[]; team:string[]; seen:number[]; caught:number[]; badges:string[];
   position:{regionId:string;x:number;y:number}; battle:Battle|null; question:Question|null; daily:Daily; checkins:Checkin[]; mastery:Record<string,Mastery>;
   carry:number; carryTargets:string[]; carryByPartner?:Record<string,number>; unallocatedExp?:number; streakRewardsSettled?:number; settings:Settings; npcs:Npc[]; customWords:Word[]; disabledWordIds:string[]; npcCompleted:string[]; events:{date:string;message:string}[];
 }
 export interface PublicState extends Omit<GameState,'question'|'customWords'|'disabledWordIds'|'realName'> {
   contentMode?:'own'|'follow';
+  adventureAccess:Record<string,AdventureAccess>; gymRemaining:number;
   question:PublicQuestion|null; realName?:string; words?:Word[]; reviewWords:(Pick<Word,'id'|'word'|'meaning'>&{reviewable?:boolean})[]; reviewCount:number; claimableExp:number; wordCount:number; role:Role; revision:number; canBattle:boolean; today:string;
 }
 export interface DailyFeedback { questionId:string; word:string; explanation:string; example:string; completed:number; correct:number; date:string; goal?:number; rewardMessage?:string }
