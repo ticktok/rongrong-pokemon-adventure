@@ -25,3 +25,20 @@
 ## 主要软件
 
 React、Vite、TypeScript、Phaser、CloudBase SDK、Zod、Vitest、Playwright 等保留其各自开源授权。依赖版本由 package-lock.json 记录。
+
+## 道馆徽章
+
+关都八枚徽章使用 Bulbagarden Archives 收录的传统徽章图案，按区域 ID 绑定，供本家庭非官方学习项目展示。资料与图案核对入口：https://bulbapedia.bulbagarden.net/wiki/Badge 。Archives 页面将这些图像标为受版权保护的作品，并非 CC0 素材；相关权利仍归原权利人。
+
+Archives 文件站直接下载返回 403，因此本版本从 Neoseeker 的同名图片镜像下载；本地保留原始 PNG，不依赖运行时外链。来源地址：
+
+| 本地文件（public/assets/badges/gen1/） | 下载来源 |
+|---|---|
+| boulder.png | https://cdn.staticneo.com/w/pokemon/d/dd/Boulder_Badge.png |
+| cascade.png | https://cdn.staticneo.com/w/pokemon/9/9c/Cascade_Badge.png |
+| thunder.png | https://cdn.staticneo.com/w/pokemon/a/a6/Thunder_Badge.png |
+| rainbow.png | https://cdn.staticneo.com/w/pokemon/b/b5/Rainbow_Badge.png |
+| soul.png | https://cdn.staticneo.com/w/pokemon/7/7d/Soul_Badge.png |
+| marsh.png | https://cdn.staticneo.com/w/pokemon/6/6b/Marsh_Badge.png |
+| volcano.png | https://cdn.staticneo.com/w/pokemon/1/12/Volcano_Badge.png |
+| earth.png | https://cdn.staticneo.com/w/pokemon/7/78/Earth_Badge.png |

@@ -7,7 +7,8 @@ import type {Npc,PublicState} from '../game/types';
 import type {Run} from '../lib';
 interface Props {state:PublicState;busy:boolean;run:Run;onNpc:(npc:Npc)=>void;reduced:boolean}
 export default function World(props:Props){
-  const host=useRef<HTMLDivElement>(null),latest=useRef(props),held=useRef(''),interact=useRef<()=>void>(()=>{}),[near,setNear]=useState('');
+  const host=useRef<HTMLDivElement>(null),latest=useRef(props),held=useRef(''),interact=useRef<()=>void>(()=>{}),[near,setNear]=useState(''),[gymConfirm,setGymConfirm]=useState(false),[exitHint,setExitHint]=useState('');
+  const confirming=useRef(false);confirming.current=gymConfirm;
   latest.current=props;
   const region=REGIONS.find(r=>r.id===props.state.position.regionId)!;
   useEffect(()=>{
@@ -76,13 +77,13 @@ export default function World(props:Props){
           g.fillStyle(0xffedbd);g.fillRect(-4,-3,8,3);c.add(g);return c;
         }
         interaction(){
-          if(latest.current.busy||latest.current.state.question)return;
+          if(confirming.current||latest.current.busy||latest.current.state.question)return;
           if(this.nearNpc){latest.current.onNpc(this.nearNpc);return;}
-          if(Math.hypot(this.tx-30,this.ty-11)<3){void latest.current.run('gym.start');return;}
+          if(Math.hypot(this.tx-30,this.ty-11)<3){setGymConfirm(true);return;}
         }
         update(time:number){
           const p=latest.current;
-          if(!this.hero||p.busy||p.state.question||this.moving)return;
+          if(confirming.current||!this.hero||p.busy||p.state.question||this.moving)return;
           const npcs=p.state.npcs.filter(n=>n.regionId===region.id);
           this.nearNpc=npcs.find(n=>Math.hypot(n.x-this.tx,n.y-this.ty)<2.4);
           const near=this.nearNpc?'和'+this.nearNpc.name+'聊一聊':Math.hypot(this.tx-30,this.ty-11)<3?'进入道馆':'';
@@ -106,9 +107,11 @@ export default function World(props:Props){
         arrived(time:number){
           const state=latest.current.state;
           const index=REGIONS.findIndex(r=>r.id===region.id);
+          setExitHint('');
           if(this.tx>=18&&this.tx<=21&&(this.ty===24||this.ty===1)){
             const next=REGIONS[index+(this.ty===24?1:-1)];
-            if(next&&state.badges.length>=next.requiredBadges){void latest.current.run('world.position',{regionId:next.id,x:19,y:this.ty===24?3:22});return;}
+            if(next&&!state.adventureAccess?.[next.id]?.regionOpen)setExitHint(state.adventureAccess?.[next.id]?.regionReason??'暂未开放');
+            if(next&&state.adventureAccess?.[next.id]?.regionOpen){void latest.current.run('world.position',{regionId:next.id,x:19,y:this.ty===24?3:22});return;}
           }
           if(isGrass(this.tx,this.ty)&&state.canBattle&&state.daily.encounters<state.settings.captureLimit&&time-this.lastEncounter>10000&&Math.random()<0.11){
             this.lastEncounter=time;void latest.current.run('encounter');
@@ -122,6 +125,8 @@ export default function World(props:Props){
   },[region.id]);
   return <div className="world-wrap">
     <div className="map-label"><MapPin size={14}/><span>{region.name}</span><small>{region.subtitle}</small></div>
+    <div className="gym-status" role="status">{exitHint||props.state.adventureAccess?.[region.id]?.gymReason||'今日道馆剩余 '+props.state.gymRemaining+' 次'}</div>
+    {gymConfirm&&<div className="modal-scrim"><section className="dialog" role="dialog" aria-modal="true" aria-label="道馆挑战确认"><h2>{region.leader}的道馆</h2><p>{props.state.adventureAccess?.[region.id]?.gymReason||'每天 1 次，失败或退出也计次。准备好和伙伴一起挑战了吗？'}</p><button className="primary" disabled={props.busy||!props.state.adventureAccess?.[region.id]?.gymAvailable} onClick={async()=>{setGymConfirm(false);await props.run('gym.start');}}>开始挑战</button><button onClick={()=>setGymConfirm(false)}>再准备一下</button></section></div>}
     <div ref={host} className="world-canvas" role="application" aria-label={region.name+'冒险地图，使用方向键或屏幕方向键移动'}/>
     <div className="map-controls">
       <div className="dpad" aria-label="移动方向">
