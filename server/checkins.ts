@@ -1,6 +1,7 @@
 import type {Checkin,CheckinReview,GameState} from '../src/game/types';
+import {species} from './game-data';
 import {checkinTasks} from '../src/game/checkins';
-import {dayOf,isWeekend,grant,streakMilestones,updateSeals,claimableExp,type Runtime} from './state';
+import {dayOf,isWeekend,grant,grantShared,cappedHalfExp,streakMilestones,updateSeals,claimableExp,type Runtime} from './state';
 
 export function reviewRules(s:GameState){
   const {baseExp,fastMultiplier,fastDeadline,englishPerQuestion,streakBonus}=s.settings;
@@ -32,16 +33,27 @@ export function settleCheckin(s:GameState,c:Checkin,rt:Runtime,includeStreak=fal
   const milestones=streakMilestones(s),streakCount=includeStreak?Math.max(0,milestones-(s.streakRewardsSettled??milestones)):0;
   const bonus=streakCount*review.rules.streakBonus;
   const unallocated=s.unallocatedExp??0;
-  const actual=grant(s,delta+bonus);
+  const before=s.partners.map(p=>({id:p.id,exp:p.exp,level:p.level}));
+  const shared=review.rewardMode==='shared-half';
+  const actual=shared?grantShared(s,delta+bonus):grant(s,delta+bonus);
+  const details=s.partners.map(p=>{const old=before.find(x=>x.id===p.id)!;return p.exp>old.exp?species(p.speciesId).name+' +'+(p.exp-old.exp)+(p.level>old.level?'（Lv.'+old.level+' → '+p.level+'）':''):'';}).filter(Boolean).join('、');
+  const message=shared?`本次基础奖励 ${delta+bonus}：${details||'已保留，等待分配'}。`+`基础额度已用 ${s.daily.baseExpUsed??s.daily.expGranted}/${s.settings.dailyCap}；顺延 ${(s.sharedRewards??[]).reduce((n,r)=>n+r.base,0)} 基础经验，待分配 ${s.sharedUnallocated??0} 基础经验。`:settlementMessage(delta+bonus,actual,(s.unallocatedExp??0)-unallocated);
   review.settled=total;review.streakReward+=bonus;c.granted+=actual;
   if(includeStreak){s.streakRewardsSettled=Math.max(s.streakRewardsSettled??0,milestones);updateSeals(s,dayOf(rt.now),rt);}
-  return {total:delta+bonus,actual,message:settlementMessage(delta+bonus,actual,(s.unallocatedExp??0)-unallocated)};
+  return {total:delta+bonus,actual,message};
 }
 export function claimReward(s:GameState){
   if(!s.partners.some(p=>s.team.includes(p.id)&&!p.sealed&&p.level<50))throw new Error('先让一位未满级伙伴加入小队，再领取经验');
-  const amount=claimableExp(s);if(!amount)throw new Error('暂时没有待分配经验');
+  let amount=claimableExp(s);const base=s.sharedUnallocated??0;if(!amount&&!base)throw new Error('暂时没有待分配经验');
+  const halves=cappedHalfExp(s);amount-=halves/2;
+  if(halves){
+    const recipient=s.team.find(id=>s.partners.some(p=>p.id===id&&!p.sealed&&p.level<50))!;
+    s.expHalfRemainders??={};const combined=halves+(s.expHalfRemainders[recipient]??0);
+    for(const partner of s.partners)if(partner.level>=50)delete s.expHalfRemainders[partner.id];
+    amount+=Math.floor(combined/2);s.expHalfRemainders[recipient]=combined%2;
+  }
   s.unallocatedExp=0;
   for(const p of s.partners)if(p.level>=50&&s.carryByPartner)delete s.carryByPartner[p.id];
-  const actual=grant(s,amount);
-  return {message:settlementMessage(amount,actual,s.unallocatedExp??0),effect:'approve' as const};
+  const actual=grant(s,amount);s.sharedUnallocated=0;const sharedActual=base?grantShared(s,base):0;
+  return {message:settlementMessage(amount,actual,s.unallocatedExp??0)+(halves?'已保留并转移满级伙伴的半点余数。':'')+(base?'另领取 '+base+' 基础经验，全队实际到账 '+sharedActual+'，剩余按原伙伴顺延。':''),effect:'approve' as const};
 }

@@ -42,7 +42,7 @@ describe('questions and rewards',()=>{
    s.checkins=['13','14','15','16','17','18'].map(d=>({date:'2026-10-'+d,taskIds:['english'],status:'approved',submittedAt:'2026-10-'+d+'T10:00:00Z',englishCorrect:0,granted:230}));
    s=act(s,'checkin.submit',{taskIds:s.settings.tasks.map(t=>t.id)},'child',{...rt,now:new Date('2026-10-19T12:00:00Z')}).state;
    s=act(s,'parent.review',{date:'2026-10-19',approve:true},'parent',{...rt,now:new Date('2026-10-19T14:00:00Z')}).state;
-   expect(s.daily.expGranted).toBe(320);expect(s.carry).toBe(6);expect(s.partners.find(p=>p.id===gift.id)!.sealed).toBe(0);
+   expect(s.daily.expGranted).toBe(320);expect(s.sharedRewards?.reduce((n,r)=>n+r.base,0)).toBe(6);expect(s.partners.find(p=>p.id===gift.id)!.sealed).toBe(0);
  });
  it('does not offer two valid translations for the same Chinese meaning',()=>{
    const s=started();s.disabledWordIds=WORDS.map(w=>w.id);s.customWords=[
@@ -99,7 +99,7 @@ describe('questions and rewards',()=>{
  it('applies approval once and respects the shared cap and carry',()=>{
    let s=started();s.daily.correct=10;s=act(s,'checkin.submit',{taskIds:s.settings.tasks.map(t=>t.id)}).state;s.daily.expGranted=300;
    const reviewed=act(s,'parent.review',{date:s.daily.date,approve:true},'parent');
-   expect(reviewed.state.daily.expGranted).toBe(320);expect(reviewed.state.carry).toBe(256);
+   expect(reviewed.state.daily.expGranted).toBe(320);expect(reviewed.state.sharedRewards?.reduce((n,r)=>n+r.base,0)).toBe(256);
    expect(()=>act(reviewed.state,'parent.review',{date:s.daily.date,approve:true},'parent')).toThrow('已处理');
    const after=reviewed.state;rollover(after,{...rt,now:new Date('2026-10-19T00:00:00Z')});expect(after.daily.expGranted).toBe(256);expect(after.carry).toBe(0);
    rollover(after,{...rt,now:new Date('2026-10-19T01:00:00Z')});expect(after.daily.expGranted).toBe(256);

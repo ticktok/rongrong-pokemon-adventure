@@ -91,3 +91,18 @@ CloudBase Node SDK 的旧 NoSQL 依赖在 npm audit 中仍有上游警报。本�
 PublicState.adventureAccess 是地图、出口和道馆的统一展示来源，实际命令仍由服务端验证。日期计算只使用服务端时钟。新字段以可选形式加入旧存档验证器，schemaVersion 仍为 1。
 
 徽章收藏由 GenerationPack 的 collectionLabel、badgeImages 与 regions 生成，路由为 #/collection?generation=gen1；新增世代追加内容包及素材即可，不能重用已有 ID。此配置仅管理收藏展示，跨世代进度规则需要单独设计。徽章素材位于 assets/badges/<packId>/；缺失图片保留文字状态，不影响收藏判定。
+
+
+## 六人队伍、共享经验与关都地图（v0.9.0）
+
+伙伴仍以 UUID 为身份，`team` 的顺序决定首发、自动接力和地图跟随。可选 `boxes` 保存 30 格盒子；旧存档按原伙伴顺序补齐，入队和出盒同事务完成。`team.update`、`box.create`、`box.rename`、`box.move` 需要当前 `expectedRevision`；提交前发生变化时返回最新 PublicState，客户端保留选择并提示重新选择。同一 operationId 的成功重试先读旧结果，不因旧 revision 再执行。
+
+新打卡的 `review.rewardMode=shared-half`，已经存在的打卡不追加该标记。多人队伍每位已唤醒、未满级成员获得一半基础奖励；只带一只时获得全部。比例按完整队伍人数判定。`daily.baseExpUsed` 记录基础额度，缺失时从当日已有 `expGranted` 初始化；`expGranted` 继续记录全队实际整数经验。定向重复捕获和历史余额仍按实际点数消耗同一额度。
+
+`sharedRewards` 是基础奖励队列，保留接收伙伴、比例与剩余基础点数；`sharedUnallocated` 是尚无接收对象的基础奖励。`carryByPartner` 和 `unallocatedExp` 仍是已计算好的实际经验，不经过共享转换。`expHalfRemainders` 按 UUID 保留半点余数，满级伙伴的余数可转给当前可成长伙伴继续累计。旧顺延先结算，再按生成顺序处理共享队列。升级溢出的实际经验进入待分配余额。
+
+地图定义位于 `content/geometry.ts`，包含地形、建筑占地、道路、入口、出口、道馆和发现点。先确定建筑，再生成绕开占地的道路；前后端共用可行走及安全落点计算。NPC 显示位置按原顺序确定性适配，不修改存档原坐标，并避开主路、桥和交互点。发现只记录稳定 ID，不改变词汇记忆、经验、道馆或捕捉限制。
+
+验证命令：`npm run test:adventure-ui` 使用合成存档与真实游戏引擎，在四种宽度检查盒子、队伍、移动、地图、战斗和重试；`npm run simulate:adventure` 生成 1/3/6 人队伍的成长与真实引擎对战报告；`npm run test:adventure-live` 仅写独立 QA，先备份及读回，结束恢复并核对其他家庭未改动。
+
+平衡模拟采用固定 Lv.5 初始队伍、不进化、不补充高等级捕获，80% 首答正确，自动接力与当前可装备的最高有效伤害招式。六人基础任务含连续奖励，28/56 天约 Lv.19/27；加入英语奖励约 Lv.21/29。56 天英语奖励情景在八场独立道馆模拟中赢得七场；这些测试临时开放所有馆用于衡量战力，不代表实际可以绕过开放日期。

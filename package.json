@@ -1,6 +1,6 @@
 {
   "name": "rongrong-pokemon-adventure",
-  "version": "0.8.0",
+  "version": "0.9.0",
   "private": true,
   "type": "module",
   "scripts": {
@@ -29,7 +29,10 @@
     "test:rewards-ui": "node scripts/verify-rewards-ui.mjs",
     "test:rewards-live": "node scripts/verify-rewards-live.mjs",
     "test:scheduler-live": "node scripts/verify-scheduler-live.mjs",
-    "simulate:learning": "node scripts/simulate-learning.mjs"
+    "simulate:learning": "node scripts/simulate-learning.mjs",
+    "test:adventure-ui": "node scripts/verify-adventure-ui.mjs",
+    "test:adventure-live": "node scripts/verify-adventure-live.mjs",
+    "simulate:adventure": "node scripts/simulate-adventure.mjs"
   },
   "dependencies": {
     "@cloudbase/js-sdk": "latest",
