@@ -1,6 +1,6 @@
 // Check actual Chrome media playback, stop, failed load and recovery without cloud data.
 import {chromium} from '@playwright/test';import assert from 'node:assert/strict';import {readFile} from 'node:fs/promises';
-const files=JSON.parse(await readFile('content/pronunciations.json')),word=Object.keys(files).find(w=>w==='apple')??Object.keys(files)[0];assert(word);
+const files=JSON.parse(await readFile('content/pronunciations.json')),word=process.env.AUDIO_WORD??'apple';assert(files[word]);
 const browser=await chromium.launch({channel:'chrome',headless:true}),page=await browser.newPage();
 try{
  await page.goto(process.env.TEST_BASE_URL??'http://127.0.0.1:5173/');

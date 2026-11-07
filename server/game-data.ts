@@ -45,7 +45,15 @@ export function wordBank(state:GameState):Word[] {
 }
 export function wordsFor(state:GameState):Word[]{return wordBank(state).filter(w=>!state.disabledWordIds.includes(w.id)&&w.level<=state.settings.maxWordLevel);}
 
-const ambiguousGroups=[['look','see','watch'],['good','nice'],['home','house'],['hat','cap'],['coat','jacket'],['cup','glasses'],['blue','sad']];
+const ambiguousGroups=[
+  ['look','see','watch'],['good','nice'],['home','house'],['hat','cap'],['coat','jacket'],['cup','glasses'],['blue','sad'],
+  ['plane','airplane'],['gift','present'],['pants','trousers'],['sea','ocean'],['rock','stone'],['stream','river'],
+  ['bag','backpack'],['bed','cot'],['chair','seat','bench'],['pot','pan'],['noodles','pasta'],['paint','draw'],
+  ['cat','kitten'],['pig','piglet'],['duck','duckling'],['chicken','chick'],['sheep','lamb'],['cow','bull'],
+  ...['cat','dog','bird','fish','rabbit','duck','chicken','cow','horse','sheep','pig','goat','mouse','lion','tiger','elephant','monkey','panda','bear','giraffe','zebra','snake','frog','turtle','butterfly','bull','goose','wolf','ostrich','dinosaur','insect','crocodile','beetle','parrot','bee','lamb','koala','whale','chick','piglet','kitten','duckling','hamster','peacock'].map(word=>['animal',word]),
+  ...['bee','beetle','butterfly'].map(word=>['insect',word]),
+  ...['chicken','chick','duck','duckling','goose','ostrich','parrot','peacock'].map(word=>['bird',word]),
+];
 export function questionDecoys(word:Word,words:Word[],reverse:boolean):Word[]{
   const related=new Set(ambiguousGroups.filter(group=>group.includes(word.word.toLowerCase())).flat());
   const values=new Set<string>();

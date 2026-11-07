@@ -10,11 +10,18 @@ const before=await store.snapshot(version,'manual'),beforeHome=before.saves.find
 const backupFile='private/backups/learning-qa-'+randomUUID()+'.json.gz';await writeFile(backupFile,gzipSync(JSON.stringify(before)),{mode:0o600,flag:'wx'});await store.uploadVerified(before);
 const browser=await chromium.launch({channel:'chrome',headless:true});const page=await browser.newPage({viewport:{width:1024,height:768}});page.setDefaultTimeout(60000);const errors=[],checks=[];page.on('pageerror',e=>errors.push(e.message));
 const base=process.env.TEST_URL??JSON.parse(await readFile('deployment.json')).url;
+const vocabularyRun=process.env.VOCABULARY_QA==='1';
+const vocabularyWords=['red','apple','ice cream','back cover','front cover','scissors','kitten','indigo','toothbrush','plum'];
 async function current(){return store.currentFamily(families.qa);}
 async function answer(correct=true){await page.locator('.quiz-options button').first().waitFor();await page.waitForFunction(()=>!document.querySelector('.quiz-options button')?.disabled);const q=(await current()).state.question;assert(q);await page.locator('.quiz-options button').nth(q.options.findIndex(o=>(o.id===q.correctOptionId)===correct)).click();}
 try{
  const state=structuredClone(original.state),date=new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Shanghai',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date());
  state.daily={date,questions:0,correct:0,completedIds:[],encounters:0,expGranted:0,practiceFinished:false};state.question=null;state.battle=null;state.mastery={};
+ if(vocabularyRun){
+  const builtIn=JSON.parse(await readFile('content/words.json'));state.customWords=[];state.settings.maxWordLevel=2;
+  state.disabledWordIds=builtIn.filter(w=>!vocabularyWords.includes(w.word)).map(w=>w.id);
+  assert.equal(builtIn.filter(w=>vocabularyWords.includes(w.word)).length,10);
+ }
  const fresh=state.started?state:execute(state,{type:'starter',payload:{speciesId:25},operationId:randomUUID()},'child',{now:new Date(),uuid:randomUUID,random:()=>0.3}).state;
  await store.rpc('rr_commit',{p_family:families.qa,p_operation:randomUUID(),p_revision:original.revision,p_state:fresh,p_result:{message:'Prepare isolated learning QA'}});
  await page.goto(base+'#/learning');const notice=page.getByRole('button',{name:/^确定访问/});if(await notice.count())await notice.click();await page.getByLabel('账号',{exact:true}).waitFor();
@@ -28,6 +35,11 @@ try{
  const recordings=JSON.parse(await readFile('content/pronunciations.json'));const words=await page.locator('.word-chips button').all();let played=false;
  for(const button of words){const label=await button.getAttribute('aria-label'),word=label.slice('听单词 '.length);if(!recordings[word.toLowerCase()])continue;await button.click();await button.getByText('正在播放',{exact:true}).waitFor();played=true;break;}
  assert(played);checks.push('Chrome plays a same-origin standard recording from a real user click.');
+ if(vocabularyRun){
+  const learned=await page.locator('.word-chips .english').allTextContents();assert.deepEqual(learned.map(w=>w.trim()).sort(),[...vocabularyWords].sort());
+  const phrase=page.getByRole('button',{name:'听单词 back cover',exact:true});await phrase.click();await phrase.getByText('正在播放',{exact:true}).waitFor();
+  checks.push('All ten selected old/new words and phrases reached real questions; synthetic phrase audio played.');
+ }
  assert.deepEqual(errors,[]);checks.forEach(x=>console.log('PASS',x));
 }finally{
  await browser.close();const row=await current();await restoreFamily(store,before,families.qa,row.revision,version);assert.deepEqual((await current()).state,original.state);

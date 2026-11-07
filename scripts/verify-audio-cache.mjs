@@ -1,5 +1,5 @@
 import {chromium} from '@playwright/test';import {readFile} from 'node:fs/promises';import assert from 'node:assert/strict';
-const file=JSON.parse(await readFile('content/pronunciations.json')).apple;
+const file=JSON.parse(await readFile('content/pronunciations.json'))[process.env.AUDIO_WORD??'apple'];assert(file);
 const browser=await chromium.launch({channel:'chrome',headless:true}),context=await browser.newContext(),page=await context.newPage();
 try{
  await page.goto(process.env.PREVIEW_URL??'http://127.0.0.1:4173/');await page.evaluate(()=>navigator.serviceWorker.ready);await page.reload();await page.waitForFunction(()=>!!navigator.serviceWorker.controller);

@@ -3,11 +3,14 @@ import {chromium} from '@playwright/test';
 import assert from 'node:assert/strict';
 import {build} from 'esbuild';
 import {mkdir} from 'node:fs/promises';
+const vocabularyRun=process.env.VOCABULARY_QA==='1';
 const fixture=await build({stdin:{resolveDir:process.cwd(),loader:'js',contents:`
 import {initialState,publicState} from './server/state';import {execute} from './server/engine';
+import {WORDS} from './server/game-data';
 const rt={now:new Date('2026-10-19T04:00:00Z'),uuid:()=>crypto.randomUUID(),random:()=>0.3};
 const saved=JSON.parse(localStorage.getItem('learning-fixture')||'null');
 let state=saved?.state??execute(initialState([],rt.now,'测试训练师',''),{type:'starter',payload:{speciesId:25}},'child',rt).state,revision=saved?.revision??0,operations=saved?.operations??{},fail='',calls=[];
+if(${vocabularyRun}&&!saved){const names=['red','apple','ice cream','back cover','front cover','scissors','kitten','indigo','toothbrush','plum'];state.disabledWordIds=WORDS.filter(w=>!names.includes(w.word)).map(w=>w.id);state.mastery['word-13-74']={correct:0,wrong:1,due:'2026-10-19',stage:0,reviewStarted:'2026-10-19'};}
 window.__learning={get state(){return state;},get revision(){return revision;},calls,fail:mode=>fail=mode,midnight:()=>rt.now=new Date('2026-10-20T04:00:00Z')};
 export const auth={getSession:async()=>({data:{session:{user:{id:'learning-child'}}}}),onAuthStateChange:()=>({data:{subscription:{unsubscribe(){}}}}),signOut:async()=>{}};
 export async function request(command){
@@ -27,6 +30,7 @@ async function answer(correct=true){const index=await page.evaluate(correct=>{co
 try{
  await page.goto((process.env.TEST_BASE_URL??'http://127.0.0.1:5173/')+'#/learning');await page.getByRole('button',{name:'开始今天的练习',exact:true}).click();
  await answer(false);await page.locator('.word-explanation').waitFor();await page.reload();await page.locator('.word-explanation').waitFor();await answer();await next().waitFor();
+ if(vocabularyRun)assert.match(await page.locator('.word-explanation').innerText(),/back cover.*封底/s);
  assert.equal(await page.locator('.quiz-options').count(),0);assert.equal(await page.evaluate(()=>window.__learning.state.daily.correct),0);
  await page.screenshot({path:'artifacts/learning-feedback-tablet.png',fullPage:true});
  await page.evaluate(()=>window.__learning.fail('before'));await next().click();await page.getByRole('button',{name:'重试这一步',exact:true}).waitFor();assert.equal(await page.locator('.quiz-success').count(),1);await page.getByRole('button',{name:'重试这一步',exact:true}).click();await page.locator('.quiz-options').waitFor();

@@ -13,7 +13,7 @@ function started(){return act(initialState([],rt.now),'starter',{speciesId:25}).
 function solve(s:GameState,correct=true){const q=s.question!;return act(s,'answer',{questionId:q.id,optionId:correct?q.correctOptionId:q.options.find(o=>o.id!==q.correctOptionId)!.id});}
 describe('content coverage',()=>{
  it('uses released evolution data for lineage, not future-generation shared ancestors',()=>{expect(sameLineage(106,107)).toBe(false);expect(sameLineage(1,3)).toBe(true);expect(sameLineage(25,26)).toBe(true);});
- it('contains 151 species and 300 distinct words',()=>{expect(SPECIES).toHaveLength(151);expect(WORDS).toHaveLength(300);expect(new Set(WORDS.map(w=>w.word.toLowerCase())).size).toBe(300);expect(SPECIES.every(p=>/[\u3400-\u9fff]/.test(p.name))).toBe(true);});
+ it('contains 151 species and 456 distinct words',()=>{expect(SPECIES).toHaveLength(151);expect(WORDS).toHaveLength(456);expect(new Set(WORDS.map(w=>w.word.toLowerCase())).size).toBe(456);expect(SPECIES.every(p=>/[\u3400-\u9fff]/.test(p.name))).toBe(true);});
  it('every species is reachable by encounter, gift or evolution before level 50',()=>{
    const reachable=new Set([...REGIONS.flatMap(r=>wildPool(r.id).map(p=>p.id)),...REGIONS.map(r=>r.gift),1,4,7,25]);
    for(let i=0;i<5;i++)for(const e of EVOLUTIONS)if(reachable.has(e.from)&&e.level<=50)reachable.add(e.to);
