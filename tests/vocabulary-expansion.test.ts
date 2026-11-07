@@ -19,8 +19,8 @@ describe('expanded learning vocabulary',()=>{
   expect(WORDS.filter(w=>['scissor','drawn','singing','balloons','shoe','sock','noodle'].includes(w.word))).toEqual([]);
   expect(WORDS.some(w=>w.word==='scissors')).toBe(true);
  });
- it('asks and records every new word in both translation directions',()=>{
-  for(const w of additions)for(const random of [()=>0.3,()=>0.8]){
+ it.each(additions)('asks and records $word in both translation directions',w=>{
+  for(const random of [()=>0.3,()=>0.8]){
    const state=initialState([],now),rt={now,uuid:randomUUID,random};
    state.mastery[w.id]={correct:0,wrong:1,stage:0,due:'2026-11-07',reviewStarted:'2026-11-07'};
    const q=makeQuestion(state,'review',rt);
