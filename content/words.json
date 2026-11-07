@@ -2398,5 +2398,1253 @@
     "topic": "时间与方向",
     "level": 2,
     "example": "Let us say \"under\"."
+  },
+  {
+    "id": "word-13-1",
+    "word": "block",
+    "meaning": "积木",
+    "topic": "衣服与物品",
+    "level": 1,
+    "example": "This block is red."
+  },
+  {
+    "id": "word-13-2",
+    "word": "paint",
+    "meaning": "涂色；画画",
+    "topic": "一起行动",
+    "level": 1,
+    "example": "I paint a flower."
+  },
+  {
+    "id": "word-13-3",
+    "word": "plane",
+    "meaning": "飞机",
+    "topic": "衣服与物品",
+    "level": 1,
+    "example": "The plane is in the sky."
+  },
+  {
+    "id": "word-13-4",
+    "word": "wagon",
+    "meaning": "四轮小拉车",
+    "topic": "衣服与物品",
+    "level": 1,
+    "example": "Put the toys in the wagon."
+  },
+  {
+    "id": "word-13-5",
+    "word": "cookie",
+    "meaning": "饼干",
+    "topic": "美味食物",
+    "level": 1,
+    "example": "I eat a cookie."
+  },
+  {
+    "id": "word-13-6",
+    "word": "cupcake",
+    "meaning": "纸杯蛋糕",
+    "topic": "美味食物",
+    "level": 1,
+    "example": "This cupcake is small."
+  },
+  {
+    "id": "word-13-7",
+    "word": "ice cream",
+    "meaning": "冰淇淋",
+    "topic": "美味食物",
+    "level": 1,
+    "example": "I like ice cream."
+  },
+  {
+    "id": "word-13-8",
+    "word": "pie",
+    "meaning": "馅饼",
+    "topic": "美味食物",
+    "level": 1,
+    "example": "This is an apple pie."
+  },
+  {
+    "id": "word-13-9",
+    "word": "brownie",
+    "meaning": "巧克力布朗尼蛋糕",
+    "topic": "美味食物",
+    "level": 1,
+    "example": "I have a brownie."
+  },
+  {
+    "id": "word-13-10",
+    "word": "candy",
+    "meaning": "糖果",
+    "topic": "美味食物",
+    "level": 1,
+    "example": "The candy is sweet."
+  },
+  {
+    "id": "word-13-11",
+    "word": "jelly",
+    "meaning": "果冻",
+    "topic": "美味食物",
+    "level": 1,
+    "example": "The jelly is red."
+  },
+  {
+    "id": "word-13-12",
+    "word": "gate",
+    "meaning": "大门",
+    "topic": "温暖的家",
+    "level": 1,
+    "example": "Open the gate."
+  },
+  {
+    "id": "word-13-13",
+    "word": "mailbox",
+    "meaning": "信箱",
+    "topic": "温暖的家",
+    "level": 1,
+    "example": "The letter is in the mailbox."
+  },
+  {
+    "id": "word-13-14",
+    "word": "sidewalk",
+    "meaning": "人行道",
+    "topic": "大自然",
+    "level": 1,
+    "example": "We walk on the sidewalk."
+  },
+  {
+    "id": "word-13-15",
+    "word": "fence",
+    "meaning": "栅栏",
+    "topic": "温暖的家",
+    "level": 1,
+    "example": "The fence is white."
+  },
+  {
+    "id": "word-13-16",
+    "word": "street",
+    "meaning": "街道",
+    "topic": "大自然",
+    "level": 1,
+    "example": "This street is quiet."
+  },
+  {
+    "id": "word-13-17",
+    "word": "cot",
+    "meaning": "小床",
+    "topic": "温暖的家",
+    "level": 1,
+    "example": "The baby is in the cot."
+  },
+  {
+    "id": "word-13-18",
+    "word": "pillow",
+    "meaning": "枕头",
+    "topic": "温暖的家",
+    "level": 1,
+    "example": "My pillow is soft."
+  },
+  {
+    "id": "word-13-19",
+    "word": "blanket",
+    "meaning": "毯子",
+    "topic": "温暖的家",
+    "level": 1,
+    "example": "This blanket is warm."
+  },
+  {
+    "id": "word-13-20",
+    "word": "game",
+    "meaning": "游戏",
+    "topic": "快乐校园",
+    "level": 1,
+    "example": "We play a game."
+  },
+  {
+    "id": "word-13-21",
+    "word": "light",
+    "meaning": "灯光",
+    "topic": "温暖的家",
+    "level": 1,
+    "example": "Turn on the light."
+  },
+  {
+    "id": "word-13-22",
+    "word": "bull",
+    "meaning": "公牛",
+    "topic": "动物朋友",
+    "level": 1,
+    "example": "The bull is big."
+  },
+  {
+    "id": "word-13-23",
+    "word": "goose",
+    "meaning": "鹅",
+    "topic": "动物朋友",
+    "level": 1,
+    "example": "The goose can swim."
+  },
+  {
+    "id": "word-13-24",
+    "word": "bench",
+    "meaning": "长椅",
+    "topic": "温暖的家",
+    "level": 1,
+    "example": "We sit on the bench."
+  },
+  {
+    "id": "word-13-25",
+    "word": "step",
+    "meaning": "台阶",
+    "topic": "温暖的家",
+    "level": 1,
+    "example": "Watch the step."
+  },
+  {
+    "id": "word-13-26",
+    "word": "seat",
+    "meaning": "座位",
+    "topic": "温暖的家",
+    "level": 1,
+    "example": "This is my seat."
+  },
+  {
+    "id": "word-13-27",
+    "word": "swing",
+    "meaning": "秋千",
+    "topic": "衣服与物品",
+    "level": 1,
+    "example": "I play on the swing."
+  },
+  {
+    "id": "word-13-28",
+    "word": "airplane",
+    "meaning": "飞机",
+    "topic": "衣服与物品",
+    "level": 1,
+    "example": "The airplane can fly."
+  },
+  {
+    "id": "word-13-29",
+    "word": "skate",
+    "meaning": "滑冰",
+    "topic": "一起行动",
+    "level": 1,
+    "example": "I can skate."
+  },
+  {
+    "id": "word-13-30",
+    "word": "beet",
+    "meaning": "甜菜",
+    "topic": "美味食物",
+    "level": 1,
+    "example": "The beet is red."
+  },
+  {
+    "id": "word-13-31",
+    "word": "box",
+    "meaning": "盒子",
+    "topic": "温暖的家",
+    "level": 1,
+    "example": "Open the box."
+  },
+  {
+    "id": "word-13-32",
+    "word": "bow",
+    "meaning": "蝴蝶结",
+    "topic": "衣服与物品",
+    "level": 1,
+    "example": "The gift has a bow."
+  },
+  {
+    "id": "word-13-33",
+    "word": "gift",
+    "meaning": "礼物",
+    "topic": "衣服与物品",
+    "level": 1,
+    "example": "This gift is for you."
+  },
+  {
+    "id": "word-13-34",
+    "word": "smile",
+    "meaning": "微笑",
+    "topic": "一起行动",
+    "level": 1,
+    "example": "I smile at my friend."
+  },
+  {
+    "id": "word-13-35",
+    "word": "hug",
+    "meaning": "拥抱",
+    "topic": "一起行动",
+    "level": 1,
+    "example": "I give Mom a hug."
+  },
+  {
+    "id": "word-13-36",
+    "word": "pasta",
+    "meaning": "意大利面",
+    "topic": "美味食物",
+    "level": 1,
+    "example": "I like pasta."
+  },
+  {
+    "id": "word-13-37",
+    "word": "belt",
+    "meaning": "腰带",
+    "topic": "衣服与物品",
+    "level": 1,
+    "example": "My belt is brown."
+  },
+  {
+    "id": "word-13-38",
+    "word": "backpack",
+    "meaning": "双肩背包",
+    "topic": "衣服与物品",
+    "level": 1,
+    "example": "My book is in my backpack."
+  },
+  {
+    "id": "word-13-39",
+    "word": "wolf",
+    "meaning": "狼",
+    "topic": "动物朋友",
+    "level": 1,
+    "example": "The wolf lives in the forest."
+  },
+  {
+    "id": "word-13-40",
+    "word": "ostrich",
+    "meaning": "鸵鸟",
+    "topic": "动物朋友",
+    "level": 1,
+    "example": "An ostrich has a long neck."
+  },
+  {
+    "id": "word-13-41",
+    "word": "napkin",
+    "meaning": "餐巾",
+    "topic": "温暖的家",
+    "level": 1,
+    "example": "Use a napkin."
+  },
+  {
+    "id": "word-13-42",
+    "word": "coast",
+    "meaning": "海岸",
+    "topic": "大自然",
+    "level": 1,
+    "example": "We walk along the coast."
+  },
+  {
+    "id": "word-13-43",
+    "word": "ocean",
+    "meaning": "海洋",
+    "topic": "大自然",
+    "level": 1,
+    "example": "The ocean is blue."
+  },
+  {
+    "id": "word-13-44",
+    "word": "wave",
+    "meaning": "海浪",
+    "topic": "大自然",
+    "level": 1,
+    "example": "Look at the big wave."
+  },
+  {
+    "id": "word-13-45",
+    "word": "rock",
+    "meaning": "岩石",
+    "topic": "大自然",
+    "level": 1,
+    "example": "The rock is hard."
+  },
+  {
+    "id": "word-13-46",
+    "word": "cliff",
+    "meaning": "悬崖",
+    "topic": "大自然",
+    "level": 1,
+    "example": "The cliff is high."
+  },
+  {
+    "id": "word-13-47",
+    "word": "lighthouse",
+    "meaning": "灯塔",
+    "topic": "大自然",
+    "level": 1,
+    "example": "The lighthouse is by the sea."
+  },
+  {
+    "id": "word-13-48",
+    "word": "sunshine",
+    "meaning": "阳光",
+    "topic": "大自然",
+    "level": 1,
+    "example": "I like the warm sunshine."
+  },
+  {
+    "id": "word-13-49",
+    "word": "swimsuit",
+    "meaning": "泳衣",
+    "topic": "衣服与物品",
+    "level": 1,
+    "example": "My swimsuit is blue."
+  },
+  {
+    "id": "word-13-50",
+    "word": "dinosaur",
+    "meaning": "恐龙",
+    "topic": "动物朋友",
+    "level": 1,
+    "example": "This dinosaur has a long tail."
+  },
+  {
+    "id": "word-13-51",
+    "word": "cart",
+    "meaning": "购物车；手推车",
+    "topic": "衣服与物品",
+    "level": 1,
+    "example": "Put the food in the cart."
+  },
+  {
+    "id": "word-13-52",
+    "word": "vegetable",
+    "meaning": "蔬菜",
+    "topic": "美味食物",
+    "level": 1,
+    "example": "A carrot is a vegetable."
+  },
+  {
+    "id": "word-13-53",
+    "word": "checkout",
+    "meaning": "收银台",
+    "topic": "温暖的家",
+    "level": 1,
+    "example": "We pay at the checkout."
+  },
+  {
+    "id": "word-13-54",
+    "word": "log",
+    "meaning": "原木",
+    "topic": "大自然",
+    "level": 1,
+    "example": "The frog is on a log."
+  },
+  {
+    "id": "word-13-55",
+    "word": "pot",
+    "meaning": "锅",
+    "topic": "温暖的家",
+    "level": 1,
+    "example": "The soup is in the pot."
+  },
+  {
+    "id": "word-13-56",
+    "word": "hole",
+    "meaning": "洞",
+    "topic": "大自然",
+    "level": 1,
+    "example": "The rabbit is in a hole."
+  },
+  {
+    "id": "word-13-57",
+    "word": "insect",
+    "meaning": "昆虫",
+    "topic": "动物朋友",
+    "level": 1,
+    "example": "A bee is an insect."
+  },
+  {
+    "id": "word-13-58",
+    "word": "snowman",
+    "meaning": "雪人",
+    "topic": "大自然",
+    "level": 1,
+    "example": "We make a snowman."
+  },
+  {
+    "id": "word-13-59",
+    "word": "sled",
+    "meaning": "雪橇",
+    "topic": "衣服与物品",
+    "level": 1,
+    "example": "The sled is on the snow."
+  },
+  {
+    "id": "word-13-60",
+    "word": "fire",
+    "meaning": "火",
+    "topic": "大自然",
+    "level": 1,
+    "example": "The fire is hot."
+  },
+  {
+    "id": "word-13-61",
+    "word": "balloon",
+    "meaning": "气球",
+    "topic": "衣服与物品",
+    "level": 1,
+    "example": "My balloon is yellow."
+  },
+  {
+    "id": "word-13-62",
+    "word": "candy bar",
+    "meaning": "糖果棒",
+    "topic": "美味食物",
+    "level": 1,
+    "example": "This candy bar is sweet."
+  },
+  {
+    "id": "word-13-63",
+    "word": "card",
+    "meaning": "卡片",
+    "topic": "衣服与物品",
+    "level": 1,
+    "example": "I make a card for Mom."
+  },
+  {
+    "id": "word-13-64",
+    "word": "pizza",
+    "meaning": "比萨饼",
+    "topic": "美味食物",
+    "level": 1,
+    "example": "We share a pizza."
+  },
+  {
+    "id": "word-13-65",
+    "word": "present",
+    "meaning": "礼物",
+    "topic": "衣服与物品",
+    "level": 1,
+    "example": "This present is for you."
+  },
+  {
+    "id": "word-13-66",
+    "word": "apron",
+    "meaning": "围裙",
+    "topic": "衣服与物品",
+    "level": 1,
+    "example": "Dad wears an apron."
+  },
+  {
+    "id": "word-13-67",
+    "word": "pan",
+    "meaning": "平底锅",
+    "topic": "温暖的家",
+    "level": 1,
+    "example": "The egg is in the pan."
+  },
+  {
+    "id": "word-13-68",
+    "word": "love",
+    "meaning": "爱",
+    "topic": "一起行动",
+    "level": 1,
+    "example": "I love my family."
+  },
+  {
+    "id": "word-13-69",
+    "word": "tuck",
+    "meaning": "掖好；塞好",
+    "topic": "一起行动",
+    "level": 1,
+    "example": "Tuck the blanket around the baby."
+  },
+  {
+    "id": "word-13-70",
+    "word": "voice",
+    "meaning": "嗓音",
+    "topic": "我的身体",
+    "level": 1,
+    "example": "I hear your voice."
+  },
+  {
+    "id": "word-13-71",
+    "word": "closet",
+    "meaning": "衣橱",
+    "topic": "温暖的家",
+    "level": 1,
+    "example": "My coat is in the closet."
+  },
+  {
+    "id": "word-13-72",
+    "word": "hanger",
+    "meaning": "衣架",
+    "topic": "温暖的家",
+    "level": 1,
+    "example": "Put the shirt on a hanger."
+  },
+  {
+    "id": "word-13-73",
+    "word": "pants",
+    "meaning": "裤子",
+    "topic": "衣服与物品",
+    "level": 1,
+    "example": "My pants are blue."
+  },
+  {
+    "id": "word-13-74",
+    "word": "back cover",
+    "meaning": "封底",
+    "topic": "快乐校园",
+    "level": 1,
+    "example": "Look at the back cover."
+  },
+  {
+    "id": "word-13-75",
+    "word": "front cover",
+    "meaning": "封面",
+    "topic": "快乐校园",
+    "level": 1,
+    "example": "The front cover is red."
+  },
+  {
+    "id": "word-13-76",
+    "word": "letter",
+    "meaning": "字母",
+    "topic": "快乐校园",
+    "level": 1,
+    "example": "A is a letter."
+  },
+  {
+    "id": "word-13-77",
+    "word": "number",
+    "meaning": "数字",
+    "topic": "数字与形状",
+    "level": 1,
+    "example": "Three is a number."
+  },
+  {
+    "id": "word-13-78",
+    "word": "page",
+    "meaning": "书页",
+    "topic": "快乐校园",
+    "level": 1,
+    "example": "Turn the page."
+  },
+  {
+    "id": "word-13-79",
+    "word": "title",
+    "meaning": "标题；书名",
+    "topic": "快乐校园",
+    "level": 1,
+    "example": "Read the title of the book."
+  },
+  {
+    "id": "word-13-80",
+    "word": "crocodile",
+    "meaning": "鳄鱼",
+    "topic": "动物朋友",
+    "level": 1,
+    "example": "The crocodile is in the river."
+  },
+  {
+    "id": "word-13-81",
+    "word": "plain",
+    "meaning": "平原",
+    "topic": "大自然",
+    "level": 1,
+    "example": "Zebras live on the plain."
+  },
+  {
+    "id": "word-13-82",
+    "word": "hoe",
+    "meaning": "锄头",
+    "topic": "衣服与物品",
+    "level": 1,
+    "example": "Use the hoe in the garden."
+  },
+  {
+    "id": "word-13-83",
+    "word": "hose",
+    "meaning": "软水管",
+    "topic": "衣服与物品",
+    "level": 1,
+    "example": "Water the plants with a hose."
+  },
+  {
+    "id": "word-13-84",
+    "word": "plant",
+    "meaning": "植物",
+    "topic": "大自然",
+    "level": 1,
+    "example": "This plant needs water."
+  },
+  {
+    "id": "word-13-85",
+    "word": "seed",
+    "meaning": "种子",
+    "topic": "大自然",
+    "level": 1,
+    "example": "Put a seed in the soil."
+  },
+  {
+    "id": "word-13-86",
+    "word": "shovel",
+    "meaning": "铲子",
+    "topic": "衣服与物品",
+    "level": 1,
+    "example": "Dig with a shovel."
+  },
+  {
+    "id": "word-13-87",
+    "word": "animal",
+    "meaning": "动物",
+    "topic": "动物朋友",
+    "level": 1,
+    "example": "A cat is an animal."
+  },
+  {
+    "id": "word-13-88",
+    "word": "fairy",
+    "meaning": "小仙子",
+    "topic": "家人与朋友",
+    "level": 1,
+    "example": "The fairy has wings."
+  },
+  {
+    "id": "word-13-89",
+    "word": "roof",
+    "meaning": "屋顶",
+    "topic": "温暖的家",
+    "level": 1,
+    "example": "The bird is on the roof."
+  },
+  {
+    "id": "word-13-90",
+    "word": "bath",
+    "meaning": "洗澡",
+    "topic": "一起行动",
+    "level": 1,
+    "example": "I take a bath."
+  },
+  {
+    "id": "word-13-91",
+    "word": "bubble",
+    "meaning": "泡泡",
+    "topic": "大自然",
+    "level": 1,
+    "example": "The bubble floats in the air."
+  },
+  {
+    "id": "word-13-92",
+    "word": "shampoo",
+    "meaning": "洗发水",
+    "topic": "温暖的家",
+    "level": 1,
+    "example": "Wash your hair with shampoo."
+  },
+  {
+    "id": "word-13-93",
+    "word": "soap",
+    "meaning": "肥皂",
+    "topic": "温暖的家",
+    "level": 1,
+    "example": "Wash your hands with soap."
+  },
+  {
+    "id": "word-13-94",
+    "word": "towel",
+    "meaning": "毛巾",
+    "topic": "温暖的家",
+    "level": 1,
+    "example": "Dry your hands with a towel."
+  },
+  {
+    "id": "word-13-95",
+    "word": "tub",
+    "meaning": "浴缸",
+    "topic": "温暖的家",
+    "level": 1,
+    "example": "The tub is full of water."
+  },
+  {
+    "id": "word-13-96",
+    "word": "clean",
+    "meaning": "干净的",
+    "topic": "颜色与感受",
+    "level": 1,
+    "example": "My hands are clean."
+  },
+  {
+    "id": "word-13-97",
+    "word": "food",
+    "meaning": "食物",
+    "topic": "美味食物",
+    "level": 1,
+    "example": "We need food and water."
+  },
+  {
+    "id": "word-13-98",
+    "word": "not",
+    "meaning": "不；不是",
+    "topic": "时间与方向",
+    "level": 1,
+    "example": "This is not my bag."
+  },
+  {
+    "id": "word-13-99",
+    "word": "broccoli",
+    "meaning": "西兰花",
+    "topic": "美味食物",
+    "level": 1,
+    "example": "The broccoli is green."
+  },
+  {
+    "id": "word-13-100",
+    "word": "cabbage",
+    "meaning": "卷心菜",
+    "topic": "美味食物",
+    "level": 1,
+    "example": "This cabbage is big."
+  },
+  {
+    "id": "word-13-101",
+    "word": "lettuce",
+    "meaning": "生菜",
+    "topic": "美味食物",
+    "level": 1,
+    "example": "The rabbit eats lettuce."
+  },
+  {
+    "id": "word-13-102",
+    "word": "onion",
+    "meaning": "洋葱",
+    "topic": "美味食物",
+    "level": 1,
+    "example": "Cut the onion."
+  },
+  {
+    "id": "word-13-103",
+    "word": "kick",
+    "meaning": "踢",
+    "topic": "一起行动",
+    "level": 1,
+    "example": "Kick the ball."
+  },
+  {
+    "id": "word-13-104",
+    "word": "lift",
+    "meaning": "举起",
+    "topic": "一起行动",
+    "level": 1,
+    "example": "Lift your arms."
+  },
+  {
+    "id": "word-13-105",
+    "word": "muscle",
+    "meaning": "肌肉",
+    "topic": "我的身体",
+    "level": 1,
+    "example": "This muscle helps me move."
+  },
+  {
+    "id": "word-13-106",
+    "word": "pull",
+    "meaning": "拉",
+    "topic": "一起行动",
+    "level": 1,
+    "example": "Pull the door."
+  },
+  {
+    "id": "word-13-107",
+    "word": "push",
+    "meaning": "推",
+    "topic": "一起行动",
+    "level": 1,
+    "example": "Push the cart."
+  },
+  {
+    "id": "word-13-108",
+    "word": "stretch",
+    "meaning": "伸展",
+    "topic": "一起行动",
+    "level": 1,
+    "example": "Stretch your arms."
+  },
+  {
+    "id": "word-13-109",
+    "word": "camp",
+    "meaning": "营地",
+    "topic": "大自然",
+    "level": 1,
+    "example": "We sing at camp."
+  },
+  {
+    "id": "word-13-110",
+    "word": "lunch",
+    "meaning": "午餐",
+    "topic": "美味食物",
+    "level": 1,
+    "example": "It is time for lunch."
+  },
+  {
+    "id": "word-13-111",
+    "word": "song",
+    "meaning": "歌曲",
+    "topic": "快乐校园",
+    "level": 1,
+    "example": "We sing a song."
+  },
+  {
+    "id": "word-13-112",
+    "word": "boat",
+    "meaning": "小船",
+    "topic": "衣服与物品",
+    "level": 1,
+    "example": "The boat is on the lake."
+  },
+  {
+    "id": "word-13-113",
+    "word": "dock",
+    "meaning": "码头",
+    "topic": "大自然",
+    "level": 1,
+    "example": "The boat is at the dock."
+  },
+  {
+    "id": "word-13-114",
+    "word": "beetle",
+    "meaning": "甲虫",
+    "topic": "动物朋友",
+    "level": 1,
+    "example": "The beetle is on a leaf."
+  },
+  {
+    "id": "word-13-115",
+    "word": "parrot",
+    "meaning": "鹦鹉",
+    "topic": "动物朋友",
+    "level": 1,
+    "example": "The parrot is green."
+  },
+  {
+    "id": "word-13-116",
+    "word": "rainforest",
+    "meaning": "热带雨林",
+    "topic": "大自然",
+    "level": 1,
+    "example": "Monkeys live in the rainforest."
+  },
+  {
+    "id": "word-13-117",
+    "word": "birthday",
+    "meaning": "生日",
+    "topic": "时间与方向",
+    "level": 1,
+    "example": "Today is my birthday."
+  },
+  {
+    "id": "word-13-118",
+    "word": "candle",
+    "meaning": "蜡烛",
+    "topic": "衣服与物品",
+    "level": 1,
+    "example": "There is a candle on the cake."
+  },
+  {
+    "id": "word-13-119",
+    "word": "guest",
+    "meaning": "客人",
+    "topic": "家人与朋友",
+    "level": 1,
+    "example": "Our guest is here."
+  },
+  {
+    "id": "word-14-1",
+    "word": "plum",
+    "meaning": "李子",
+    "topic": "美味食物",
+    "level": 1,
+    "example": "This plum is purple."
+  },
+  {
+    "id": "word-14-2",
+    "word": "bee",
+    "meaning": "蜜蜂",
+    "topic": "动物朋友",
+    "level": 1,
+    "example": "The bee is on a flower."
+  },
+  {
+    "id": "word-14-3",
+    "word": "lamb",
+    "meaning": "小羊羔",
+    "topic": "动物朋友",
+    "level": 1,
+    "example": "The lamb stays with its mother."
+  },
+  {
+    "id": "word-14-4",
+    "word": "koala",
+    "meaning": "考拉",
+    "topic": "动物朋友",
+    "level": 1,
+    "example": "The koala is in a tree."
+  },
+  {
+    "id": "word-14-5",
+    "word": "whale",
+    "meaning": "鲸",
+    "topic": "动物朋友",
+    "level": 1,
+    "example": "The whale lives in the ocean."
+  },
+  {
+    "id": "word-14-6",
+    "word": "chick",
+    "meaning": "小鸡",
+    "topic": "动物朋友",
+    "level": 1,
+    "example": "The chick is yellow."
+  },
+  {
+    "id": "word-14-7",
+    "word": "piglet",
+    "meaning": "小猪崽",
+    "topic": "动物朋友",
+    "level": 1,
+    "example": "The piglet stays near the pig."
+  },
+  {
+    "id": "word-14-8",
+    "word": "kitten",
+    "meaning": "小猫崽",
+    "topic": "动物朋友",
+    "level": 1,
+    "example": "The kitten plays with a ball."
+  },
+  {
+    "id": "word-14-9",
+    "word": "duckling",
+    "meaning": "小鸭子",
+    "topic": "动物朋友",
+    "level": 1,
+    "example": "The duckling follows the duck."
+  },
+  {
+    "id": "word-14-10",
+    "word": "hamster",
+    "meaning": "仓鼠",
+    "topic": "动物朋友",
+    "level": 1,
+    "example": "My hamster is small."
+  },
+  {
+    "id": "word-14-11",
+    "word": "scissors",
+    "meaning": "剪刀",
+    "topic": "衣服与物品",
+    "level": 1,
+    "example": "Cut the paper with scissors."
+  },
+  {
+    "id": "word-14-12",
+    "word": "sandbox",
+    "meaning": "沙坑",
+    "topic": "快乐校园",
+    "level": 1,
+    "example": "We play in the sandbox."
+  },
+  {
+    "id": "word-14-13",
+    "word": "indigo",
+    "meaning": "靛蓝色",
+    "topic": "颜色与感受",
+    "level": 1,
+    "example": "This color is indigo."
+  },
+  {
+    "id": "word-14-14",
+    "word": "toilet",
+    "meaning": "马桶",
+    "topic": "温暖的家",
+    "level": 1,
+    "example": "The toilet is in the bathroom."
+  },
+  {
+    "id": "word-14-15",
+    "word": "stream",
+    "meaning": "小溪",
+    "topic": "大自然",
+    "level": 1,
+    "example": "The stream flows through the forest."
+  },
+  {
+    "id": "word-14-16",
+    "word": "tap",
+    "meaning": "水龙头",
+    "topic": "温暖的家",
+    "level": 1,
+    "example": "Turn off the tap."
+  },
+  {
+    "id": "word-14-17",
+    "word": "flush",
+    "meaning": "冲水",
+    "topic": "一起行动",
+    "level": 1,
+    "example": "Flush the toilet."
+  },
+  {
+    "id": "word-14-18",
+    "word": "brush",
+    "meaning": "刷子",
+    "topic": "衣服与物品",
+    "level": 1,
+    "example": "This brush is for my hair."
+  },
+  {
+    "id": "word-14-19",
+    "word": "drum",
+    "meaning": "鼓",
+    "topic": "衣服与物品",
+    "level": 1,
+    "example": "I play the drum."
+  },
+  {
+    "id": "word-14-20",
+    "word": "peacock",
+    "meaning": "孔雀",
+    "topic": "动物朋友",
+    "level": 1,
+    "example": "The peacock has a beautiful tail."
+  },
+  {
+    "id": "word-14-21",
+    "word": "scary",
+    "meaning": "吓人的",
+    "topic": "颜色与感受",
+    "level": 1,
+    "example": "That story is scary."
+  },
+  {
+    "id": "word-14-22",
+    "word": "zigzag",
+    "meaning": "锯齿形；之字形",
+    "topic": "数字与形状",
+    "level": 1,
+    "example": "Draw a zigzag line."
+  },
+  {
+    "id": "word-14-23",
+    "word": "thin",
+    "meaning": "薄的；细的",
+    "topic": "颜色与感受",
+    "level": 1,
+    "example": "This book is thin."
+  },
+  {
+    "id": "word-14-24",
+    "word": "straight",
+    "meaning": "直的",
+    "topic": "数字与形状",
+    "level": 1,
+    "example": "Draw a straight line."
+  },
+  {
+    "id": "word-14-25",
+    "word": "short",
+    "meaning": "短的；矮的",
+    "topic": "颜色与感受",
+    "level": 1,
+    "example": "This pencil is short."
+  },
+  {
+    "id": "word-14-26",
+    "word": "long",
+    "meaning": "长的",
+    "topic": "颜色与感受",
+    "level": 1,
+    "example": "The snake is long."
+  },
+  {
+    "id": "word-14-27",
+    "word": "silver",
+    "meaning": "银色",
+    "topic": "颜色与感受",
+    "level": 1,
+    "example": "This ring is silver."
+  },
+  {
+    "id": "word-14-28",
+    "word": "smooth",
+    "meaning": "光滑的",
+    "topic": "颜色与感受",
+    "level": 1,
+    "example": "The stone is smooth."
+  },
+  {
+    "id": "word-14-29",
+    "word": "touch",
+    "meaning": "触摸",
+    "topic": "一起行动",
+    "level": 1,
+    "example": "Touch your nose."
+  },
+  {
+    "id": "word-14-30",
+    "word": "smell",
+    "meaning": "闻",
+    "topic": "一起行动",
+    "level": 1,
+    "example": "Smell the flower."
+  },
+  {
+    "id": "word-14-31",
+    "word": "thick",
+    "meaning": "厚的；粗的",
+    "topic": "颜色与感受",
+    "level": 1,
+    "example": "This book is thick."
+  },
+  {
+    "id": "word-14-32",
+    "word": "toothpaste",
+    "meaning": "牙膏",
+    "topic": "温暖的家",
+    "level": 1,
+    "example": "Put toothpaste on the toothbrush."
+  },
+  {
+    "id": "word-14-33",
+    "word": "toothbrush",
+    "meaning": "牙刷",
+    "topic": "温暖的家",
+    "level": 1,
+    "example": "My toothbrush is blue."
+  },
+  {
+    "id": "word-14-34",
+    "word": "boot",
+    "meaning": "靴子",
+    "topic": "衣服与物品",
+    "level": 1,
+    "example": "This boot keeps my foot warm."
+  },
+  {
+    "id": "word-14-35",
+    "word": "feed",
+    "meaning": "喂食",
+    "topic": "一起行动",
+    "level": 1,
+    "example": "Feed the rabbit."
+  },
+  {
+    "id": "word-14-36",
+    "word": "mask",
+    "meaning": "面具；口罩",
+    "topic": "衣服与物品",
+    "level": 1,
+    "example": "I wear a mask."
+  },
+  {
+    "id": "word-14-37",
+    "word": "party",
+    "meaning": "聚会",
+    "topic": "家人与朋友",
+    "level": 1,
+    "example": "We have a birthday party."
   }
 ]

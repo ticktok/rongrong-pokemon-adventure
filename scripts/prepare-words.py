@@ -28,5 +28,8 @@ for topic_id,(topic,entries) in enumerate(topics):
         words.append({"id":"word-"+str(topic_id+1)+"-"+str(i+1),"word":word,"meaning":meaning,"topic":topic,"level":1 if i<15 else 2,"example":example})
 assert len(words)==300 and len({w["word"].lower() for w in words})==300
 root=pathlib.Path(__file__).resolve().parents[1]
+words.extend(json.loads((root/"content/word-expansions.json").read_text()))
+assert len({w["id"] for w in words})==len(words),"Duplicate word ID"
+assert len({w["word"].strip().lower() for w in words})==len(words),"Duplicate word"
 (root/"content/words.json").write_text(json.dumps(words,ensure_ascii=False,indent=2))
-print("300 unique words ready")
+print(f"{len(words)} unique words ready")
