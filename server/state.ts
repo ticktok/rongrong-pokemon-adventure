@@ -1,5 +1,6 @@
 import type { GameState, Daily, Npc, Partner, Role, PublicState } from '../src/game/types';
 import { defaultMoves, levelFor, expFor, species, wordsFor, wordBank,questionWords,dailyGoal } from './game-data';
+import {learned} from './learning-scheduler';
 import {adventureAccess,initializeGymProgress} from './gym-progress';
 import {qualifies} from '../src/game/checkins';
 export interface Runtime { now:Date; random:()=>number; uuid:()=>string }
@@ -64,13 +65,13 @@ export function rollover(s:GameState,rt:Runtime){
 export function canBattle(s:GameState,day:string){return isWeekend(day)||s.settings.weekdayPassDate===day;}
 export function publicState(s:GameState,role:Role,revision:number,now:Date):PublicState {
   s=structuredClone(s);initializeGymProgress(s,dayOf(now));
-  const {question,customWords:_,disabledWordIds:__,realName,...rest}=structuredClone(s);
+  const {question,customWords:_,disabledWordIds:__,recentWordIds:___recent,realName,...rest}=structuredClone(s);
   let publicQuestion:PublicState['question']=null;
   if(question){
-    const {correctOptionId:___,wordId:____,explanation,word,example,...safe}=question;
+    const {correctOptionId:___,wordId:____,learningPool:_____,explanation,word,example,...safe}=question;
     publicQuestion={...safe,...(question.wrong?{explanation,word,example}:{})};
   }
-  const availableWords=questionWords(s),reviewWords=availableWords.filter(w=>s.mastery[w.id]),availableIds=new Set(availableWords.map(w=>w.id)),goal=dailyGoal(s,availableWords);
+  const availableWords=questionWords(s),reviewWords=availableWords.filter(w=>learned(s.mastery[w.id])),availableIds=new Set(availableWords.map(w=>w.id)),goal=dailyGoal(s,availableWords);
   return {...rest,adventureAccess:adventureAccess(s,dayOf(now)),gymRemaining:Math.max(0,1-(s.daily.date===dayOf(now)?s.daily.gymStarts??0:0)),daily:{...rest.daily,goal,practiceFinished:goal>0&&s.daily.questions>=goal},question:publicQuestion,role,revision,today:dayOf(now),canBattle:canBattle(s,dayOf(now)),reviewWords:wordBank(s).filter(w=>s.mastery[w.id]).map(({id,word,meaning})=>({id,word,meaning,reviewable:availableIds.has(id)})),reviewCount:reviewWords.filter(w=>s.mastery[w.id].due<=dayOf(now)).length,claimableExp:claimableExp(s),wordCount:wordsFor(s).length,...(role==='parent'?{realName,words:wordBank(s).map(w=>({...w,active:!s.disabledWordIds.includes(w.id)}))}:{})};
 }
 export function qualifyingDates(s:GameState){return [...new Set(s.checkins.filter(qualifies).map(c=>c.date))].sort();}

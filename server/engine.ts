@@ -107,7 +107,7 @@ function answer(s:GameState,p:Record<string,unknown>,rt:Runtime):ActionResult {
   const firstCorrect=!q.wrong;s.question=null;
   if(q.kind==='battle'||q.kind==='catch')return settleAction(s,q,firstCorrect,rt);
   if(q.kind==='daily'){
-    s.daily.questions++;s.daily.completedIds.push(q.wordId);if(firstCorrect)s.daily.correct++;
+    s.daily.questions++;s.daily.completedIds.push(q.wordId);if(q.learningPool==='new')s.daily.newWordCount=(s.daily.newWordCount??0)+1;if(firstCorrect)s.daily.correct++;
     syncLearning(s);
     const checkin=s.checkins.find(c=>c.date===s.daily.date);
     let reward='';

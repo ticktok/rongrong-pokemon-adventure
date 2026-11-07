@@ -52,12 +52,13 @@ describe('questions and rewards',()=>{
    ];
    for(let i=0;i<40;i++){const q=makeQuestion(s,'daily',{...rt,random:()=>((i*31+7)%97)/97});if(q.prompt.includes('“家”'))expect(q.options.filter(o=>['home','house'].includes(o.text))).toHaveLength(1);}
  });
- it('schedules reviews on calendar days 1, 3 and 7 without skipping after early repetition',()=>{
+ it('defers a failed word until tomorrow and ignores same-day scheduling successes',()=>{
    const s=act(started(),'practice.start').state,q=s.question!;
-   recordFirst(s,q,false,rt);recordFirst(s,q,true,rt);expect(s.mastery[q.wordId].due).toBe('2026-10-19');
-   recordFirst(s,q,true,rt);expect(s.mastery[q.wordId].due).toBe('2026-10-19');
-   recordFirst(s,q,true,{...rt,now:new Date('2026-10-19T10:00:00Z')});expect(s.mastery[q.wordId].due).toBe('2026-10-21');
-   recordFirst(s,q,true,{...rt,now:new Date('2026-10-21T10:00:00Z')});expect(s.mastery[q.wordId].due).toBe('2026-10-25');
+   recordFirst(s,q,false,rt);const failed=structuredClone(s.mastery[q.wordId].fsrs);
+   recordFirst(s,q,true,rt);recordFirst(s,q,true,rt);
+   expect(s.mastery[q.wordId].due).toBe('2026-10-19');expect(s.mastery[q.wordId].fsrs).toEqual(failed);
+   recordFirst(s,q,true,{...rt,now:new Date('2026-10-19T10:00:00Z')});
+   expect(s.mastery[q.wordId].due>'2026-10-19').toBe(true);expect(s.mastery[q.wordId].fsrs?.lastRating).toBe('good');
  });
  it('requires correction and grants no damage bonus after a wrong first attempt',()=>{
    let s=act(started(),'encounter').state;s=act(s,'battle.move',{moveId:s.partners[0].moves[0]}).state;

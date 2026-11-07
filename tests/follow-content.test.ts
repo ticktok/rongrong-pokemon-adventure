@@ -38,6 +38,14 @@ class Store implements GameStore {
 const run=(db:Store,type:string,payload:Record<string,unknown>={},uid='child')=>gameCommand(command(type,payload),uid,db,rt);
 
 describe('following content without sharing progress',()=>{
+ it('commits FSRS memory once across a revision conflict and a replayed answer',async()=>{
+  const db=new Store();await run(db,'starter',{speciesId:25});await run(db,'practice.start');
+  const q=db.saves.get(trial)!.state.question!;
+  const cmd=command('answer',{questionId:q.id,optionId:q.correctOptionId});db.conflict=true;
+  const first=await gameCommand(cmd,'child',db,rt);expect(first.ok).toBe(true);
+  const saved=structuredClone(db.saves.get(trial)!);expect(saved.state.mastery[q.wordId].correct).toBe(1);expect(saved.state.mastery[q.wordId].fsrs?.card.reps).toBe(1);
+  const replay=await gameCommand(cmd,'child',db,rt);expect(replay.ok).toBe(true);expect(db.saves.get(trial)).toEqual(saved);
+ });
  it('copies only content and retains all progress, identity, pending question and battle snapshots',()=>{
   let own=fresh(),source=fresh();own.settings.weekdayPassDate='2026-10-19';
   own=execute(own,command('starter',{speciesId:25}),'child',rt).state;
