@@ -7,11 +7,11 @@ const vocabularyRun=process.env.VOCABULARY_QA==='1';
 const fixture=await build({stdin:{resolveDir:process.cwd(),loader:'js',contents:`
 import {initialState,publicState} from './server/state';import {execute} from './server/engine';
 import {WORDS} from './server/game-data';
-const rt={now:new Date('2026-10-19T04:00:00Z'),uuid:()=>crypto.randomUUID(),random:()=>0.3};
+const rt={now:new Date(localStorage.getItem('learning-fixture-time')??'2026-10-19T04:00:00Z'),uuid:()=>crypto.randomUUID(),random:()=>0.3};
 const saved=JSON.parse(localStorage.getItem('learning-fixture')||'null');
 let state=saved?.state??execute(initialState([],rt.now,'测试训练师',''),{type:'starter',payload:{speciesId:25}},'child',rt).state,revision=saved?.revision??0,operations=saved?.operations??{},fail='',calls=[];
 if(${vocabularyRun}&&!saved){const names=['red','apple','ice cream','back cover','front cover','scissors','kitten','indigo','toothbrush','plum'];state.disabledWordIds=WORDS.filter(w=>!names.includes(w.word)).map(w=>w.id);state.mastery['word-13-74']={correct:0,wrong:1,due:'2026-10-19',stage:0,reviewStarted:'2026-10-19'};}
-window.__learning={get state(){return state;},get revision(){return revision;},calls,fail:mode=>fail=mode,midnight:()=>rt.now=new Date('2026-10-20T04:00:00Z')};
+window.__learning={get state(){return state;},get revision(){return revision;},calls,fail:mode=>fail=mode,midnight:()=>{rt.now=new Date('2026-10-20T04:00:00Z');localStorage.setItem('learning-fixture-time',rt.now.toISOString());}};
 export const auth={getSession:async()=>({data:{session:{user:{id:'learning-child'}}}}),onAuthStateChange:()=>({data:{subscription:{unsubscribe(){}}}}),signOut:async()=>{}};
 export async function request(command){
  calls.push(command);
@@ -41,6 +41,8 @@ try{
  for(let i=3;i<10;i++){await next().click();await answer();await page.locator('.quiz-complete-actions').waitFor();}
  await page.getByRole('button',{name:'完成挑战',exact:true}).waitFor();assert.equal(await page.evaluate(()=>window.__learning.state.daily.questions),10);assert.equal(await page.evaluate(()=>window.__learning.state.daily.correct),9);assert.equal(await next().count(),0);
  await page.screenshot({path:'artifacts/learning-complete-mobile.png',fullPage:true});await page.getByRole('button',{name:'完成挑战',exact:true}).click();assert(await page.getByRole('button',{name:'今日挑战完成',exact:true}).isDisabled());
+ assert(await page.getByRole('button',{name:'开始复习',exact:true}).isDisabled());
+ await page.evaluate(()=>window.__learning.midnight());await page.reload();
  await page.getByRole('button',{name:'开始复习',exact:true}).click();await answer();await page.locator('.quiz-dialog').waitFor({state:'hidden'});
  assert.deepEqual(errors,[]);console.log('PASS: continuous ten questions, correction and refresh, next retry, lost answer replay after refresh, pause/resume, mobile layout, completion, independent review.');
 }finally{await browser.close();}

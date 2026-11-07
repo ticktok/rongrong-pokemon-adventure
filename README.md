@@ -9,6 +9,8 @@
 
 当前可游玩内容包含第一世代 151 只宝可梦、8 个可走动区域、8 座道馆、456 个英语单词与短语，以及家人与同学 NPC。支持平板横屏、方向键/WASD、触屏方向键和主屏幕快捷入口。
 
+学习调度使用 FSRS-6（`ts-fsrs 5.4.2`）：日常候选充足时四新六旧，其他游戏入口共享同一份掌握记录。目标保持率为 90%，按北京时间整天安排复习，间隔 1—365 天；答错次日再练，当题纠正和同日重复答对不延长间隔。没有完整历史的旧词沿用现有到期日，在首次真实作答后启用模型。运行 `npm run simulate:learning` 可用合成数据与 Git 中的 v0.7.0 对比，结果不代表真实学习效果。
+
 词库维护：在 `content/word-expansions.json` 追加新 ID，运行 `python3 scripts/prepare-words.py` 生成完整词库；不要改动已发布 ID 的含义。发音脚本 `python3 scripts/prepare-pronunciations.py --synthesize-missing` 保留现有音频，优先查找美式真人录音，再用美式合成语音补缺。它需要 Python 的 `edge-tts`，以及 ffmpeg（或 `imageio-ffmpeg`）；只更新音频资产时运行，不在游戏运行时调用外部语音服务。原始素材缓存在忽略的 `private/`，音频来源随站点发布。
 
 ## 第一次使用

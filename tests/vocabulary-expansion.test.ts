@@ -26,7 +26,7 @@ describe('expanded learning vocabulary',()=>{
    const q=makeQuestion(state,'review',rt);
    expect(q.wordId).toBe(w.id);expect(q.options).toHaveLength(4);
    expect(new Set(q.options.map(o=>o.text)).size).toBe(4);
-   recordFirst(state,q,true,rt);expect(state.mastery[w.id].due).toBe('2026-11-08');
+   recordFirst(state,q,true,rt);expect(state.mastery[w.id].due>'2026-11-07').toBe(true);expect(state.mastery[w.id].fsrs?.algorithm).toBe('fsrs-6');
    expect(validateSave(state).mastery[w.id]).toEqual(state.mastery[w.id]);
   }
  });
