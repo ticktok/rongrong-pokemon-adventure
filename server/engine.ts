@@ -1,7 +1,8 @@
+import {initializeBoxes,updateTeam,createBox,movePartners} from './partner-storage';
 import {adventureAccess,initializeGymProgress} from './gym-progress';
 import { MOVES } from '../content/world';
 import {STARTERS,NPC_GIFTS} from '../content/packs';
-import {isWalkable} from '../content/geometry';
+import {isWalkable,mapOf,safePoint,placedNpcs} from '../content/geometry';
 import type { GameState, GameCommand, ActionResult, Role, Word, Npc, Question, Partner } from '../src/game/types';
 import { species, region, hp, damage, captureChance, wildPool, availableMoves, defaultMoves, EVOLUTIONS, wordsFor,wordBank,sameLineage,dailyGoal,syncLearning } from './game-data';
 import { dayOf, rollover, canBattle, grant, makePartner, addEvent, updateSeals,initializeRewardProgress, type Runtime } from './state';
@@ -30,7 +31,7 @@ function startBattle(s:GameState,kind:'wild'|'gym',rt:Runtime):ActionResult {
     enemy=pool[Math.floor(rt.random()*pool.length)];level=Math.max(3,r.level-4+Math.floor(rt.random()*3));enemies=[enemy];
     s.daily.encounters++;
   }else{if(!access.gymAvailable)throw new Error(access.gymReason);enemy=r.boss[0];level=r.level;enemies=r.boss;}
-  const team=s.partners.filter(p=>s.team.includes(p.id)&&!p.sealed);
+  const team=s.team.map(id=>s.partners.find(p=>p.id===id)!).filter(p=>!p.sealed);
   if(!team.length)throw new Error('出战伙伴还没有准备好');
   if(kind==='gym')s.daily.gymStarts=(s.daily.gymStarts??0)+1;
   const p=team[0],ph=hp(p.speciesId,p.level),eh=hp(enemy,level);
@@ -45,7 +46,7 @@ function enemyTurn(s:GameState):ActionResult|undefined {
   b.playerHp=Math.max(0,b.playerHp-n);b.teamHp[p.id]=b.playerHp;b.turn++;
   log(s,species(b.enemy).name+'使用'+MOVES.find(m=>m.id===move)!.name+'，造成 '+n+' 点伤害。');
   if(b.playerHp===0){
-    const next=s.partners.find(p=>s.team.includes(p.id)&&(b.teamHp[p.id]??0)>0);
+    const next=s.team.map(id=>s.partners.find(p=>p.id===id)!).find(p=>(b.teamHp[p.id]??0)>0);
     if(next){b.playerId=next.id;b.playerHp=b.teamHp[next.id];b.playerMaxHp=hp(next.speciesId,next.level);log(s,species(next.speciesId).name+'接力上场！');}
     else{b.status='lost';return {message:'伙伴需要休息。我们整理一下，下次再来！',effect:'lose'};}
   }
@@ -71,7 +72,7 @@ function settleAction(s:GameState,q:Question,firstCorrect:boolean,rt:Runtime):Ac
       const duplicate=s.partners.find(p=>p.speciesId===b.enemy&&!p.sealed)??s.partners.find(p=>sameLineage(p.speciesId,b.enemy)&&!p.sealed);
       let message:string;
       if(duplicate){const gained=grant(s,80,[duplicate.id]);message='又遇见了同一家族的伙伴！为'+species(duplicate.speciesId).name+'带来 '+gained+' 经验，其余奖励按每日上限顺延。';}
-      else{const p=makePartner(b.enemy,b.enemyLevel,rt);s.partners.push(p);if(s.team.length<3)s.team.push(p.id);message='捕捉成功！'+species(b.enemy).name+'加入了你的冒险。';}
+      else{const p=makePartner(b.enemy,b.enemyLevel,rt);s.partners.push(p);if(s.team.length<6)s.team.push(p.id);message='捕捉成功！'+species(b.enemy).name+'加入了你的冒险。';}
       addEvent(s,rt,message);return {message,effect:'catch'};
     }
     log(s,species(b.enemy).name+'跳出了精灵球。');
@@ -122,7 +123,7 @@ function answer(s:GameState,p:Record<string,unknown>,rt:Runtime):ActionResult {
   return {message:'记住这个词了，下次遇见它试着自己读出来！',effect:'correct'};
 }
 export function execute(input:GameState,cmd:GameCommand,role:Role,rt:Runtime):{state:GameState;result:ActionResult}{
-  const s=structuredClone(input);initializeRewardProgress(s);rollover(s,rt);initializeGymProgress(s,dayOf(rt.now));syncLearning(s);const p=cmd.payload,day=dayOf(rt.now);
+  const s=structuredClone(input);initializeBoxes(s);initializeRewardProgress(s);rollover(s,rt);initializeGymProgress(s,dayOf(rt.now));syncLearning(s);const p=cmd.payload,day=dayOf(rt.now);
   let result:ActionResult={message:''};
   if(cmd.type.startsWith('parent.'))requireParent(role);
   switch(cmd.type){
@@ -157,8 +158,9 @@ export function execute(input:GameState,cmd:GameCommand,role:Role,rt:Runtime):{s
       let c=s.checkins.find(c=>c.date===day);
       if(c?.status==='pending')throw new Error('还有任务等待家长确认，确认后再补交');
       if(c?.status==='approved')throw new Error('今天的任务已经全部通过了');
+      const newCheckin=!c;
       if(!c){c={date:day,taskIds:[],status:'pending',submittedAt:rt.now.toISOString(),englishCorrect:s.daily.correct,granted:0};s.checkins.push(c);}
-      if(!c.review)c.review={tasks:s.settings.tasks.filter(t=>t.active).map(({id,name})=>({id,name,status:'unsubmitted'})),rules:reviewRules(s),submissionVersion:0,settled:0,streakReward:0};
+      if(!c.review)c.review={...(newCheckin?{rewardMode:'shared-half' as const}:{}),tasks:s.settings.tasks.filter(t=>t.active).map(({id,name})=>({id,name,status:'unsubmitted'})),rules:reviewRules(s),submissionVersion:0,settled:0,streakReward:0};
       if(taskIds.some(id=>!c.review!.tasks.some(t=>t.id===id&&(t.status==='unsubmitted'||t.status==='rejected'))))throw new Error('只能提交尚未通过的当天任务');
       const submittedAt=rt.now.toISOString();
       for(const task of c.review.tasks)if(taskIds.includes(task.id)){task.status='pending';task.submittedAt=submittedAt;delete task.reason;delete task.reviewedAt;}
@@ -194,8 +196,15 @@ export function execute(input:GameState,cmd:GameCommand,role:Role,rt:Runtime):{s
       noBattle(s);noQuestion(s);
       const id=text(p,'regionId'),r=region(id);const access=adventureAccess(s,day)[r.id];if(!access.regionOpen)throw new Error(access.regionReason);
       const x=Math.round(number(p,'x',1,38)),y=Math.round(number(p,'y',1,24));
-      if(!isWalkable(x,y,r.biome))throw new Error('这里暂时无法停留，请选择附近的空地');
+      if(!isWalkable(x,y,r.id))throw new Error('这里暂时无法停留，请选择附近的空地');
+      if(placedNpcs(s.npcs,id).some(n=>n.x===x&&n.y===y))throw new Error('这里有朋友，请选择附近的空地');
       s.position={regionId:id,x,y};break;
+    }
+    case 'world.interact':{
+      noBattle(s);noQuestion(s);const m=mapOf(s.position.regionId),point=m.discoveries.find(d=>d.id===text(p,'discoveryId'));
+      if(!adventureAccess(s,day)[m.id].regionOpen||!point||Math.hypot(s.position.x-point.x,s.position.y-point.y)>2.4)throw new Error('先走到发现点附近吧');
+      s.discoveries??=[];if(!s.discoveries.includes(point.id)){s.discoveries.push(point.id);addEvent(s,rt,'发现了'+point.name+'！');}
+      result={message:point.description};break;
     }
     case 'encounter':result=startBattle(s,'wild',rt);break;
     case 'gym.start':result=startBattle(s,'gym',rt);break;
@@ -215,9 +224,13 @@ export function execute(input:GameState,cmd:GameCommand,role:Role,rt:Runtime):{s
     }
     case 'battle.leave':noQuestion(s);s.battle=null;result={message:'回到地图，伙伴们已经恢复体力。'};break;
     case 'team.update':{
-      noBattle(s);noQuestion(s);const team=ids(p,'partnerIds',3);if(!team.length||team.some(id=>!s.partners.some(x=>x.id===id&&!x.sealed)))throw new Error('选择 1 到 3 位已唤醒的伙伴');
-      s.team=team;result={message:'出战队伍准备好了！'};break;
+      noBattle(s);noQuestion(s);updateTeam(s,ids(p,'partnerIds',6));result={message:'出战队伍准备好了！'};break;
     }
+    case 'box.create':noBattle(s);noQuestion(s);createBox(s,text(p,'name',20));result={message:'新盒子准备好了'};break;
+    case 'box.rename':{
+      noBattle(s);noQuestion(s);const box=s.boxes!.find(b=>b.id===text(p,'boxId'));if(!box)throw new Error('盒子不存在');box.name=text(p,'name',20);result={message:'盒子名称已保存'};break;
+    }
+    case 'box.move':noBattle(s);noQuestion(s);movePartners(s,ids(p,'partnerIds',30),text(p,'boxId'));result={message:'伙伴已经搬好家了'};break;
     case 'moves.update':{
       noBattle(s);noQuestion(s);const partner=s.partners.find(x=>x.id===text(p,'partnerId'));if(!partner)throw new Error('伙伴不存在');
       const moves=ids(p,'moveIds',4);if(!moves.length||moves.some(id=>!availableMoves(partner).some(m=>m.id===id)))throw new Error('选择 1 到 4 个已经学会的招式');
@@ -263,11 +276,12 @@ export function execute(input:GameState,cmd:GameCommand,role:Role,rt:Runtime):{s
       const npc=s.npcs.find(n=>n.id===text(p,'id'));if(!npc)throw new Error('NPC 不存在');
       const regionId=text(p,'regionId');region(regionId);
       const update:Partial<Npc>={name:text(p,'name',30),line:text(p,'line',200),quest:text(p,'quest',100),regionId,x:Math.round(number(p,'x',2,37)),y:Math.round(number(p,'y',2,23))};
-      if(!isWalkable(update.x!,update.y!,region(regionId).biome)||s.npcs.some(n=>n.id!==npc.id&&n.regionId===regionId&&n.x===update.x&&n.y===update.y))throw new Error('请把朋友放在没有障碍、没有其他 NPC 的空地上');
+      if(!isWalkable(update.x!,update.y!,regionId)||placedNpcs(s.npcs,regionId).some(n=>n.id!==npc.id&&n.x===update.x&&n.y===update.y))throw new Error('请把朋友放在没有障碍、没有其他 NPC 的空地上');
       Object.assign(npc,update);result={message:'朋友的信息已保存'};break;
     }
     default:throw new Error('不支持的操作，请刷新页面');
   }
-  syncLearning(s);
+  if(s.battle?.status!=='active'){const occupied=placedNpcs(s.npcs,s.position.regionId).map(n=>[n.x,n.y] as const);const [x,y]=safePoint(s.position.regionId,s.position.x,s.position.y,occupied);s.position={...s.position,x,y};}
+  initializeBoxes(s);syncLearning(s);
   return {state:s,result};
 }

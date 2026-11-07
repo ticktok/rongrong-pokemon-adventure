@@ -1,0 +1,17 @@
+import {useState} from 'react';
+import {Map,MapPin,Lock,Flag} from 'lucide-react';
+import {mapOf,MAPS,COLS,ROWS} from '../../content/geometry';
+import {REGIONS} from '../../content/world';
+import type {PublicState} from '../game/types';
+import type {Run} from '../lib';
+import Dialog from './Dialog';
+import './WorldMaps.css';
+const colors={land:'#d4dfbb',path:'#e8c777',grass:'#92bb79',water:'#88bbc5',tree:'#62865b',rock:'#919d88',bridge:'#b49a72',building:'#ab7e63'};
+export function LocalMap({regionId,x,y,discoveries}:{regionId:string;x:number;y:number;discoveries:string[]}){
+ const [open,setOpen]=useState(false),map=mapOf(regionId);
+ return <div className={'local-map '+(open?'expanded':'')}><button aria-expanded={open} aria-label="区域小地图" onClick={()=>setOpen(!open)}><Map size={16}/><span>{map.discoveries.filter(d=>discoveries.includes(d.id)).length}/3 发现</span></button>{open&&<><svg viewBox={`0 0 ${COLS} ${ROWS}`} role="img" aria-label="当前位置、道馆、出口与已发现地点">{map.tiles.flatMap((row,ty)=>row.map((t,tx)=><rect key={tx+','+ty} x={tx} y={ty} width="1" height="1" fill={colors[t]}/>))}<rect x={map.gym[0]-1} y={map.gym[1]-1} width="2" height="2" fill="#385972"/>{[map.entry,map.exit].map(([px,py],i)=><rect key={i} x={px-1} y={py-1} width="2" height="2" fill="#fffdf5"/>)}{map.discoveries.filter(d=>discoveries.includes(d.id)).map(d=><circle key={d.id} cx={d.x} cy={d.y} r=".9" fill="#e6b640"/>)}<circle cx={x+.5} cy={y+.5} r="1.1" fill="#d75843" stroke="#fffdf5" strokeWidth=".5"/></svg><small>红点：你 · 蓝方：道馆<br/>白方：出口 · 金点：已发现</small></>}</div>;
+}
+const points=[[16,76],[35,61],[48,82],[31,38],[57,58],[56,28],[78,78],[81,26]];
+export function WorldMap({state,run,busy,onClose}:{state:PublicState;run:Run;busy:boolean;onClose:()=>void}){
+ return <Dialog title="关都冒险地图" onClose={onClose} className="world-map-dialog"><div className="kanto-atlas"><svg viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><path d="M6 18Q32 3 58 10L91 12 95 51 88 93 58 96 46 89 15 94 4 57Z" fill="#d3dfb5"/><path d="M66 92Q64 73 83 67L96 59 100 100 61 100Z" fill="#a0c9ce"/><polyline points={points.map(p=>p.join(',')).join(' ')} fill="none" stroke="#8eaa76" strokeWidth="1.3" strokeDasharray="2 1"/></svg>{REGIONS.map((r,i)=>{const open=state.adventureAccess[r.id].regionOpen;return <div key={r.id} className={'atlas-point '+(state.position.regionId===r.id?'current':'')} style={{left:points[i][0]+'%',top:points[i][1]+'%'}}><span>{open?i+1:<Lock size={10}/>}</span><small>{r.name}</small></div>;})}</div><div className="atlas-caption"><MapPin size={15}/>沿着每一站，收集新的发现 <b>{state.discoveries?.length??0} / 24</b></div><div className="region-path">{REGIONS.map((r,i)=>{const access=state.adventureAccess[r.id],m=MAPS[i],count=m.discoveries.filter(d=>state.discoveries?.includes(d.id)).length;return <button key={r.id} disabled={!access.regionOpen||busy||!!state.battle||!!state.question} className={state.position.regionId===r.id?'current':''} onClick={async()=>{if(state.position.regionId===r.id){onClose();return;}if((await run('world.position',{regionId:r.id,x:m.spawn[0],y:m.spawn[1]}))?.ok)onClose();}}><span className="region-number" style={{background:r.color}}>{access.regionOpen?<Flag size={20}/>:<Lock size={20}/>}</span><div><small>第 {i+1} 站 · 发现 {count}/3</small><strong>{r.name}</strong><p>{r.badge} · 推荐 Lv.{r.level}</p><small>{!access.regionOpen?access.regionReason:access.gymReason||'可以挑战道馆'}</small></div></button>;})}</div></Dialog>;
+}

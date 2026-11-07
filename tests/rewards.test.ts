@@ -19,7 +19,7 @@ function review(s:GameState,approvedTaskIds:string[],date=s.daily.date,now=rt.no
 }
 function solve(s:GameState){const q=s.question!;return act(s,'answer',{questionId:q.id,optionId:q.correctOptionId}).state;}
 const earned=(s:GameState)=>s.checkins[0].review!.settled;
-const totalExp=(s:GameState)=>s.partners.reduce((n,p)=>n+p.exp,0)+s.carry+(s.unallocatedExp??0);
+const totalExp=(s:GameState)=>(s.sharedUnallocated??0)+(s.sharedRewards??[]).reduce((n,r)=>n+r.base*r.rate*r.partnerIds.length,0)+s.partners.reduce((n,p)=>n+p.exp,0)+s.carry+(s.unallocatedExp??0);
 
 describe('itemized approval',()=>{
  it('keeps approved tasks, resubmits only remaining tasks and pays the exact cumulative difference',()=>{
@@ -67,7 +67,7 @@ describe('itemized approval',()=>{
   for(const order of [['a','b','c','d','e'],['e','c','a','b','d']]){
     let s=start();s.daily.correct=10;const before=totalExp(s);
     for(const id of order)s=review(submit(s,[id]),[id]);
-    expect(earned(s)).toBe(322);expect(s.daily.expGranted).toBe(320);expect(s.carry).toBe(2);expect(totalExp(s)-before).toBe(322);
+    expect(earned(s)).toBe(322);expect(s.daily.expGranted).toBe(320);expect(s.sharedRewards?.reduce((n,r)=>n+r.base,0)).toBe(2);expect(totalExp(s)-before).toBe(322);
   }
  });
  it('tops up English after approval, including after all tasks pass, and counts only first answers',()=>{

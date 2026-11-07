@@ -1,14 +1,15 @@
 import {describe,it,expect} from 'vitest';
 import {REGIONS,PACKS} from '../content/packs';
-import {isWalkable,COLS,ROWS} from '../content/geometry';
+import {MAPS,reachable,placedNpcs} from '../content/geometry';
 import {parseWordCsv} from '../src/game/csv';
 describe('maps and imports',()=>{
  it('keeps every gate, gym and NPC placement reachable',()=>{
-   const points=[[8,16],[14,16],[23,19],[30,14],[34,19],[11,12],[14,14],[9,19],[14,21],[24,17],[30,11],[19,1],[19,24]];
-   for(const r of REGIONS){
-     const queue=[[12,16]],seen=new Set(['12,16']);
-     for(let i=0;i<queue.length;i++){const [x,y]=queue[i];for(const [dx,dy]of [[1,0],[-1,0],[0,1],[0,-1]]){const nx=x+dx,ny=y+dy,key=nx+','+ny;if(!seen.has(key)&&nx>=0&&ny>=0&&nx<COLS&&ny<ROWS&&isWalkable(nx,ny,r.biome)){seen.add(key);queue.push([nx,ny]);}}}
-     expect(points.every(([x,y])=>seen.has(x+','+y))).toBe(true);
+   for(const map of MAPS){
+     const points=[map.entry,map.exit,map.gym,...map.discoveries.map(d=>[d.x,d.y])];
+     const seen=new Set(reachable(map.id).map(p=>p.join(',')));
+     for(const point of points)expect(seen.has(point.join(',')),map.id+' '+point).toBe(true);
+     const npcs=placedNpcs([{id:'test',name:'朋友',regionId:map.id,x:0,y:0,kind:'family',line:'你好',quest:'观察'}],map.id);
+     expect(seen.has([npcs[0].x,npcs[0].y].join(','))).toBe(true);
    }
  });
  it('has unique stable IDs across registered content packs',()=>{

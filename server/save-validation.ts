@@ -1,3 +1,4 @@
+import {MAPS} from '../content/geometry';
 import {z} from 'zod';
 import {PACKS} from '../content/packs';
 import {MOVES} from '../content/world';
@@ -7,6 +8,7 @@ import type {GameState} from '../src/game/types';
 const id=z.string().min(1),count=z.number().int().nonnegative(),day=z.string().regex(/^\d{4}-\d{2}-\d{2}$/);
 const ids=z.array(id),numbers=z.array(z.number().int().positive());
 const checkinReview=z.object({
+  rewardMode:z.literal('shared-half').optional(),
   tasks:z.array(z.object({id,name:id,status:z.enum(['unsubmitted','pending','approved','rejected']),submittedAt:id.optional(),reviewedAt:id.optional(),reason:z.string().optional()}).passthrough()).min(1).max(20),
   rules:z.object({baseExp:count,fastMultiplier:z.number().min(1).max(2),fastDeadline:id,englishPerQuestion:z.number().nonnegative(),streakBonus:count}).passthrough(),
   submissionVersion:count,settled:count,streakReward:count,
@@ -20,11 +22,15 @@ export const saveSchema:z.ZodType<GameState>=z.object({
   recentWordIds:ids.max(3).optional(),
   schemaVersion:z.literal(1),nickname:id,realName:z.string(),started:z.boolean(),
   partners:z.array(z.object({id,speciesId:z.number().int().positive(),exp:count,level:z.number().int().min(1).max(50),moves:ids.min(1).max(4),sealed:count.optional(),sealCountedDates:z.array(day).optional(),acquiredAt:day}).passthrough()),
-  team:ids.max(3),seen:numbers,caught:numbers,badges:ids,
+  boxes:z.array(z.object({id,name:id,slots:z.array(id.nullable()).length(30)}).passthrough()).optional(),
+  discoveries:ids.optional(),
+  sharedRewards:z.array(z.object({base:count,partnerIds:ids.min(1).max(6),rate:z.union([z.literal(0.5),z.literal(1)])}).passthrough()).optional(),
+  sharedUnallocated:count.optional(),expHalfRemainders:z.record(id,z.number().int().min(0).max(1)).optional(),
+  team:ids.max(6),seen:numbers,caught:numbers,badges:ids,
   position:z.object({regionId:id,x:z.number().int(),y:z.number().int()}).passthrough(),
   battle:z.object({id,kind:z.enum(['wild','gym']),regionId:id,enemy:z.number().int().positive(),enemyLevel:count,enemyHp:count,enemyMaxHp:count,playerId:id,playerHp:count,playerMaxHp:count,teamHp:z.record(id,count),enemyIndex:count,enemies:numbers,combo:count,balls:count,turn:count,log:z.array(z.string()),status:z.enum(['active','won','lost','caught','fled'])}).passthrough().nullable(),
   question:question.nullable(),
-  daily:z.object({date:day,questions:count,correct:count,completedIds:ids,encounters:count,expGranted:count,practiceFinished:z.boolean(),goal:count.optional(),gymStarts:count.optional(),newWordCount:count.optional()}).passthrough(),
+  daily:z.object({baseExpUsed:count.optional(),date:day,questions:count,correct:count,completedIds:ids,encounters:count,expGranted:count,practiceFinished:z.boolean(),goal:count.optional(),gymStarts:count.optional(),newWordCount:count.optional()}).passthrough(),
   checkins:z.array(z.object({date:day,taskIds:ids,status:z.enum(['pending','partial','approved','rejected']),submittedAt:id,englishCorrect:count,granted:count,reason:z.string().optional(),reviewedAt:id.optional(),review:checkinReview.optional()}).passthrough()),
   mastery:z.record(id,z.object({correct:count,wrong:count,due:day,stage:count,reviewStarted:day.optional(),lastAnsweredOn:day.optional(),fsrs:z.object({algorithm:z.literal('fsrs-6'),card:memoryCard,scheduledOn:day,lastRating:z.enum(['good','again'])}).passthrough().optional()}).passthrough()),
   carry:count,carryTargets:ids,carryByPartner:z.record(id,count).optional(),unallocatedExp:count.optional(),streakRewardsSettled:count.optional(),
@@ -75,6 +81,17 @@ export function validateSave(value:unknown,content=contentIdentity()):GameState{
   for(const p of s.partners){species(p.speciesId,'partners.speciesId');unique(p.moves,'equipped moves');p.moves.forEach(m=>move(m,'partners.moves'));}
   for(const p of [...s.team,...s.carryTargets,...Object.keys(s.carryByPartner??{})])requireRef(partners.has(p),'partner ID');
   requireRef(!s.started||s.team.length>0,'started team');
+  if(s.discoveries){unique(s.discoveries,'discoveries');s.discoveries.forEach(id=>requireRef(MAPS.some(m=>m.discoveries.some(d=>d.id===id)),'discovery'));}
+  if(s.boxes){
+    unique(s.boxes.map(b=>b.id),'box IDs');
+    const stored=s.boxes.flatMap(b=>b.slots.filter((id):id is string=>id!==null));
+    unique([...s.team,...stored],'partner locations');
+    requireRef(stored.length+s.team.length===s.partners.length,'partner locations');
+    stored.forEach(id=>requireRef(partners.has(id),'box partner'));
+  }
+  for(const r of s.sharedRewards??[]){unique(r.partnerIds,'reward recipients');r.partnerIds.forEach(id=>requireRef(partners.has(id),'reward recipient'));}
+  Object.keys(s.expHalfRemainders??{}).forEach(id=>requireRef(partners.has(id),'experience remainder'));
+
   [...s.caught,...s.seen].forEach(n=>species(n,'Pokedex'));s.badges.forEach(n=>region(n,'badges'));region(s.position.regionId,'position');
   if(s.gymProgress){Object.keys(s.gymProgress.firstWins).forEach(n=>{region(n,'gym first win');requireRef(s.badges.includes(n),'gym badge');});s.gymProgress.legacyOpenRegions.forEach(n=>region(n,'legacy region'));}
   s.npcs.forEach(n=>region(n.regionId,'NPC region'));

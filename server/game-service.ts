@@ -39,6 +39,9 @@ export async function gameCommand(event:unknown,uid:string,db:GameStore,rt:Runti
       }
       const old=await db.one<{result:ActionResult}>('rr_operations','result',{family_id:member.family_id,operation_id:command.operationId});
       if(old)return {ok:true,state:view(state,saved.revision),result:old.result};
+      if((command.type==='team.update'||command.type.startsWith('box.'))&&command.payload.expectedRevision!==saved.revision){
+        return {ok:false,error:'伙伴位置已更新，请根据最新队伍重新选择',state:view(state,saved.revision)};
+      }
       const next=execute(state,command,member.role,rt);
       try{
         const result=await db.rpc<CommitResult>('rr_commit',{p_family:member.family_id,p_operation:command.operationId,p_revision:saved.revision,p_state:next.state,p_result:next.result});

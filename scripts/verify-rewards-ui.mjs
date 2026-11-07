@@ -40,13 +40,13 @@ try{
  await role('parent');await page.evaluate(()=>window.__features.flags.loseResponse=true);await page.getByRole('button',{name:'通过 3 项，退回 0 项',exact:true}).click();await page.getByRole('button',{name:'重试',exact:true}).waitFor();
  assert.equal((await state()).checkins[0].review.settled,276);await page.getByRole('button',{name:'重试',exact:true}).click();await page.getByText('今天没有待审核的打卡').waitFor();assert.equal((await state()).checkins[0].review.settled,276);assert.equal((await state()).daily.expGranted,276);
  pass('Child submits; parent passes two items; child retains approvals and resubmits the rest; lost response retry does not pay twice.');
- await page.getByRole('button',{name:'存档与记录',exact:true}).click();assert.match(await page.locator('.itemized-history').innerText(),/奖励共 276 经验/);
+ await page.getByRole('button',{name:'存档与记录',exact:true}).click();assert.match(await page.locator('.itemized-history').innerText(),/奖励共 276 基础经验/);
  await role('child');await page.getByRole('button',{name:'开始今天的练习',exact:true}).click();
  for(let i=0;i<10;i++){
   await page.locator('.quiz-options button').first().waitFor();const s=await state();const index=s.question.options.findIndex(o=>o.id===s.question.correctOptionId);await page.locator('.quiz-options button').nth(index).click();
   await page.locator('.quiz-complete-actions').waitFor();if(i<9)await page.getByRole('button',{name:'下一题',exact:true}).click();
  }
- assert.equal((await state()).checkins[0].review.settled,322);assert.equal((await state()).daily.expGranted,320);assert.equal((await state()).carry,2);assert.match(await page.locator('.quiz-reward').innerText(),/顺延/);await page.getByRole('button',{name:'完成挑战',exact:true}).click();
+ assert.equal((await state()).checkins[0].review.settled,322);assert.equal((await state()).daily.expGranted,320);assert.equal((await state()).sharedRewards.reduce((n,r)=>n+r.base,0),2);assert.match(await page.locator('.quiz-reward').innerText(),/顺延/);await page.getByRole('button',{name:'完成挑战',exact:true}).click();
  pass('English completed after approval tops up to 322 total; 320 arrives and two points carry, with visible feedback.');
  for(const width of [360,768,1024,1365]){
   await page.setViewportSize({width,height:width<500?844:950});await page.evaluate(()=>window.__features.prepare());await role('parent');
