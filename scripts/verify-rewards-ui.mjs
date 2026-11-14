@@ -25,7 +25,7 @@ page.on('pageerror',e=>errors.push(e.message));page.setDefaultTimeout(15000);
 await page.route('**/src/lib.ts',route=>route.fulfill({contentType:'application/javascript',body:fixture.outputFiles[0].text}));
 await mkdir('artifacts',{recursive:true});
 const state=()=>page.evaluate(()=>window.__features.state);
-async function role(value){await page.evaluate(value=>window.__features.setRole(value),value);await page.goto(base+'#/'+(value==='parent'?'parent':'learning'));await page.reload();await page.locator(value==='parent'?'.parent-page':'.learning-grid').waitFor();}
+async function role(value){await page.evaluate(value=>window.__features.setRole(value),value);await page.goto(base+'#/'+(value==='parent'?'parent':'learning'));await page.reload();await page.locator(value==='parent'?'.parent-page':'.learning-grid').waitFor();if(value==='child'&&await page.evaluate(()=>window.__features.state.growth?.entries.some(e=>e.seq>window.__features.state.growth.readThrough))){await page.getByRole('button',{name:'知道啦',exact:true}).click();await page.locator('.growth-dialog').waitFor({state:'hidden'});}}
 const base=process.env.TEST_BASE_URL??'http://127.0.0.1:5176/';
 function pass(value){checks.push(value);console.log('PASS',value);}
 try{

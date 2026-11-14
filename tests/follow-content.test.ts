@@ -46,6 +46,23 @@ describe('following content without sharing progress',()=>{
   const saved=structuredClone(db.saves.get(trial)!);expect(saved.state.mastery[q.wordId].correct).toBe(1);expect(saved.state.mastery[q.wordId].fsrs?.card.reps).toBe(1);
   const replay=await gameCommand(cmd,'child',db,rt);expect(replay.ok).toBe(true);expect(db.saves.get(trial)).toEqual(saved);
  });
+ it('synchronizes growth acknowledgement across devices and retries without consuming newer entries',async()=>{
+  const db=new Store();await run(db,'starter',{speciesId:25});await run(db,'checkin.submit',{taskIds:['english']});
+  await run(db,'parent.review',{date:'2026-10-19',approve:true},'parent');
+  const first=await run(db,'bootstrap');expect(first.state!.growth!.entries).toHaveLength(1);
+  expect((await run(db,'growth.ack',{through:1},'parent')).ok).toBe(false);
+  const ack=command('growth.ack',{through:1});db.conflict=true;
+  expect((await gameCommand(ack,'child',db,rt)).state!.growth!.readThrough).toBe(1);
+  const row=db.saves.get(trial)!;row.state.growth!.entries.push({...row.state.growth!.entries[0],seq:2});row.state.growth!.lastSeq=2;
+  const retry=await gameCommand(ack,'child',db,rt);expect(retry.state!.growth!.readThrough).toBe(1);expect(retry.state!.growth!.lastSeq).toBe(2);
+  expect((await run(db,'bootstrap')).state!.growth).toEqual(retry.state!.growth);
+ });
+ it('does not replay old battle animations on an operation retry',async()=>{
+  const db=new Store();db.saves.get(home)!.state.settings.weekdayPassDate='2026-10-19';await run(db,'starter',{speciesId:25});await run(db,'encounter');await run(db,'battle.move',{moveId:'normal-0'});
+  const q=db.saves.get(trial)!.state.question!,cmd=command('answer',{questionId:q.id,optionId:q.correctOptionId});
+  const first=await gameCommand(cmd,'child',db,rt);expect(first.result!.battlePlayback!.events.length).toBeGreaterThan(0);
+  const retry=await gameCommand(cmd,'child',db,rt);expect(retry.result!.battlePlayback).toBeUndefined();expect(retry.state).toEqual(first.state);
+ });
  it('copies only content and retains all progress, identity, pending question and battle snapshots',()=>{
   let own=fresh(),source=fresh();own.settings.weekdayPassDate='2026-10-19';
   own=execute(own,command('starter',{speciesId:25}),'child',rt).state;
