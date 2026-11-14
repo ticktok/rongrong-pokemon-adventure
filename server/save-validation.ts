@@ -18,6 +18,7 @@ const question=z.object({id,wordId:id,prompt:id,options:z.array(z.object({id,tex
 const memoryCard=z.object({due:z.string().datetime(),stability:z.number().positive().finite(),difficulty:z.number().min(1).max(10),elapsed_days:count,scheduled_days:z.number().int().min(1).max(365),learning_steps:count,reps:count,lapses:count,state:z.union([z.literal(0),z.literal(1),z.literal(2),z.literal(3)]),last_review:z.string().datetime().optional()}).passthrough();
 // passthrough preserves future additive fields when a backup is restored.
 export const saveSchema:z.ZodType<GameState>=z.object({
+  growth:z.object({lastSeq:count,readThrough:count,entries:z.array(z.object({seq:count,at:z.string().datetime(),partnerId:id,fromSpecies:z.number().int().positive(),toSpecies:z.number().int().positive(),fromExp:count,toExp:count,fromLevel:z.number().int().min(1).max(50),toLevel:z.number().int().min(1).max(50)}).passthrough())}).passthrough().optional(),
   gymProgress:z.object({initializedOn:day,firstWins:z.record(id,day),legacyOpenRegions:ids}).passthrough().optional(),
   recentWordIds:ids.max(3).optional(),
   schemaVersion:z.literal(1),nickname:id,realName:z.string(),started:z.boolean(),
@@ -77,6 +78,15 @@ export function validateSave(value:unknown,content=contentIdentity()):GameState{
     c.taskIds.forEach(id=>requireRef(tasks.some(t=>t.id===id),'checkin task'));
     const status=tasks.some(t=>t.status==='pending')?'pending':tasks.every(t=>t.status==='approved')?'approved':tasks.some(t=>t.status==='approved')?'partial':'rejected';
     requireRef(c.status===status,'checkin status');
+  }
+  if(s.growth){
+    const h=s.growth;requireRef(h.readThrough<=h.lastSeq,'growth read position');
+    let previous=0;
+    for(const e of h.entries){
+      requireRef(e.seq>previous&&e.seq<=h.lastSeq,'growth sequence');previous=e.seq;
+      requireRef(partners.has(e.partnerId),'growth partner');species(e.fromSpecies,'growth original species');species(e.toSpecies,'growth evolved species');
+      requireRef(e.toExp>=e.fromExp&&e.toLevel>=e.fromLevel,'growth progress');
+    }
   }
   for(const p of s.partners){species(p.speciesId,'partners.speciesId');unique(p.moves,'equipped moves');p.moves.forEach(m=>move(m,'partners.moves'));}
   for(const p of [...s.team,...s.carryTargets,...Object.keys(s.carryByPartner??{})])requireRef(partners.has(p),'partner ID');

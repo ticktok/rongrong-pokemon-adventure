@@ -1,5 +1,5 @@
 import {useEffect,useState} from 'react';
-import {ArrowLeft,ArrowRight,Box,Check,Heart,Lock,Plus,Search,Star} from 'lucide-react';
+import {BookOpen,ArrowLeft,ArrowRight,Box,Check,Heart,Lock,Plus,Search,Star} from 'lucide-react';
 import {TypeIcon,TypeIcons} from './TypeIcon';
 import Dialog from './Dialog';
 import {pokemon,evolutions,portraitMoves} from '../game/catalog';
@@ -8,9 +8,10 @@ import {TYPE_NAMES} from '../../content/world';
 import {asset,type Run} from '../lib';
 import type {Partner,PublicState,ApiResponse} from '../game/types';
 import './Collection.css';
-export function Team({state,run,busy,error='',pending=false,retry}:{state:PublicState;run:Run;busy:boolean;error?:string;pending?:boolean;retry?:()=>Promise<ApiResponse|undefined>}){
+export function Team({state,run,busy,error='',pending=false,retry,onGrowth,inspectId='',onInspected}:{state:PublicState;run:Run;busy:boolean;error?:string;pending?:boolean;retry?:()=>Promise<ApiResponse|undefined>;onGrowth?:()=>void;inspectId?:string;onInspected?:()=>void}){
  const [selectedId,setSelectedId]=useState(''),[boxId,setBoxId]=useState(''),[query,setQuery]=useState(''),[type,setType]=useState(''),[status,setStatus]=useState(''),[sort,setSort]=useState('slots'),[minLevel,setMinLevel]=useState(''),[maxLevel,setMaxLevel]=useState('');
  const [bulk,setBulk]=useState(false),[checked,setChecked]=useState<string[]>([]),[moveOpen,setMoveOpen]=useState(false),[destination,setDestination]=useState(''),[replaceId,setReplaceId]=useState(''),[choose,setChoose]=useState(false),[editing,setEditing]=useState<'create'|'rename'|null>(null),[name,setName]=useState(''),[moves,setMoves]=useState<string[]|null>(null);
+ useEffect(()=>{if(inspectId){setSelectedId(inspectId);onInspected?.();}},[inspectId,onInspected]);
  const boxes=state.boxes??[],box=boxes.find(b=>b.id===boxId)??boxes[0],selected=state.partners.find(p=>p.id===selectedId);
  const locked=busy||pending||!!state.question||state.battle?.status==='active';
  const reason=state.question?'完成眼前这道题后，就可以整理队伍。':state.battle?.status==='active'?'结束这场对战后，就可以整理队伍。':'';
@@ -37,6 +38,7 @@ export function Team({state,run,busy,error='',pending=false,retry}:{state:Public
   </div>;
  };
  return <section className="page-content partners-page"><div className="section-heading"><div><span className="eyebrow">TOGETHER, EVERYWHERE</span><h1>我的伙伴</h1><p>选好今天的同行伙伴，把每一份相遇好好收藏。</p></div><span className="soft-tag"><Heart size={17}/>{state.partners.length} 位伙伴</span></div>
+  <button className="growth-history-button" onClick={onGrowth}><BookOpen size={17}/>成长记录{(state.growth?.entries.filter(e=>e.seq>state.growth!.readThrough).length??0)>0&&<small>有新成长</small>}</button>
   <section className="party-section"><div className="storage-heading"><h2>冒险小队 <small>{state.team.length} / 6</small></h2><span>第一位伙伴会跟在你身边</span></div><div className="party-slots">{Array.from({length:6},(_,i)=>tile(state.team[i]??null,i,true))}</div>{reason&&<p className="storage-note" role="status">{reason}</p>}</section>
   <section className="shared-summary"><div><b>一起成长</b><p>{state.team.length===1?'单人获得 100% 基础经验':'每位可成长队员获得 50% 基础经验'} · 基础奖励 {state.settings.baseExp} 时，每只预计 +{state.settings.baseExp*ratio}</p><small>今日基础额度 {state.daily.baseExpUsed??state.daily.expGranted} / {state.settings.dailyCap} · {pendingBase} 基础经验顺延 · {state.carry} 历史经验顺延</small></div>{(state.claimableExp>0||(state.sharedUnallocated??0)>0)&&<button className="primary" disabled={locked||!state.partners.some(p=>state.team.includes(p.id)&&!p.sealed&&p.level<50)} onClick={()=>run('reward.claim')}>领取待分配经验<small>{state.claimableExp} 经验 / {state.sharedUnallocated??0} 基础经验</small></button>}</section>
   <section className="storage-section" id="partner-boxes"><div className="storage-heading"><h2><Box size={20}/>伙伴盒子</h2><div className="storage-tools"><button disabled={locked} onClick={()=>{setName('伙伴盒子 '+(boxes.length+1));setEditing('create');}}><Plus size={16}/>新盒子</button><button disabled={locked||!box} onClick={()=>{setName(box!.name);setEditing('rename');}}>改名</button><button aria-pressed={bulk} onClick={()=>{setBulk(!bulk);setChecked([]);setChoose(false);}}>{bulk?'退出多选':'多选移动'}</button></div></div>

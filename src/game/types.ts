@@ -5,6 +5,13 @@ export interface Move { id:string; name:string; type:string; power:number; accur
 export interface PartnerBox {id:string;name:string;slots:(string|null)[]}
 export interface SharedReward {base:number;partnerIds:string[];rate:0.5|1}
 export interface Partner { id:string; speciesId:number; exp:number; level:number; moves:string[]; sealed?:number; sealCountedDates?:string[]; acquiredAt:string }
+export interface GrowthEntry { seq:number; at:string; partnerId:string; fromSpecies:number; toSpecies:number; fromExp:number; toExp:number; fromLevel:number; toLevel:number }
+export interface GrowthHistory { lastSeq:number; readThrough:number; entries:GrowthEntry[] }
+export interface BattleFrame { battle:Battle; playerSpecies:number; playerLevel:number }
+export type BattleEvent =
+  | {kind:'attack'; side:'own'|'enemy'; moveId:string; damage:number; effectiveness:number; bonus:number; before:BattleFrame; after:BattleFrame}
+  | {kind:'faint'|'sendout'|'outcome'|'capture'; side:'own'|'enemy'; message:string; before:BattleFrame; after:BattleFrame};
+export interface BattlePlayback { battleId:string; events:BattleEvent[] }
 export interface Word { id:string; word:string; meaning:string; topic:string; level:number; example:string; active?:boolean }
 export interface Npc { id:string; name:string; regionId:string; x:number; y:number; kind:'family'|'classmate'; line:string; quest:string }
 export interface Region { id:string; name:string; subtitle:string; biome:string; color:string; badge:string; leader:string; level:number; gift:number; boss:number[]; requiredBadges:number; description:string }
@@ -22,6 +29,7 @@ export interface Settings { baseExp:number; dailyCap:number; captureLimit:number
 export interface AdventureAccess { regionOpen:boolean; regionOpensOn?:string; regionReason:string; gymAvailable:boolean; gymEligibleOn?:string; gymReason:string }
 export interface GymProgress { initializedOn:string; firstWins:Record<string,string>; legacyOpenRegions:string[] }
 export interface GameState {
+  growth?:GrowthHistory;
   boxes?:PartnerBox[];
   discoveries?:string[];
   sharedRewards?:SharedReward[];
@@ -39,6 +47,6 @@ export interface PublicState extends Omit<GameState,'question'|'customWords'|'di
   question:PublicQuestion|null; realName?:string; words?:Word[]; reviewWords:(Pick<Word,'id'|'word'|'meaning'>&{reviewable?:boolean})[]; reviewCount:number; claimableExp:number; wordCount:number; role:Role; revision:number; canBattle:boolean; today:string;
 }
 export interface DailyFeedback { questionId:string; word:string; explanation:string; example:string; completed:number; correct:number; date:string; goal?:number; rewardMessage?:string }
-export interface ActionResult { message:string; effect?:'correct'|'wrong'|'attack'|'catch'|'win'|'lose'|'level'|'evolve'|'approve'|'gift'; dailyFeedback?:DailyFeedback }
+export interface ActionResult { message:string; effect?:'correct'|'wrong'|'attack'|'catch'|'win'|'lose'|'level'|'evolve'|'approve'|'gift'; dailyFeedback?:DailyFeedback; battlePlayback?:BattlePlayback }
 export interface ApiResponse { ok:boolean; state?:PublicState; result?:ActionResult; error?:string; export?:GameState }
 export interface GameCommand { type:string; operationId:string; payload:Record<string,unknown>; expectedUid?:string }
