@@ -16,9 +16,12 @@ export function initializeGymProgress(s:GameState,day:string){
   s.gymProgress={initializedOn:day,firstWins,legacyOpenRegions:REGIONS.filter(r=>s.badges.length>=r.requiredBadges).map(r=>r.id)};
   if(s.battle?.kind==='gym'&&s.battle.status==='active')s.daily.gymStarts=1;
 }
+export function gymRemaining(s:GameState,day:string){
+  return s.daily.date===day?Math.max(0,1+(s.daily.gymExtraStarts??0)-(s.daily.gymStarts??0)):1;
+}
 export function adventureAccess(s:GameState,day:string):Record<string,AdventureAccess>{
   const progress=s.gymProgress!;
-  const starts=s.daily.date===day?s.daily.gymStarts??0:0;
+  const remaining=gymRemaining(s,day);
   return Object.fromEntries(REGIONS.map(r=>{
     const previous=REGIONS.find(p=>p.requiredBadges===r.requiredBadges-1);
     const hasBadge=s.badges.includes(r.id),prerequisite=r.requiredBadges===0||!!previous&&s.badges.includes(previous.id);
@@ -27,7 +30,7 @@ export function adventureAccess(s:GameState,day:string):Record<string,AdventureA
     const regionOpen=hasBadge||progress.legacyOpenRegions.includes(r.id)||(prerequisite&&(!regionOpensOn||day>=regionOpensOn));
     const regionReason=regionOpen?'':!prerequisite?'先获得上一座道馆的徽章吧':regionOpensOn+' 开放';
     const gymEligibleOn=!hasBadge&&wonOn?dateShift(wonOn,7):undefined;
-    const gymReason=!regionOpen?regionReason:!prerequisite&&!hasBadge?'先获得上一座道馆的徽章吧':gymEligibleOn&&day<gymEligibleOn?gymEligibleOn+' 可挑战':starts>=1?'今天的道馆挑战已用完':!isWeekend(day)&&s.settings.weekdayPassDate!==day?'道馆挑战周末开放，也可以请家长临时放行':'';
+    const gymReason=!regionOpen?regionReason:!prerequisite&&!hasBadge?'先获得上一座道馆的徽章吧':gymEligibleOn&&day<gymEligibleOn?gymEligibleOn+' 可挑战':remaining===0?'今天的道馆挑战已用完':!isWeekend(day)&&s.settings.weekdayPassDate!==day?'道馆挑战周末开放，也可以请家长临时放行':'';
     return [r.id,{regionOpen,regionOpensOn,regionReason,gymAvailable:!gymReason,gymEligibleOn,gymReason}];
   }));
 }

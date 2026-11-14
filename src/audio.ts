@@ -1,4 +1,5 @@
 let context:AudioContext|undefined;
+export function stopEffects(){const previous=context;context=undefined;if(previous)void previous.close().catch(error=>console.warn('提示音停止失败',error.message));}
 export function prepareAudio(){
   const Constructor=window.AudioContext;
   if(!Constructor)return;

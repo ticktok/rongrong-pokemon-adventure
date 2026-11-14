@@ -1,5 +1,5 @@
 import {initializeBoxes,updateTeam,createBox,movePartners} from './partner-storage';
-import {adventureAccess,initializeGymProgress} from './gym-progress';
+import {adventureAccess,initializeGymProgress,gymRemaining} from './gym-progress';
 import {recordGrowth,acknowledgeGrowth} from './growth';
 import {battleFrame,attackEvent,stageEvent} from './battle-events';
 import { MOVES } from '../content/world';
@@ -36,15 +36,15 @@ function startBattle(s:GameState,kind:'wild'|'gym',rt:Runtime):ActionResult {
   const team=s.team.map(id=>s.partners.find(p=>p.id===id)!).filter(p=>!p.sealed);
   if(!team.length)throw new Error('出战伙伴还没有准备好');
   if(kind==='gym')s.daily.gymStarts=(s.daily.gymStarts??0)+1;
-  const p=team[0],ph=hp(p.speciesId,p.level),eh=hp(enemy,level);
-  s.battle={id:rt.uuid(),kind,regionId:r.id,enemy,enemyLevel:level,enemyHp:eh,enemyMaxHp:eh,playerId:p.id,playerHp:ph,playerMaxHp:ph,teamHp:Object.fromEntries(team.map(p=>[p.id,hp(p.speciesId,p.level)])),enemyIndex:0,enemies,combo:0,balls:0,turn:1,log:[kind==='gym'?r.leader+'：准备好了吗？一起认真打一场！':'野生的'+species(enemy).name+'出现了！'],status:'active'};
+  const p=team[0],ph=hp(p.speciesId,p.level),eh=Math.max(1,Math.floor(hp(enemy,level)*(kind==='gym'?s.settings.gymDifficulty??1.5:1)));
+  s.battle={...(kind==='gym'?{gymDifficulty:s.settings.gymDifficulty??1.5}:{}),id:rt.uuid(),kind,regionId:r.id,enemy,enemyLevel:level,enemyHp:eh,enemyMaxHp:eh,playerId:p.id,playerHp:ph,playerMaxHp:ph,teamHp:Object.fromEntries(team.map(p=>[p.id,hp(p.speciesId,p.level)])),enemyIndex:0,enemies,combo:0,balls:0,turn:1,log:[kind==='gym'?r.leader+'：准备好了吗？一起认真打一场！':'野生的'+species(enemy).name+'出现了！'],status:'active'};
   if(!s.seen.includes(enemy))s.seen.push(enemy);
   return {message:kind==='wild'?'草丛里的新朋友出现了！':'道馆挑战开始了'};
 }
 function enemyTurn(s:GameState,events:BattleEvent[]):ActionResult|undefined {
   const b=s.battle!;const p=current(s);
   const move=defaultMoves(b.enemy,b.enemyLevel).sort((a,c)=>damage(b.enemy,b.enemyLevel,p.speciesId,p.level,c)-damage(b.enemy,b.enemyLevel,p.speciesId,p.level,a))[0];
-  const before=battleFrame(s),n=damage(b.enemy,b.enemyLevel,p.speciesId,p.level,move);
+  const before=battleFrame(s),baseDamage=damage(b.enemy,b.enemyLevel,p.speciesId,p.level,move),n=baseDamage===0?0:Math.max(1,Math.floor(baseDamage*(b.kind==='gym'?b.gymDifficulty??1:1)));
   b.playerHp=Math.max(0,b.playerHp-n);b.teamHp[p.id]=b.playerHp;b.turn++;
   attackEvent(events,before,s,'enemy',move);
   log(s,species(b.enemy).name+'使用'+MOVES.find(m=>m.id===move)!.name+'，造成 '+n+' 点伤害。');
@@ -98,7 +98,7 @@ function settleAction(s:GameState,q:Question,firstCorrect:boolean,rt:Runtime,eve
     stageEvent(events,battleFrame(s),s,'faint','enemy',species(b.enemy).name+'倒下了');
     const fallen=battleFrame(s);
     if(b.enemyIndex+1<b.enemies.length){
-      b.enemyIndex++;b.enemy=b.enemies[b.enemyIndex];b.enemyMaxHp=hp(b.enemy,b.enemyLevel);b.enemyHp=b.enemyMaxHp;
+      b.enemyIndex++;b.enemy=b.enemies[b.enemyIndex];b.enemyMaxHp=Math.max(1,Math.floor(hp(b.enemy,b.enemyLevel)*(b.kind==='gym'?b.gymDifficulty??1:1)));b.enemyHp=b.enemyMaxHp;
       if(!s.seen.includes(b.enemy))s.seen.push(b.enemy);
       log(s,'下一位对手：'+species(b.enemy).name+'！');
       stageEvent(events,fallen,s,'sendout','enemy','下一位对手：'+species(b.enemy).name+'！');
@@ -134,6 +134,7 @@ function answer(s:GameState,p:Record<string,unknown>,rt:Runtime,events:BattleEve
   return {message:'记住这个词了，下次遇见它试着自己读出来！',effect:'correct'};
 }
 export function execute(input:GameState,cmd:GameCommand,role:Role,rt:Runtime):{state:GameState;result:ActionResult}{
+  if(role==='child'&&input.settings.childLocked&&cmd.type!=='bootstrap')throw new Error('家长让冒险暂停一下，休息好了再回来吧。');
   const s=structuredClone(input);initializeBoxes(s);initializeRewardProgress(s);rollover(s,rt);initializeGymProgress(s,dayOf(rt.now));syncLearning(s);const p=cmd.payload,day=dayOf(rt.now);
   const events:BattleEvent[]=[];
   let result:ActionResult={message:''};
@@ -255,7 +256,15 @@ export function execute(input:GameState,cmd:GameCommand,role:Role,rt:Runtime):{s
       if(!partner||partner.sealed||!EVOLUTIONS.some(e=>e.from===partner.speciesId&&e.to===to&&e.level<=partner.level))throw new Error('还没到这次进化的时机');
       partner.speciesId=to;partner.moves=defaultMoves(to,partner.level);addCaught(s,to);result={message:'进化成功！'+species(to).name+'会继续陪你冒险。',effect:'evolve'};addEvent(s,rt,result.message);break;
     }
+    case 'parent.gym.retry':{
+      noBattle(s);noQuestion(s);
+      if(gymRemaining(s,day)>0)throw new Error('还有未使用的挑战机会，用完后再补充吧');
+      s.daily.gymExtraStarts=(s.daily.gymExtraStarts??0)+1;
+      result={message:'今天已增加一次道馆挑战机会'};break;
+    }
     case 'parent.settings':{
+      if('childLocked' in p){if(typeof p.childLocked!=='boolean')throw new Error('锁定状态必须是开或关');s.settings.childLocked=p.childLocked;}
+      if('gymDifficulty' in p){const value=number(p,'gymDifficulty',0.5,3);if(Math.abs(value*10-Math.round(value*10))>1e-8)throw new Error('难度系数请按 0.1 调整');s.settings.gymDifficulty=value;}
       const numeric:Record<string,[number,number]>={baseExp:[0,1000],dailyCap:[1,5000],captureLimit:[0,30],attackBonus:[1,2],comboBonus:[1,3],catchBonus:[0,0.5],fastMultiplier:[1,2],streakBonus:[0,500],englishPerQuestion:[0,0.1],sealDays:[1,30],maxWordLevel:[1,3]};
       for(const [key,[min,max]] of Object.entries(numeric)){if(key in p){const value=number(p,key,min,max);Object.assign(s.settings,{[key]:['attackBonus','comboBonus','catchBonus','fastMultiplier','englishPerQuestion'].includes(key)?value:Math.round(value)});}}
       if('weekdayPassDate'in p)s.settings.weekdayPassDate=p.weekdayPassDate===true?day:'';
