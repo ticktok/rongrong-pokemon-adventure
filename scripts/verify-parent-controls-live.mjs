@@ -43,7 +43,7 @@ try{
  await parent.getByRole('button',{name:'家庭规则',exact:true}).click();
  const initial=await current();for(let i=0;i<3;i++)assert((await command(child,'state.read')).ok);assert.equal((await current()).revision,initial.revision);
  assert.equal((await command(child,'parent.settings',{childLocked:true})).ok,false);
- await parent.getByLabel('道馆难度系数').fill('2');await parent.getByRole('button',{name:'保存难度',exact:true}).click();await expect(parent.getByRole('button',{name:'保存难度',exact:true})).toBeDisabled();assert.equal((await current()).state.settings.gymDifficulty,2);
+ await parent.getByLabel('道馆难度系数').fill('2');await parent.getByRole('button',{name:'保存难度',exact:true}).click();await expect(parent.getByRole('button',{name:'保存难度',exact:true})).toBeDisabled();await expect.poll(async()=>(await current()).state.settings.gymDifficulty,{timeout:15000}).toBe(2);
  await parent.getByRole('checkbox',{name:'锁定儿童端'}).check();await child.locator('.child-rest-page').waitFor();
  const locked=await current(),q=locked.state.question;
  for(const type of ['answer','world.position','reward.claim','parent.gym.retry']){const result=await command(child,type,{questionId:q.id,optionId:q.correctOptionId});assert.equal(result.ok,false);assert.equal(result.state.settings.childLocked,true);}
@@ -57,7 +57,7 @@ try{
  const battle=await command(child,'gym.start');assert(battle.ok,battle.error);assert.equal(battle.state.battle.gymDifficulty,2);const oldBattle=battle.state.battle;
  assert((await command(parent,'parent.settings',{gymDifficulty:.5})).ok);assert.deepEqual((await current()).state.battle,oldBattle);assert.equal((await command(parent,'parent.gym.retry')).ok,false);
  assert((await command(child,'battle.leave')).ok);await parent.reload();await parent.locator('.parent-page').waitFor();await parent.getByRole('button',{name:'家庭规则',exact:true}).click();
- const grant=parent.getByRole('button',{name:'今天再给一次挑战机会',exact:true});await expect(grant).toBeEnabled();await grant.click();await expect(grant).toBeDisabled();assert.equal((await current()).state.daily.gymExtraStarts,1);
+ const grant=parent.getByRole('button',{name:'今天再给一次挑战机会',exact:true});await expect(grant).toBeEnabled();await grant.click();await expect(grant).toBeDisabled();await expect.poll(async()=>(await current()).state.daily.gymExtraStarts,{timeout:15000}).toBe(1);
  const retryId=randomUUID();const extra=await command(child,'gym.start',{},retryId);assert(extra.ok,extra.error);assert.equal(extra.state.battle.gymDifficulty,.5);assert.equal(extra.state.daily.gymStarts,2);assert((await command(child,'gym.start',{},retryId)).ok);assert.equal((await current()).state.daily.gymStarts,2);
  assert((await command(child,'battle.leave')).ok);const grantId=randomUUID();assert((await command(parent,'parent.gym.retry',{},grantId)).ok);assert((await command(parent,'parent.gym.retry',{},grantId)).ok);assert.equal((await current()).state.daily.gymExtraStarts,2);
  validateSave((await current()).state);pass('Active gym retains its coefficient; parent grants exactly one retry and the next battle uses the new difficulty.');
