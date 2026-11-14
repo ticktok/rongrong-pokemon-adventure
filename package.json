@@ -1,6 +1,6 @@
 {
   "name": "rongrong-pokemon-adventure",
-  "version": "0.10.0",
+  "version": "0.11.0",
   "private": true,
   "type": "module",
   "scripts": {
@@ -34,7 +34,9 @@
     "test:adventure-live": "node scripts/verify-adventure-live.mjs",
     "simulate:adventure": "node scripts/simulate-adventure.mjs",
     "test:presentation-ui": "node scripts/verify-growth-battle-ui.mjs",
-    "test:presentation-live": "node scripts/verify-growth-battle-live.mjs"
+    "test:presentation-live": "node scripts/verify-growth-battle-live.mjs",
+    "test:parent-controls-ui": "node scripts/verify-parent-controls-ui.mjs",
+    "test:parent-controls-live": "node scripts/verify-parent-controls-live.mjs"
   },
   "dependencies": {
     "@cloudbase/js-sdk": "latest",

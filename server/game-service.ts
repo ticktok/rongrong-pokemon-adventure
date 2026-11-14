@@ -33,6 +33,8 @@ export async function gameCommand(event:unknown,uid:string,db:GameStore,rt:Runti
         state=followContent(saved.state,source.state);
       }
       const view=(value:GameState,revision:number)=>({...publicState(value,member.role,revision,rt.now),contentMode:following?'follow' as const:'own' as const});
+      if(command.type==='state.read'||(command.type==='bootstrap'&&member.role==='child'&&state.settings.childLocked))return {ok:true,state:view(state,saved.revision)};
+      if(member.role==='child'&&state.settings.childLocked)return {ok:false,error:'家长让冒险暂停一下，休息好了再回来吧。',state:view(state,saved.revision)};
       if(command.type==='parent.export'){
         if(member.role!=='parent')throw new Error('这项操作需要家长登录');
         return {ok:true,export:state,state:view(state,saved.revision)};

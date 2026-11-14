@@ -20,7 +20,7 @@ import {BADGE_COLLECTIONS} from './game/badges';
 import Pokedex from './components/Pokedex';
 import Parent from './components/Parent';
 import DailyTasks from './components/DailyTasks';
-import {prepareAudio,playEffect} from './audio';
+import {prepareAudio,playEffect,stopEffects} from './audio';
 import {version} from '../package.json';
 const pages=['adventure','partners','pokedex','learning','parent','collection'];
 function pageFromHash(){const value=location.hash.slice(1).replace(/^\//,'').split('?')[0];return pages.includes(value)?value:'adventure';}
@@ -46,6 +46,12 @@ export default function App(){
 function GameSession({user,isCurrent}:{user:string;isCurrent:(uid:string)=>boolean}){
   const [state,setState]=useState<PublicState|null>(null);
   const [playback,setPlayback]=useState<(Playback&{message:string;effect:string})|null>(null),[growthHistory,setGrowthHistory]=useState(false),[inspectPartner,setInspectPartner]=useState('');
+  const stateRef=useRef<PublicState|null>(null),requestSequence=useRef(0),acceptedSequence=useRef(0),readBusy=useRef(false);
+  const acceptState=useCallback((next:PublicState,sequence:number)=>{
+    const old=stateRef.current;
+    if(old&&(next.revision<old.revision||(next.revision===old.revision&&sequence<acceptedSequence.current)))return false;
+    stateRef.current=next;acceptedSequence.current=sequence;setState(next);return true;
+  },[]);
   const playbackRef=useRef(false),presentedOperations=useRef(new Set<string>());
   playbackRef.current=!!playback;
   const [feedback,setFeedback]=useState<DailyFeedback|null>(null);
@@ -59,15 +65,17 @@ function GameSession({user,isCurrent}:{user:string;isCurrent:(uid:string)=>boole
   const perform=useCallback(async(command:GameCommand):Promise<ApiResponse|undefined>=>{
     if(!aliveRef.current||!isCurrent(user)||busyRef.current||playbackRef.current)return;
     if(pendingRef.current&&command.type!=='bootstrap'&&command.operationId!==pendingRef.current.operationId){setError('先重试上次的操作，确认云端结果后再继续吧。');return;}
+    if(stateRef.current?.role==='child'&&stateRef.current.settings.childLocked&&command.type!=='bootstrap')return;
+    const sequence=++requestSequence.current;
     busyRef.current=true;setBusy(true);setError('');
     const key='rr-pending-'+user;
     if(command.type!=='bootstrap'){localStorage.setItem(key,JSON.stringify(command));setPending(command);pendingRef.current=command;}
     try{
       const result=await request(command,user);
       if(!aliveRef.current||!isCurrent(user))return;
-      if(!result.ok){if(result.state)setState(old=>!old||result.state!.revision>=old.revision?result.state!:old);localStorage.removeItem(key);setPending(null);pendingRef.current=null;throw new Error(result.error??'这次操作没有完成');}
-      if(result.state){
-        setState(old=>!old||result.state!.revision>=old.revision?result.state!:old);
+      if(!result.ok){if(result.state)acceptState(result.state,sequence);localStorage.removeItem(key);setPending(null);pendingRef.current=null;throw new Error(result.error??'这次操作没有完成');}
+      const accepted=!result.state||acceptState(result.state,sequence);
+      if(result.state&&accepted){
         const f=result.result?.dailyFeedback;
         setFeedback(previous=>{
           if(result.state!.question)return null;
@@ -76,6 +84,7 @@ function GameSession({user,isCurrent}:{user:string;isCurrent:(uid:string)=>boole
         });
       }
       if(command.type!=='bootstrap'){localStorage.removeItem(key);setPending(null);pendingRef.current=null;}
+      if(!accepted||(stateRef.current?.role==='child'&&stateRef.current.settings.childLocked))return result;
       const animation=result.result?.battlePlayback;
       if(animation){setNotice('');clearTimeout(noticeTimer.current);}
       if(command.type!=='bootstrap'&&animation?.events.length&&animation.battleId===result.state?.battle?.id&&!presentedOperations.current.has(command.operationId)){
@@ -90,19 +99,44 @@ function GameSession({user,isCurrent}:{user:string;isCurrent:(uid:string)=>boole
       return result;
     }catch(e){if(aliveRef.current&&isCurrent(user))setError(e instanceof Error?e.message:'暂时连接不上，请稍后重试');}
     finally{busyRef.current=false;if(aliveRef.current&&isCurrent(user))setBusy(false);}
-  },[user,isCurrent]);
+  },[user,isCurrent,acceptState]);
   const run:Run=useCallback((type,payload={})=>perform({type,payload,operationId:crypto.randomUUID()}),[perform]);
   useEffect(()=>{const saved=localStorage.getItem('rr-pending-'+user);if(saved){try{const restored=JSON.parse(saved) as GameCommand;setPending(restored);pendingRef.current=restored;}catch{setError('上次未完成的操作记录无法读取，请刷新云端存档');}}void run('bootstrap');},[user,run]);
+  const readState=useCallback(async()=>{
+    if(readBusy.current||!aliveRef.current||!isCurrent(user))return;
+    readBusy.current=true;const sequence=++requestSequence.current;
+    try{
+      const response=await request({type:'state.read',payload:{},operationId:crypto.randomUUID()},user);
+      if(!aliveRef.current||!isCurrent(user))return;
+      if(!response.ok||!response.state)throw new Error(response.error??'暂时无法同步，请重新连接');
+      if(acceptState(response.state,sequence))setSyncError('');
+    }catch(e){if(aliveRef.current&&isCurrent(user))setSyncError(e instanceof Error?e.message:'暂时无法同步，请重新连接');}
+    finally{readBusy.current=false;}
+  },[user,isCurrent,acceptState]);
+  const [syncError,setSyncError]=useState('');
+  useEffect(()=>{
+    if(state?.role!=='child')return;
+    const refresh=()=>{if(document.visibilityState==='visible')void readState();};
+    const interval=setInterval(refresh,5000);
+    document.addEventListener('visibilitychange',refresh);window.addEventListener('online',refresh);window.addEventListener('focus',refresh);
+    return()=>{clearInterval(interval);document.removeEventListener('visibilitychange',refresh);window.removeEventListener('online',refresh);window.removeEventListener('focus',refresh);};
+  },[state?.role,readState]);
+  const childLocked=state?.role==='child'&&!!state.settings.childLocked;
+  useEffect(()=>{
+    if(!childLocked)return;
+    stopPronunciation();stopEffects();setPlayback(null);setFeedback(null);setNpc(null);setMapOpen(false);setSettingsOpen(false);setInspectPartner('');setGrowthHistory(false);setNotice('');clearTimeout(noticeTimer.current);
+  },[childLocked]);
   useEffect(()=>{const handler=()=>setTab(pageFromHash());window.addEventListener('hashchange',handler);return()=>window.removeEventListener('hashchange',handler);},[]);
   useEffect(()=>{document.documentElement.dataset.reduced=String(reduced);localStorage.setItem('rr-reduced',reduced?'on':'off');},[reduced]);
   useEffect(()=>{localStorage.setItem('rr-sound',sound?'on':'off');},[sound]);
-  useEffect(()=>{const unlock=()=>{if(soundRef.current)prepareAudio();};window.addEventListener('pointerdown',unlock,{passive:true});return()=>window.removeEventListener('pointerdown',unlock);},[]);
+  useEffect(()=>{const unlock=()=>{if(soundRef.current&&!(stateRef.current?.role==='child'&&stateRef.current.settings.childLocked))prepareAudio();};window.addEventListener('pointerdown',unlock,{passive:true});return()=>window.removeEventListener('pointerdown',unlock);},[]);
   useEffect(()=>{stopPronunciation();return stopPronunciation;},[tab]);
   useEffect(()=>{if(tab!=='adventure')setPlayback(null);},[tab,playback]);
   const playbackDone=useCallback(()=>{setPlayback(null);if(playback){playEffect(playback.effect,soundRef.current);setNotice(playback.message);clearTimeout(noticeTimer.current);noticeTimer.current=setTimeout(()=>setNotice(''),6500);}},[playback]);
   const inspected=useCallback(()=>setInspectPartner(''),[]);
   const navigate=(page:string)=>{setFeedback(null);setTab(page);location.hash='/'+page;setNpc(null);};
   if(!state)return <div className="loading-screen"><div className="pokeball"/><h2>正在取回云端存档</h2>{error&&<p className="error-text">{error}</p>}<button onClick={()=>run('bootstrap')} disabled={busy}><RefreshCw size={16}/>重新连接</button><button className="text-button" onClick={()=>auth.signOut()}>切换账号</button></div>;
+  if(childLocked)return <main className="child-rest-page"><section className="admin-panel"><Lock size={44}/><span className="eyebrow">TIME FOR A LITTLE REST</span><h1>冒险先休息一下</h1><p>家长让我们暂停一会儿。<br/>伙伴和进度都在，解锁后就能继续。</p><small>正在等待家长解锁…</small>{syncError&&<p role="alert">{syncError}</p>}<div><button className="primary" onClick={()=>void readState()}><RefreshCw size={17}/>重新连接</button><button onClick={()=>auth.signOut()}><LogOut size={17}/>退出账号</button></div></section></main>;
   const region=REGIONS.find(r=>r.id===state.position.regionId)!,goal=state.daily.goal??10,nav=[['adventure','去冒险',Compass],['partners','我的伙伴',Heart],['pokedex','发现图鉴',BookOpen],['learning','学习手册',NotebookPen],['collection','我的收藏',ShieldCheck]] as const;
   const renderTasks=()=> <DailyTasks state={state} run={run} busy={busy||!!pending||!!playback}/>;
   return <div className="app-shell">
