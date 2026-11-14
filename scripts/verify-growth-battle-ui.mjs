@@ -32,14 +32,20 @@ export async function request(command){
 export const asset=(kind,id)=>'/assets/pokemon/'+kind+'/'+id+'.png';export const saveFile=()=>{};export const dueWords=s=>s.reviewCount;
 `},bundle:true,write:false,platform:'browser',format:'esm'});
 const useWebkit=process.env.TEST_BROWSER==='webkit',browser=await (useWebkit?webkit:chromium).launch(useWebkit?{headless:true}:{channel:'chrome',headless:true}),page=await browser.newPage({viewport:{width:1365,height:950},serviceWorkers:'block'}),errors=[],checks=[];
-page.on('pageerror',e=>errors.push(e.message));page.setDefaultTimeout(12000);
+page.on('pageerror',e=>{errors.push(e.message);console.error('BROWSER_ERROR',page.url(),e.stack);});
+page.on('requestfailed',r=>console.log('REQUEST_FAILED',r.url(),r.failure()?.errorText));page.setDefaultTimeout(12000);
 await page.route('**/src/lib.ts',r=>r.fulfill({contentType:'application/javascript',body:fixture.outputFiles[0].text}));
 await mkdir('artifacts',{recursive:true});const base=process.env.TEST_BASE_URL??'http://127.0.0.1:5176/';
 const pass=s=>{checks.push(s);console.log('PASS',s);};
 const state=()=>page.evaluate(()=>window.__presentation.state);
 // Wait for the previous fixture's asset requests before replacing its synthetic state.
 async function reload(){await page.waitForLoadState('networkidle');await page.reload();await page.waitForLoadState('networkidle');}
-async function prepare(kind='growth',move='fire-0',route='adventure'){await page.evaluate(({kind,move})=>window.__presentation.prepare(kind,move),{kind,move});await page.goto(base+'#/'+route);await reload();await page.locator('.app-shell').waitFor();}
+async function prepare(kind='growth',move='fire-0',route='adventure'){
+ // Replace the fixture and URL atomically, then mount it once. A hash navigation followed
+ // by reload mounts a throwaway World and cancels its dynamic import in WebKit.
+ await page.evaluate(({kind,move,route})=>{window.__presentation.prepare(kind,move);history.replaceState(null,'','#/'+route);},{kind,move,route});
+ await reload();await page.locator('.app-shell').waitFor();
+}
 async function solve(correct=true){const s=await state(),q=s.question;const index=q.options.findIndex(o=>correct?o.id===q.correctOptionId:o.id!==q.correctOptionId);await page.locator('.quiz-options button').nth(index).click();}
 try{
  await page.goto(base);await page.locator('.growth-dialog').waitFor();assert.match(await page.locator('.growth-dialog').innerText(),/320/);assert.match(await page.locator('.growth-dialog').innerText(),/Lv.15.*Lv.16/s);
