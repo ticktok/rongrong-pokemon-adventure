@@ -27,15 +27,19 @@ async function login(username,hash){
 function pass(message){report.checks.push(message);console.log('PASS',message);}
 try{
  const {page:child,context:cc}=await login('rongrong','');
- await child.locator(expected.started?'.adventure-page':'.starter-page').waitFor();
- if(!expected.started)assert.equal(await child.locator('.starter-card').count(),4);
- assert.equal(await child.locator('.app-footer').innerText().then(text=>text.includes('v'+version)),true);
- pass('Production HTTPS login and current save screen at v'+version);
+ const childScreen=expected.settings.childLocked?'.child-rest-page':expected.started?'.adventure-page':'.starter-page';
+ await child.locator(childScreen).waitFor();
+ if(expected.settings.childLocked){assert.equal(await child.locator('.adventure-page,.starter-page').count(),0);pass('Production HTTPS login preserves the saved child lock and displays the rest page');}
+ else{
+  if(!expected.started)assert.equal(await child.locator('.starter-card').count(),4);
+  assert((await child.locator('.app-footer').innerText()).includes('v'+version));
+  pass('Production HTTPS login and current save screen at v'+version);
+ }
  await child.screenshot({path:'artifacts/production-starter.png',fullPage:true});
- await child.reload({waitUntil:'networkidle'});await child.locator(expected.started?'.adventure-page':'.starter-page').waitFor();pass('Production child session survives refresh');
+ await child.reload({waitUntil:'networkidle'});await child.locator(childScreen).waitFor();pass('Production child session and saved lock state survive refresh');
  await cc.close();
  const {page:parent,context:pc}=await login('rongrong-parent','#/parent');
- await parent.locator('.parent-page').waitFor();pass('Production parent deep link opens protected management before starter selection');
+ await parent.locator('.parent-page').waitFor();assert((await parent.locator('.app-footer').innerText()).includes('v'+version));pass('Production parent deep link opens protected management before starter selection');
  await parent.getByRole('button',{name:'家人与同学',exact:true}).click();assert.equal(await parent.locator('.npc-list>button').count(),expected.npcs.length);pass('Saved NPC identities read back from production');
  await parent.getByRole('button',{name:'英语词库',exact:true}).click();await parent.locator('tbody tr').last().waitFor();assert.equal(await parent.locator('tbody tr').count(),wordBank(expected).length);pass('Current vocabulary entries read back from production');
  await parent.getByRole('button',{name:'存档与记录',exact:true}).click();
