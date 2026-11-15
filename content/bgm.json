@@ -1,0 +1,130 @@
+{
+  "pallet": {
+    "path": "assets/bgm/pallet.mp3",
+    "title": "Pallet Town",
+    "gain": 0.65,
+    "loopStart": 10.0086875,
+    "loopEnd": 42.1521875,
+    "source": "https://fi.zophar.net/soundfiles/gameboy-gbs/pokemon-red/04%20Pallet%20Town%27s%20Theme.mp3",
+    "sourcePage": "https://www.zophar.net/music/gameboy-gbs/pokemon-red",
+    "rights": "Original Pokémon game music; copyright belongs to its respective rights holders. No open license claimed."
+  },
+  "center": {
+    "path": "assets/bgm/center.mp3",
+    "title": "Pokémon Center",
+    "gain": 0.65,
+    "loopStart": 10.000125,
+    "loopEnd": 125.715375,
+    "source": "https://fi.zophar.net/soundfiles/gameboy-gbs/pokemon-red/05%20Pokemon%20Center.mp3",
+    "sourcePage": "https://www.zophar.net/music/gameboy-gbs/pokemon-red",
+    "rights": "Original Pokémon game music; copyright belongs to its respective rights holders. No open license claimed."
+  },
+  "pewter": {
+    "path": "assets/bgm/pewter.mp3",
+    "title": "Pewter / Viridian / Saffron City",
+    "gain": 0.65,
+    "loopStart": 10.00059375,
+    "loopEnd": 67.86084375,
+    "source": "https://fi.zophar.net/soundfiles/gameboy-gbs/pokemon-red/07%20Pewter%20City%27s%20Theme.mp3",
+    "sourcePage": "https://www.zophar.net/music/gameboy-gbs/pokemon-red",
+    "rights": "Original Pokémon game music; copyright belongs to its respective rights holders. No open license claimed."
+  },
+  "cerulean": {
+    "path": "assets/bgm/cerulean.mp3",
+    "title": "Cerulean City",
+    "gain": 0.65,
+    "loopStart": 10.00146875,
+    "loopEnd": 39.73409375,
+    "source": "https://fi.zophar.net/soundfiles/gameboy-gbs/pokemon-red/08%20Cerulean%20City%27s%20Theme.mp3",
+    "sourcePage": "https://www.zophar.net/music/gameboy-gbs/pokemon-red",
+    "rights": "Original Pokémon game music; copyright belongs to its respective rights holders. No open license claimed."
+  },
+  "celadon": {
+    "path": "assets/bgm/celadon.mp3",
+    "title": "Celadon City",
+    "gain": 0.65,
+    "loopStart": 9.99959375,
+    "loopEnd": 67.85734375,
+    "source": "https://fi.zophar.net/soundfiles/gameboy-gbs/pokemon-red/09%20Celadon%20City%27s%20Theme.mp3",
+    "sourcePage": "https://www.zophar.net/music/gameboy-gbs/pokemon-red",
+    "rights": "Original Pokémon game music; copyright belongs to its respective rights holders. No open license claimed."
+  },
+  "cinnabar": {
+    "path": "assets/bgm/cinnabar.mp3",
+    "title": "Cinnabar Island",
+    "gain": 0.65,
+    "loopStart": 10.0005625,
+    "loopEnd": 31.6968125,
+    "source": "https://fi.zophar.net/soundfiles/gameboy-gbs/pokemon-red/10%20Cinnabar%20Island%27s%20Theme.mp3",
+    "sourcePage": "https://www.zophar.net/music/gameboy-gbs/pokemon-red",
+    "rights": "Original Pokémon game music; copyright belongs to its respective rights holders. No open license claimed."
+  },
+  "vermilion": {
+    "path": "assets/bgm/vermilion.mp3",
+    "title": "Vermilion City",
+    "gain": 0.65,
+    "loopStart": 10.00009375,
+    "loopEnd": 80.51371875,
+    "source": "https://fi.zophar.net/soundfiles/gameboy-gbs/pokemon-red/11%20Vermilion%20City%27s%20Theme.mp3",
+    "sourcePage": "https://www.zophar.net/music/gameboy-gbs/pokemon-red",
+    "rights": "Original Pokémon game music; copyright belongs to its respective rights holders. No open license claimed."
+  },
+  "gym-battle": {
+    "path": "assets/bgm/gym-battle.mp3",
+    "title": "Battle — Gym Leader",
+    "gain": 0.65,
+    "loopStart": 30.008875,
+    "loopEnd": 74.405,
+    "source": "https://fi.zophar.net/soundfiles/gameboy-gbs/pokemon-red/22%20Battle%20%28VS%20Gym%20Leader%29.mp3",
+    "sourcePage": "https://www.zophar.net/music/gameboy-gbs/pokemon-red",
+    "rights": "Original Pokémon game music; copyright belongs to its respective rights holders. No open license claimed."
+  },
+  "wild-battle": {
+    "path": "assets/bgm/wild-battle.mp3",
+    "title": "Battle — Wild Pokémon",
+    "gain": 0.65,
+    "loopStart": 29.99478125,
+    "loopEnd": 92.67403125,
+    "source": "https://fi.zophar.net/soundfiles/gameboy-gbs/pokemon-red/24%20Battle%20%28VS%20Wild%20Pokemon%29.mp3",
+    "sourcePage": "https://www.zophar.net/music/gameboy-gbs/pokemon-red",
+    "rights": "Original Pokémon game music; copyright belongs to its respective rights holders. No open license claimed."
+  },
+  "wild-victory": {
+    "path": "assets/bgm/wild-victory.mp3",
+    "title": "Victory — Wild Pokémon",
+    "gain": 0.65,
+    "loopStart": 9.997375,
+    "loopEnd": 32.498,
+    "source": "https://fi.zophar.net/soundfiles/gameboy-gbs/pokemon-red/27%20Victory%20%28VS%20Wild%20Pokemon%29.mp3",
+    "sourcePage": "https://www.zophar.net/music/gameboy-gbs/pokemon-red",
+    "rights": "Original Pokémon game music; copyright belongs to its respective rights holders. No open license claimed."
+  },
+  "gym-victory": {
+    "path": "assets/bgm/gym-victory.mp3",
+    "title": "Victory — Gym Leader",
+    "gain": 0.65,
+    "loopStart": 10.0055,
+    "loopEnd": 77.50625,
+    "source": "https://fi.zophar.net/soundfiles/gameboy-gbs/pokemon-red/28%20Victory%20%28VS%20Gym%20Leader%29.mp3",
+    "sourcePage": "https://www.zophar.net/music/gameboy-gbs/pokemon-red",
+    "rights": "Original Pokémon game music; copyright belongs to its respective rights holders. No open license claimed."
+  },
+  "forest": {
+    "path": "assets/bgm/forest.mp3",
+    "title": "Viridian Forest",
+    "gain": 0.65,
+    "loopStart": 10.0098125,
+    "loopEnd": 111.2609375,
+    "source": "https://fi.zophar.net/soundfiles/gameboy-gbs/pokemon-red/37%20Viridian%20Forest.mp3",
+    "sourcePage": "https://www.zophar.net/music/gameboy-gbs/pokemon-red",
+    "rights": "Original Pokémon game music; copyright belongs to its respective rights holders. No open license claimed."
+  },
+  "capture": {
+    "path": "assets/bgm/capture.mp3",
+    "title": "Pokémon Capture Fanfare",
+    "gain": 0.65,
+    "source": "https://fi.zophar.net/soundfiles/gameboy-gbs/pokemon-red/49%20Pokemon%20Capture%20Fanfare.mp3",
+    "sourcePage": "https://www.zophar.net/music/gameboy-gbs/pokemon-red",
+    "rights": "Original Pokémon game music; copyright belongs to its respective rights holders. No open license claimed."
+  }
+}

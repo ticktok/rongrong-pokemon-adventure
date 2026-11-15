@@ -22,10 +22,6 @@ export default function BattleFx({event,reduced}:{event:BattleEvent|null;reduced
      const bounds=root.getBoundingClientRect();
      const center=(side:'own'|'enemy')=>{const r=root.querySelector('.'+side+'-sprite')?.getBoundingClientRect();return r?{x:r.left+r.width*.5-bounds.left,y:r.top+r.height*.5-bounds.top}:{x:bounds.width*.5,y:bounds.height*.5};};
      const source=center(event.side),target=center(event.side==='own'?'enemy':'own');
-     if(event.kind==='capture'){
-      const a=center('own'),b=center('enemy'),p=Math.min(1,t/.48),x=a.x+(b.x-a.x)*p,y=a.y+(b.y-a.y)*p-Math.sin(p*Math.PI)*90;
-      g.fillStyle(0xfffcdf).fillCircle(x,y,12);g.fillStyle(0xe76a4c).fillEllipse(x,y-5,23,14);g.lineStyle(3,0x345747).strokeCircle(x,y,12).lineBetween(x-11,y,x+11,y);g.fillStyle(0xfffcdf).fillCircle(x,y,4);return;
-     }
      if(event.kind!=='attack')return;
      const visual=MOVE_VISUALS[event.moveId];if(!visual)return;
      const {color,accent,shape,tier}=visual;
