@@ -1,0 +1,18 @@
+.adventure-viewport{position:relative;overflow:hidden;isolation:isolate}
+.encounter-overlay{position:absolute;inset:0;z-index:30;overflow:hidden;pointer-events:auto;--encounter-time:500ms}
+.encounter-curtain{position:absolute;inset:0;background:#243b36;animation:encounter-close var(--encounter-time) ease-in both}
+.encounter-glint{position:absolute;inset:0;background:#fff9e5;opacity:0;pointer-events:none}
+.encounter-flash .encounter-glint{animation:encounter-glint 450ms ease-out both}
+.encounter-spiral .encounter-curtain{inset:-75%;background:repeating-conic-gradient(#243b36 0deg 45deg,transparent 45deg 90deg);animation:encounter-spiral 500ms ease-in both}
+.encounter-iris .encounter-curtain{animation:encounter-iris 500ms ease-in both}
+.encounter-overlay.is-closed .encounter-curtain{inset:0;background:#243b36;animation:none;transform:none;clip-path:none;opacity:1}
+.encounter-overlay.is-opening{animation:encounter-reveal var(--encounter-time) ease-out both;pointer-events:auto}
+.encounter-wait{position:absolute;inset:0;display:grid;place-items:center;color:#fff9e5;font-size:14px}
+.encounter-reduced{--encounter-time:100ms}
+@keyframes encounter-close{from{opacity:0}to{opacity:1}}
+@keyframes encounter-glint{0%,100%{opacity:0}35%{opacity:.65}}
+@keyframes encounter-spiral{from{transform:rotate(0) scale(.02);opacity:0}70%{opacity:1}to{transform:rotate(240deg) scale(1.5);opacity:1}}
+@keyframes encounter-iris{from{clip-path:polygon(0 0,100% 0,100% 100%,0 100%,0 0,0 0,0 100%,100% 100%,100% 0,0 0)}to{clip-path:polygon(0 0,100% 0,100% 100%,0 100%,0 0,50% 50%,50% 50%,50% 50%,50% 50%,50% 50%)}}
+@keyframes encounter-reveal{from{opacity:1}to{opacity:0}}
+html[data-reduced=true] .encounter-curtain{animation:encounter-close 100ms linear both!important}
+html[data-reduced=true] .encounter-overlay.is-opening{animation:encounter-reveal 100ms linear both!important}

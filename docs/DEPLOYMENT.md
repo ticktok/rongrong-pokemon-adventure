@@ -79,3 +79,12 @@ PG 表和备份 RPC 保持服务端权限，rr_commit 在函数内部检查 serv
 部署顺序：备份并验证 → 更新备份函数代码（新增成长字段校验）→ 更新游戏函数代码 → 发布 Web → QA 与正式家庭只读验收。回退时保留成长字段和现有存档，不用旧快照覆盖新进度；优先在本版兼容代码上修复发布。
 
 本地合成数据验证：`npm run test:presentation-ui`；`TEST_ALL_MOVES=1` 可执行全部 54 个招式并保存截图，`TEST_BROWSER=webkit` 可验收 WebKit。线上独立 QA 验收：`npm run test:presentation-live`，会先备份并读回验证，结束后恢复 QA 存档，核对其他家庭未被修改。测试报告与合成界面截图写入忽略的 artifacts/，备份只进入 private/ 和私有云端桶。
+
+
+## v0.12.0 遇敌、捕捉与音乐
+
+本版只部署 Web，游戏与备份函数保持 v0.11.0 的部署代码，schemaVersion 不变，无数据库迁移。转场与捕捉阶段仅控制展示，继续使用现有 `battlePlayback` 前后状态与 operationId 去重。失败、跳过、换页或锁定不能重新提交捕捉或发放奖励。
+
+`content/bgm.json` 保存逐曲来源、增益和循环区间，素材在 `public/assets/bgm/`，来源说明在 `public/music-credits.html`。循环点通过频谱匹配后波形对齐，Web Audio 负责精确循环；游戏提示音与 BGM 开关独立。BGM 设置仅保存到本机，不进入家庭云端规则。
+
+本地合成状态验收：`npm run test:cinema-ui`，`TEST_BROWSER=webkit npm run test:cinema-ui`；使用真实 Phaser、React、MP3 解码和游戏引擎，不访问云端。另运行 `npm run test:presentation-ui` 与 `npm run test:audio-cache`。缓存验证同时覆盖单词和 BGM 的完整、部分、后缀、非法范围及离线请求。实体 iPad 的扬声器、静音模式和系统后台行为需要单独设备验证，WebKit 自动化不能替代该项。

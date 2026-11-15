@@ -20,8 +20,11 @@ import {BADGE_COLLECTIONS} from './game/badges';
 import Pokedex from './components/Pokedex';
 import Parent from './components/Parent';
 import DailyTasks from './components/DailyTasks';
-import {prepareAudio,playEffect,stopEffects} from './audio';
+import {prepareAudio,playEffect,stopEffects,cancelEffects} from './audio';
 import {version} from '../package.json';
+import {useEncounterTransition,EncounterOverlay} from './components/useEncounterTransition';
+import {useMusic} from './components/useMusic';
+import {playCaptureCue} from './music';
 const pages=['adventure','partners','pokedex','learning','parent','collection'];
 function pageFromHash(){const value=location.hash.slice(1).replace(/^\//,'').split('?')[0];return pages.includes(value)?value:'adventure';}
 export default function App(){
@@ -45,7 +48,7 @@ export default function App(){
 }
 function GameSession({user,isCurrent}:{user:string;isCurrent:(uid:string)=>boolean}){
   const [state,setState]=useState<PublicState|null>(null);
-  const [playback,setPlayback]=useState<(Playback&{message:string;effect:string})|null>(null),[growthHistory,setGrowthHistory]=useState(false),[inspectPartner,setInspectPartner]=useState('');
+  const [playback,setPlayback]=useState<(Playback&{message:string;effect:string;previous:PublicState})|null>(null),[growthHistory,setGrowthHistory]=useState(false),[inspectPartner,setInspectPartner]=useState('');
   const stateRef=useRef<PublicState|null>(null),requestSequence=useRef(0),acceptedSequence=useRef(0),readBusy=useRef(false);
   const acceptState=useCallback((next:PublicState,sequence:number)=>{
     const old=stateRef.current;
@@ -57,15 +60,19 @@ function GameSession({user,isCurrent}:{user:string;isCurrent:(uid:string)=>boole
   const [feedback,setFeedback]=useState<DailyFeedback|null>(null);
   const [busy,setBusy]=useState(false),[notice,setNotice]=useState(''),[error,setError]=useState(''),[tab,setTab]=useState(pageFromHash),[effect,setEffect]=useState('');
   const [sound,setSound]=useState(localStorage.getItem('rr-sound')!=='off'),[reduced,setReduced]=useState(localStorage.getItem('rr-reduced')==='on'),[npc,setNpc]=useState<Npc|null>(null),[mapOpen,setMapOpen]=useState(false),[pending,setPending]=useState<GameCommand|null>(null),[settingsOpen,setSettingsOpen]=useState(false);
+  const {transition,active:transitionActive,begin:beginEncounter,settle:settleEncounter,cancel:cancelEncounter}=useEncounterTransition(reduced);
+  const bgm=useMusic(state,tab,playback);
   const [starter,setStarter]=useState(25);
   const busyRef=useRef(false),aliveRef=useRef(true),noticeTimer=useRef<ReturnType<typeof setTimeout>|undefined>(undefined);
   const pendingRef=useRef<GameCommand|null>(null),soundRef=useRef(sound);
   soundRef.current=sound;
   useEffect(()=>{aliveRef.current=true;return()=>{aliveRef.current=false;clearTimeout(noticeTimer.current);};},[]);
   const perform=useCallback(async(command:GameCommand):Promise<ApiResponse|undefined>=>{
-    if(!aliveRef.current||!isCurrent(user)||busyRef.current||playbackRef.current)return;
+    if(!aliveRef.current||!isCurrent(user)||busyRef.current||playbackRef.current||transitionActive.current)return;
     if(pendingRef.current&&command.type!=='bootstrap'&&command.operationId!==pendingRef.current.operationId){setError('先重试上次的操作，确认云端结果后再继续吧。');return;}
     if(stateRef.current?.role==='child'&&stateRef.current.settings.childLocked&&command.type!=='bootstrap')return;
+    if(command.type==='encounter'&&stateRef.current&&!stateRef.current.battle)beginEncounter(command.operationId,stateRef.current);
+    const beforePresentation=stateRef.current;
     const sequence=++requestSequence.current;
     busyRef.current=true;setBusy(true);setError('');
     const key='rr-pending-'+user;
@@ -87,10 +94,10 @@ function GameSession({user,isCurrent}:{user:string;isCurrent:(uid:string)=>boole
       if(!accepted||(stateRef.current?.role==='child'&&stateRef.current.settings.childLocked))return result;
       const animation=result.result?.battlePlayback;
       if(animation){setNotice('');clearTimeout(noticeTimer.current);}
-      if(command.type!=='bootstrap'&&animation?.events.length&&animation.battleId===result.state?.battle?.id&&!presentedOperations.current.has(command.operationId)){
+      if(beforePresentation&&command.type!=='bootstrap'&&animation?.events.length&&animation.battleId===result.state?.battle?.id&&!presentedOperations.current.has(command.operationId)){
         presentedOperations.current.add(command.operationId);
         if(presentedOperations.current.size>100)presentedOperations.current.delete(presentedOperations.current.values().next().value!);
-        setPlayback({...animation,id:command.operationId,message:result.result?.message??'',effect:result.result?.effect??''});
+        setPlayback({...animation,previous:beforePresentation,id:command.operationId,message:result.result?.message??'',effect:result.result?.effect??''});
       }
       setEffect(result.result?.effect??'');
       if(result.result?.effect&&!animation)playEffect(result.result.effect,soundRef.current);
@@ -98,8 +105,8 @@ function GameSession({user,isCurrent}:{user:string;isCurrent:(uid:string)=>boole
       else if(result.result?.message&&!animation){setNotice(result.result.message);clearTimeout(noticeTimer.current);noticeTimer.current=setTimeout(()=>setNotice(''),6500);}
       return result;
     }catch(e){if(aliveRef.current&&isCurrent(user))setError(e instanceof Error?e.message:'暂时连接不上，请稍后重试');}
-    finally{busyRef.current=false;if(aliveRef.current&&isCurrent(user))setBusy(false);}
-  },[user,isCurrent,acceptState]);
+    finally{if(aliveRef.current)settleEncounter(command.operationId);busyRef.current=false;if(aliveRef.current&&isCurrent(user))setBusy(false);}
+  },[user,isCurrent,acceptState,beginEncounter,settleEncounter,transitionActive]);
   const run:Run=useCallback((type,payload={})=>perform({type,payload,operationId:crypto.randomUUID()}),[perform]);
   useEffect(()=>{const saved=localStorage.getItem('rr-pending-'+user);if(saved){try{const restored=JSON.parse(saved) as GameCommand;setPending(restored);pendingRef.current=restored;}catch{setError('上次未完成的操作记录无法读取，请刷新云端存档');}}void run('bootstrap');},[user,run]);
   const readState=useCallback(async()=>{
@@ -124,32 +131,34 @@ function GameSession({user,isCurrent}:{user:string;isCurrent:(uid:string)=>boole
   const childLocked=state?.role==='child'&&!!state.settings.childLocked;
   useEffect(()=>{
     if(!childLocked)return;
-    stopPronunciation();stopEffects();setPlayback(null);setFeedback(null);setNpc(null);setMapOpen(false);setSettingsOpen(false);setInspectPartner('');setGrowthHistory(false);setNotice('');clearTimeout(noticeTimer.current);
-  },[childLocked]);
+    stopPronunciation();stopEffects();cancelEncounter();setPlayback(null);setFeedback(null);setNpc(null);setMapOpen(false);setSettingsOpen(false);setInspectPartner('');setGrowthHistory(false);setNotice('');clearTimeout(noticeTimer.current);
+  },[childLocked,cancelEncounter]);
   useEffect(()=>{const handler=()=>setTab(pageFromHash());window.addEventListener('hashchange',handler);return()=>window.removeEventListener('hashchange',handler);},[]);
   useEffect(()=>{document.documentElement.dataset.reduced=String(reduced);localStorage.setItem('rr-reduced',reduced?'on':'off');},[reduced]);
-  useEffect(()=>{localStorage.setItem('rr-sound',sound?'on':'off');},[sound]);
+  useEffect(()=>{localStorage.setItem('rr-sound',sound?'on':'off');if(!sound)cancelEffects();},[sound]);
   useEffect(()=>{const unlock=()=>{if(soundRef.current&&!(stateRef.current?.role==='child'&&stateRef.current.settings.childLocked))prepareAudio();};window.addEventListener('pointerdown',unlock,{passive:true});return()=>window.removeEventListener('pointerdown',unlock);},[]);
   useEffect(()=>{stopPronunciation();return stopPronunciation;},[tab]);
-  useEffect(()=>{if(tab!=='adventure')setPlayback(null);},[tab,playback]);
-  const playbackDone=useCallback(()=>{setPlayback(null);if(playback){playEffect(playback.effect,soundRef.current);setNotice(playback.message);clearTimeout(noticeTimer.current);noticeTimer.current=setTimeout(()=>setNotice(''),6500);}},[playback]);
+  useEffect(()=>{if(tab!=='adventure'){setPlayback(null);cancelEncounter();stopEffects();}},[tab,playback,cancelEncounter]);
+  const playbackDone=useCallback(()=>{cancelEffects();setPlayback(null);if(playback){if(playback.effect==='catch')playCaptureCue(playback.id,soundRef.current);else playEffect(playback.effect,soundRef.current);setNotice(playback.message);clearTimeout(noticeTimer.current);noticeTimer.current=setTimeout(()=>setNotice(''),6500);}},[playback]);
+  useEffect(()=>()=>stopEffects(),[]);
   const inspected=useCallback(()=>setInspectPartner(''),[]);
   const navigate=(page:string)=>{setFeedback(null);setTab(page);location.hash='/'+page;setNpc(null);};
   if(!state)return <div className="loading-screen"><div className="pokeball"/><h2>正在取回云端存档</h2>{error&&<p className="error-text">{error}</p>}<button onClick={()=>run('bootstrap')} disabled={busy}><RefreshCw size={16}/>重新连接</button><button className="text-button" onClick={()=>auth.signOut()}>切换账号</button></div>;
   if(childLocked)return <main className="child-rest-page"><section className="admin-panel"><Lock size={44}/><span className="eyebrow">TIME FOR A LITTLE REST</span><h1>冒险先休息一下</h1><p>家长让我们暂停一会儿。<br/>伙伴和进度都在，解锁后就能继续。</p><small>正在等待家长解锁…</small>{syncError&&<p role="alert">{syncError}</p>}<div><button className="primary" onClick={()=>void readState()}><RefreshCw size={17}/>重新连接</button><button onClick={()=>auth.signOut()}><LogOut size={17}/>退出账号</button></div></section></main>;
+  const presentationState=playback?.previous??state;
   const region=REGIONS.find(r=>r.id===state.position.regionId)!,goal=state.daily.goal??10,nav=[['adventure','去冒险',Compass],['partners','我的伙伴',Heart],['pokedex','发现图鉴',BookOpen],['learning','学习手册',NotebookPen],['collection','我的收藏',ShieldCheck]] as const;
   const renderTasks=()=> <DailyTasks state={state} run={run} busy={busy||!!pending||!!playback}/>;
   return <div className="app-shell">
     <header className="topbar"><button className="brand" onClick={()=>navigate('adventure')}><img src={import.meta.env.BASE_URL+'icon.svg'} alt=""/><span>融融的宝可梦<span>英语冒险手册</span></span></button><nav aria-label="主导航">{nav.map(([id,label,Icon])=><button key={id} className={tab===id?'active':''} onClick={()=>navigate(id)}><Icon size={18}/>{label}</button>)}</nav><div className="header-tools"><span className="cloud-state" title={'云端存档版本 '+state.revision}>{busy?<LoaderCircle className="spin" size={15}/>:<Cloud size={15}/>}<span>{busy?'保存中':pending?'待重试':'已同步'}</span></span><button className="icon-button" aria-label="设置" onClick={()=>setSettingsOpen(!settingsOpen)}><Settings2 size={19}/></button>{state.role==='parent'&&<button className={'parent-link '+(tab==='parent'?'active':'')} onClick={()=>navigate('parent')}><ShieldCheck size={17}/>家长</button>}</div></header>
     {state.contentMode==='follow'&&<div className="trial-banner" role="note"><ShieldCheck size={17}/><strong>测试账号 · 进度独立</strong><span>内容与规则自动跟随融融</span></div>}
-    {settingsOpen&&<div className="settings-popover"><h3>冒险偏好</h3><label><span>游戏提示音</span><input type="checkbox" checked={sound} onChange={e=>setSound(e.target.checked)}/></label><label><span>减少动画</span><input type="checkbox" checked={reduced} onChange={e=>setReduced(e.target.checked)}/></label><button className="text-button" onClick={()=>{void auth.signOut();setSettingsOpen(false);}}><LogOut size={17}/>退出账号</button></div>}
+    {settingsOpen&&<div className="settings-popover"><h3>冒险偏好</h3><label><span>游戏提示音</span><input type="checkbox" checked={sound} onChange={e=>setSound(e.target.checked)}/></label><label><span>背景音乐</span><input type="checkbox" checked={bgm.enabled} onChange={e=>{bgm.setEnabled(e.target.checked);}}/></label><label className="music-volume"><span>音乐音量 {Math.round(bgm.volume*100)}%</span><input aria-label="音乐音量" type="range" min="0" max="100" step="5" value={Math.round(bgm.volume*100)} disabled={!bgm.enabled} onChange={e=>bgm.setVolume(Number(e.target.value)/100)}/></label><label><span>减少动画</span><input type="checkbox" checked={reduced} onChange={e=>setReduced(e.target.checked)}/></label><button className="text-button" onClick={()=>{void auth.signOut();setSettingsOpen(false);}}><LogOut size={17}/>退出账号</button></div>}
     {error&&<div className="connection-banner" role="alert"><span>{error}</span><button disabled={busy} onClick={()=>pending?perform(pending):run('bootstrap')}><RefreshCw size={16}/>重试</button><button className="icon-button" aria-label="关闭提示" onClick={()=>setError('')}><X size={16}/></button></div>}
     {pending&&!error&&!busy&&<div className="connection-banner"><span>上次有一项操作尚未收到结果，重试后会核对云端记录。</span><button onClick={()=>perform(pending)}>重试未完成操作</button></div>}
     {!state.started&&!(tab==='parent'&&state.role==='parent')?<main className="starter-page"><span className="eyebrow">A NEW ADVENTURE BEGINS</span><h1>{state.nickname}，选一位伙伴吧！</h1><p>从今天起，你们一起学单词，一起认识更大的世界。</p><div className="starter-grid">{[1,4,7,25].map(id=><button className={'starter-card '+(starter===id?'selected':'')} key={id} onClick={()=>setStarter(id)}><TypeIcons types={pokemon(id).types} size={32} className="starter-types"/><img src={asset('art',id)} alt={pokemon(id).name}/><h2>{pokemon(id).name}</h2><p>{id===1?'稳稳地，陪你一点点长大':id===4?'带着小火苗，一起勇敢出发':id===7?'认真练习，也别忘了开心': '把每天的努力，变成闪亮电光'}</p><span className="choose-indicator">{starter===id?<Check size={20}/>:<Heart size={18}/>}</span></button>)}</div><button className="primary starter-confirm" disabled={busy} onClick={()=>run('starter',{speciesId:starter})}>就决定是你了，{pokemon(starter).name}！<ArrowRight size={20}/></button>{state.role==='parent'&&<button className="text-button" onClick={()=>navigate('parent')}>先去家长空间</button>}</main>:<>
       {tab==='adventure'&&<main className="adventure-page"><div className="adventure-heading"><div><span className="eyebrow"><Leaf size={13}/>关都篇 · 第 {region.requiredBadges+1} 站</span><h1>{state.nickname}，今天也一起出发吧！</h1><p>{region.description}</p></div><button className="map-open" onClick={()=>setMapOpen(true)}><Map size={22}/><span>冒险地图<small>{state.badges.length} / 8 枚徽章</small></span><ChevronRight size={17}/></button></div>
         <div className="adventure-layout"><aside className="left-rail">{renderTasks()}<section className="vocab-note"><div className="note-icon"><BookOpen size={23}/></div><div><span>今天也认识新单词</span><strong>{state.daily.questions}<small> / {goal} 题</small></strong></div><button onClick={()=>navigate('learning')} aria-label="打开英语练习"><ArrowRight size={21}/></button><div className="little-progress"><span style={{width:(goal?state.daily.questions/goal*100:0)+'%'}}/></div></section><div className="family-quote">“先试一次，再试一次，<br/>我们一直都在。”<span>— 家人们</span></div></aside>
-        <section className="adventure-center">{state.battle?<Battle state={state} run={run} busy={busy||!!pending} playback={playback} reduced={reduced} sound={sound} onPlaybackDone={playbackDone}/>:<World state={state} busy={busy||!!pending||!!npc||mapOpen||settingsOpen||(state.role==='child'&&!!state.growth?.entries.some(e=>e.seq>state.growth!.readThrough))} run={run} onNpc={setNpc} reduced={reduced}/>}<div className="world-footer"><span><Target size={15}/>今日野外相遇 {state.daily.encounters} / {state.settings.captureLimit}</span><span>{state.canBattle?'周末冒险开放中':'今天先练习，周末去对战'}</span><span><Cloud size={14}/>进度保存在云端</span></div></section>
-        <aside className="right-rail"><div className="rail-heading"><h2>冒险小队</h2><button aria-label="管理伙伴" onClick={()=>navigate('partners')}><ChevronRight size={18}/></button></div>{state.team.map((id,index)=>{const p=state.partners.find(p=>p.id===id)!,info=pokemon(p.speciesId);return <button className={'team-mini partner-'+index} key={id} onClick={()=>navigate('partners')}><span className="mini-level">Lv.{p.level}</span><img src={asset('art',p.speciesId)} alt={info.name}/><strong>{info.name}</strong><TypeIcons types={info.types}/><div className="mini-exp"><span style={{width:(p.level>=50?100:Math.min(100,100*(p.exp-10*(p.level-1)**2)/(10*p.level**2-10*(p.level-1)**2)))+'%'}}/></div></button>;})}{state.team.length<6&&<div className="team-empty"><Heart size={22}/><span>下一位伙伴<br/>正在草丛里等你</span></div>}<div className="badge-rail"><span>一路收集的勇气</span><div>{BADGE_COLLECTIONS.flatMap(pack=>pack.badges.map(b=><button key={b.regionId} title={b.name} aria-label={'查看'+b.name} className={state.badges.includes(b.regionId)?'earned':''} onClick={()=>{navigate('collection');location.hash='/collection?generation='+pack.id;}}><BadgeImage image={b.image} name={b.name}/></button>))}</div></div></aside></div>
+        <section className="adventure-center"><div className="adventure-viewport">{state.battle&&(!transition||transition.opening)?<Battle state={{...presentationState,battle:state.battle,question:state.question}} run={run} busy={busy||!!pending||!!transition} playback={playback} reduced={reduced} sound={sound} onPlaybackDone={playbackDone}/>:<World state={transition&&!transition.opening?transition.world:state} busy={busy||!!pending||!!transition||!!npc||mapOpen||settingsOpen||(state.role==='child'&&!!state.growth?.entries.some(e=>e.seq>state.growth!.readThrough))} run={run} onNpc={setNpc} reduced={reduced}/>}{transition&&<EncounterOverlay transition={transition} reduced={reduced}/>}</div><div className="world-footer"><span><Target size={15}/>今日野外相遇 {state.daily.encounters} / {state.settings.captureLimit}</span><span>{state.canBattle?'周末冒险开放中':'今天先练习，周末去对战'}</span><span><Cloud size={14}/>进度保存在云端</span></div></section>
+        <aside className="right-rail"><div className="rail-heading"><h2>冒险小队</h2><button aria-label="管理伙伴" onClick={()=>navigate('partners')}><ChevronRight size={18}/></button></div>{presentationState.team.map((id,index)=>{const p=presentationState.partners.find(p=>p.id===id)!,info=pokemon(p.speciesId);return <button className={'team-mini partner-'+index} key={id} onClick={()=>navigate('partners')}><span className="mini-level">Lv.{p.level}</span><img src={asset('art',p.speciesId)} alt={info.name}/><strong>{info.name}</strong><TypeIcons types={info.types}/><div className="mini-exp"><span style={{width:(p.level>=50?100:Math.min(100,100*(p.exp-10*(p.level-1)**2)/(10*p.level**2-10*(p.level-1)**2)))+'%'}}/></div></button>;})}{presentationState.team.length<6&&<div className="team-empty"><Heart size={22}/><span>下一位伙伴<br/>正在草丛里等你</span></div>}<div className="badge-rail"><span>一路收集的勇气</span><div>{BADGE_COLLECTIONS.flatMap(pack=>pack.badges.map(b=><button key={b.regionId} title={b.name} aria-label={'查看'+b.name} className={presentationState.badges.includes(b.regionId)?'earned':''} onClick={()=>{navigate('collection');location.hash='/collection?generation='+pack.id;}}><BadgeImage image={b.image} name={b.name}/></button>))}</div></div></aside></div>
         <div className="mobile-task-panel">{renderTasks()}</div></main>}
       {tab==='partners'&&<Team onGrowth={()=>setGrowthHistory(true)} inspectId={inspectPartner} onInspected={inspected} state={state} run={run} busy={busy} error={error} pending={!!pending} retry={()=>pending?perform(pending):run('bootstrap')}/>}
       {tab==='collection'&&<BadgeCollection state={state}/>}
@@ -160,9 +169,9 @@ function GameSession({user,isCurrent}:{user:string;isCurrent:(uid:string)=>boole
     {npc&&<div className="modal-scrim npc-scrim"><section className="npc-dialog"><div className="npc-portrait"><UsersAvatar kind={npc.kind}/></div><div><span className="eyebrow">{npc.kind==='family'?'一直陪在你身边':'一起冒险的朋友'}</span><h2>{npc.name}</h2><p>{npc.line}</p>{NPC_GIFTS.filter(g=>g.npcId===npc.id&&!state.caught.includes(g.speciesId)).map(g=><p className="npc-completed" key={g.speciesId}><Sparkles size={16}/>{state.badges.length>=g.badges?'完成小挑战，领取'+pokemon(g.speciesId).name+'的收藏赠礼':'集齐 '+g.badges+' 枚徽章后，'+pokemon(g.speciesId).name+'会来做朋友。'}</p>)}{state.npcCompleted.includes(state.today+':'+npc.id)&&<p className="npc-completed"><Check size={16}/>今天的小挑战已经完成啦！</p>}<div className="npc-dialog-actions"><button className="primary" disabled={busy} onClick={async()=>{const result=await run('npc.challenge',{npcId:npc.id});if(result?.ok)setNpc(null);}}><BookOpen size={17}/>{npc.quest}</button><button onClick={()=>setNpc(null)}>一会儿见！</button></div></div></section></div>}
     {mapOpen&&<WorldMap state={state} run={run} busy={busy} onClose={()=>setMapOpen(false)}/>}
     {(state.question||feedback)&&tab!=='parent'&&<Quiz question={state.question} feedback={feedback} pending={!!pending} dismiss={()=>setFeedback(null)} run={run} busy={busy} sound={sound} error={error} retry={()=>{void (pending?perform(pending):run('bootstrap'));}}/>}
-    <Growth state={state} run={run} busy={busy} pending={!!pending} error={error} retry={()=>{void (pending?perform(pending):run('bootstrap'));}} blocked={!!state.question||!!feedback||!!playback||state.battle?.status==='active'||!!npc||mapOpen||settingsOpen||!!inspectPartner} historyOpen={growthHistory} closeHistory={()=>setGrowthHistory(false)} inspect={id=>{setInspectPartner(id);navigate('partners');}} viewTeam={()=>navigate('partners')}/>
-    {notice&&<div className={'toast '+effect} role="status"><Sparkles size={20}/><span>{notice}</span><button aria-label="关闭消息" onClick={()=>setNotice('')}><X size={15}/></button></div>}
-    <footer className="app-footer"><span>融融的冒险手册 · 关都篇</span><a href={import.meta.env.BASE_URL+'audio-credits.html'} target="_blank" rel="noreferrer">单词音频来源</a><span>v{version}</span></footer>
+    <Growth state={state} run={run} busy={busy} pending={!!pending} error={error} retry={()=>{void (pending?perform(pending):run('bootstrap'));}} blocked={!!transition||!!state.question||!!feedback||!!playback||state.battle?.status==='active'||!!npc||mapOpen||settingsOpen||!!inspectPartner} historyOpen={growthHistory} closeHistory={()=>setGrowthHistory(false)} inspect={id=>{setInspectPartner(id);navigate('partners');}} viewTeam={()=>navigate('partners')}/>
+    {notice&&!transition&&<div className={'toast '+effect} role="status"><Sparkles size={20}/><span>{notice}</span><button aria-label="关闭消息" onClick={()=>setNotice('')}><X size={15}/></button></div>}
+    <footer className="app-footer"><span>融融的冒险手册 · 关都篇</span><a href={import.meta.env.BASE_URL+'audio-credits.html'} target="_blank" rel="noreferrer">单词音频来源</a><a href={import.meta.env.BASE_URL+'music-credits.html'} target="_blank" rel="noreferrer">背景音乐来源</a><span>v{version}</span></footer>
   </div>;
 }
 function UsersAvatar({kind}:{kind:string}){return <div className={'drawn-avatar '+kind}><i/><b/><span/></div>;}

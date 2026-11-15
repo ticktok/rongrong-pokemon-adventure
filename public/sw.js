@@ -6,7 +6,7 @@ self.addEventListener('fetch',event=>{
   if(event.request.method!=='GET'||url.origin!==self.location.origin)return;
   if(!url.pathname.includes('/assets/')&&!url.pathname.endsWith('/icon.svg'))return;
   event.respondWith(caches.open(CACHE).then(async cache=>{
-    const isAudio=url.pathname.includes('/assets/word-audio/')&&url.pathname.endsWith('.mp3');
+    const isAudio=(url.pathname.includes('/assets/word-audio/')||url.pathname.includes('/assets/bgm/'))&&url.pathname.endsWith('.mp3');
     // Cache API rejects 206 responses. Store the complete short recording, then
     // serve the requested byte range from that copy (including while offline).
     const headers=new Headers(event.request.headers);
