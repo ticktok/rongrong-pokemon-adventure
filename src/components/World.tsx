@@ -142,7 +142,7 @@ export default function World(props:Props){
               await latest.current.run('world.position',{regionId:next.id,x:point[0],y:point[1]});return;
             }
           }
-          if(isGrass(this.tx,this.ty,region.id)&&state.canBattle&&state.daily.encounters<state.settings.captureLimit&&time-this.lastEncounter>10000&&Math.random()<.11){
+          if(isGrass(this.tx,this.ty,region.id)&&state.canBattle&&state.encounterRemaining>0&&time-this.lastEncounter>10000&&Math.random()<.11){
             this.lastEncounter=time;if(await this.save())await latest.current.run('encounter');
           }
         }
@@ -156,7 +156,7 @@ export default function World(props:Props){
   return <div className="world-wrap">
     <div className="map-label"><MapPin size={14}/><span>{region.name}</span><small>{region.subtitle}</small></div>
     <div className="gym-status" role="status">{exitHint||props.state.adventureAccess?.[region.id]?.gymReason||'今日道馆剩余 '+props.state.gymRemaining+' 次'}</div>
-    {gymConfirm&&<div className="modal-scrim"><section className="dialog" role="dialog" aria-modal="true" aria-label="道馆挑战确认"><h2>{region.leader}的道馆</h2><p>{props.state.adventureAccess?.[region.id]?.gymReason||'每天 1 次，失败或退出也计次。准备好和伙伴一起挑战了吗？'}</p><button className="primary" disabled={props.busy||!props.state.adventureAccess?.[region.id]?.gymAvailable} onClick={async()=>{setGymConfirm(false);await props.run('gym.start');}}>开始挑战</button><button onClick={()=>setGymConfirm(false)}>再准备一下</button></section></div>}
+    {gymConfirm&&<div className="modal-scrim"><section className="dialog" role="dialog" aria-modal="true" aria-label="道馆挑战确认"><h2>{region.leader}的道馆</h2><p>{props.state.adventureAccess?.[region.id]?.gymReason||('今天还可挑战 '+props.state.gymRemaining+' 次，失败或退出也计次。准备好了吗？')}</p><button className="primary" disabled={props.busy||!props.state.adventureAccess?.[region.id]?.gymAvailable} onClick={async()=>{setGymConfirm(false);await props.run('gym.start');}}>开始挑战</button><button onClick={()=>setGymConfirm(false)}>再准备一下</button></section></div>}
     <LocalMap regionId={region.id} x={cursor.regionId===region.id?cursor.x:props.state.position.x} y={cursor.regionId===region.id?cursor.y:props.state.position.y} discoveries={props.state.discoveries??[]}/>
     {discovery&&<Dialog title={discovery.name} onClose={()=>setDiscoveryId('')}><span className="eyebrow">关都发现 · 已收集</span><p>{discovery.description}</p><Pronunciation word={discovery.word}><span>{discovery.word}</span></Pronunciation><p>本区发现 {map.discoveries.filter(d=>props.state.discoveries?.includes(d.id)).length} / 3</p><button className="primary" onClick={()=>setDiscoveryId('')}>继续探索</button></Dialog>}
     <div ref={host} className="world-canvas" role="application" aria-label={region.name+'冒险地图，使用方向键或屏幕方向键移动'}/>

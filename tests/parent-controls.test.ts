@@ -1,7 +1,7 @@
 import {describe,it,expect} from 'vitest';
 import {randomUUID} from 'node:crypto';
 import {execute} from '../server/engine';
-import {initialState,publicState,makePartner} from '../server/state';
+import {initialState,publicState,makePartner,grantShared,settleSharedQueue} from '../server/state';
 import {gameCommand,type GameStore,type SaveRow} from '../server/game-service';
 import {PgError} from '../server/pg';
 import {hp,damage,defaultMoves} from '../server/game-data';
@@ -96,7 +96,7 @@ describe('gym difficulty and retry grants',()=>{
  });
  it('does not bypass weekday restrictions or consume a retry on a rejected start',()=>{
   let s=fresh();s.daily.date='2026-11-16';s.daily.gymStarts=1;s.daily.gymExtraStarts=1;
-  expect(()=>execute(s,cmd('gym.start'),'child',{...rt,now:new Date('2026-11-16T04:00:00Z')})).toThrow('周末');expect(s.daily.gymStarts).toBe(1);
+  expect(()=>execute(s,cmd('gym.start'),'child',{...rt,now:new Date('2026-11-16T04:00:00Z')})).toThrow('未开放');expect(s.daily.gymStarts).toBe(1);
  });
  it('simulates the same six partners across difficulty factors',()=>{
   const outcomes=[];
@@ -106,5 +106,101 @@ describe('gym difficulty and retry grants',()=>{
    expect(turns).toBeLessThan(200);outcomes.push({factor,turns,status:s.battle!.status});
   }
   console.log('Fixed six-partner gym simulation',outcomes);expect(outcomes[0].status).toBe('won');expect(outcomes[3].turns).toBeGreaterThan(outcomes[1].turns);
+ });
+});
+
+describe('family adventure rules',()=>{
+ const date='2026-11-14';
+ const payload=(kind:'wild'|'gym',amount:number)=>({date,kind,amount});
+ it.each(['wild','gym'] as const)('stacks %s grants during questions and battles, with date-bound retries',async kind=>{
+  const db=new Store();const start=kind==='gym'?'gym.start':'encounter';
+  const remaining=kind==='gym'?'gymRemaining':'encounterRemaining';
+  await run(db,'practice.start');const question=structuredClone(db.row.state.question!);
+  const grant=cmd('parent.adventure.grant',payload(kind,3));
+  expect((await gameCommand(grant,'child',db,rt)).ok).toBe(false);
+  for(let i=0;i<2;i++)expect((await gameCommand(grant,'parent',db,rt)).state?.[remaining]).toBe((kind==='gym'?1:3)+3);
+  expect(db.row.state.question).toEqual(question);
+  await run(db,'answer',{questionId:question.id,optionId:question.correctOptionId});await run(db,start);
+  const battle=structuredClone(db.row.state.battle!);
+  expect((await run(db,'parent.adventure.grant',payload(kind,2),'parent')).ok).toBe(true);
+  expect(db.row.state.battle).toEqual(battle);
+  const tomorrow={...rt,now:new Date('2026-11-14T16:00:00Z')};
+  expect((await gameCommand(grant,'parent',db,tomorrow)).state?.[remaining]).toBe(kind==='gym'?1:3);
+  expect((await gameCommand(cmd(grant.type,grant.payload),'parent',db,tomorrow)).ok).toBe(false);
+  for(const amount of [0,1.5,31])expect((await run(db,grant.type,payload(kind,amount),'parent')).ok).toBe(false);
+ });
+ it('grants remain spendable if the parent lowers the daily allowance below past usage',()=>{
+  let s=fresh();
+  for(let i=0;i<3;i++){s=act(s,'encounter').state;s=act(s,'battle.leave').state;}
+  s=act(s,'parent.settings',{captureLimit:0},'parent').state;
+  s=act(s,'parent.adventure.grant',payload('wild',1),'parent').state;
+  expect(publicState(s,'child',1,rt.now).encounterRemaining).toBe(1);
+  s=act(s,'encounter').state;expect(publicState(s,'child',1,rt.now).encounterRemaining).toBe(0);validateSave(s);
+ });
+ it('applies opening days, daily pass, and a per-battle ball limit',()=>{
+  let s=act(fresh(),'parent.settings',{adventureDays:[],gymLimit:0,ballLimit:1},'parent').state;
+  s=act(s,'parent.adventure.grant',payload('gym',1),'parent').state;
+  expect(()=>act(s,'gym.start')).toThrow('未开放');
+  s=act(s,'parent.settings',{weekdayPassDate:true},'parent').state;
+  s=act(s,'gym.start').state;expect(publicState(s,'child',1,rt.now).gymRemaining).toBe(0);s=act(s,'battle.leave').state;
+  s=act(s,'parent.settings',{adventureDays:[6],weekdayPassDate:false},'parent').state;
+  s=act(s,'encounter').state;s=act(s,'parent.settings',{ballLimit:10},'parent').state;
+  s=act(s,'battle.catch').state;const q=s.question!;
+  const answer=cmd('answer',{questionId:q.id,optionId:q.correctOptionId});
+  expect(execute(s,answer,'child',{...rt,random:()=>.999}).state.battle?.status).toBe('fled');
+  delete s.battle!.ballLimit;
+  expect(execute(s,answer,'child',{...rt,random:()=>.999}).state.battle?.status).toBe('active');
+  for(const rules of [{adventureDays:[7]},{adventureDays:[1,1]},{ballLimit:0},{gymLimit:31},{ballLimit:1.5}])expect(()=>act(s,'parent.settings',rules,'parent')).toThrow();
+ });
+ it('atomically substitutes the last partner and protects against stale team edits',async()=>{
+  const db=new Store(),first=db.row.state.team[0],other=makePartner(7,5,rt);
+  const lock=(locked:boolean,extra={})=>({partnerId:first,locked,expectedRevision:db.row.revision,...extra});
+  expect((await run(db,'parent.partner.lock',lock(true),'parent')).ok).toBe(false);
+  db.row.state.partners.push(other);
+  await run(db,'practice.start');expect((await run(db,'parent.partner.lock',lock(true,{replacementId:other.id}),'parent')).ok).toBe(false);
+  const q=db.row.state.question!;await run(db,'answer',{questionId:q.id,optionId:q.correctOptionId});
+  const oldRev=db.row.revision;
+  expect((await run(db,'parent.partner.lock',lock(true,{replacementId:other.id}),'child')).ok).toBe(false);
+  const locked=await run(db,'parent.partner.lock',lock(true,{replacementId:other.id}),'parent');
+  expect(locked.state?.team).toEqual([other.id]);expect(locked.state?.boxes?.[0].slots).toContain(first);
+  for(const revision of [oldRev,db.row.revision])expect((await run(db,'team.update',{expectedRevision:revision,partnerIds:[first]})).ok).toBe(false);
+  expect((await run(db,'parent.partner.lock',lock(false,{expectedRevision:oldRev}),'parent')).ok).toBe(false);
+  expect((await run(db,'parent.partner.lock',lock(false),'parent')).state?.team).toEqual([other.id]);
+  validateSave(db.row.state);
+ });
+ it('preserves a locked partner’s evolution and queued reward, and assigns new experience to the remaining team',()=>{
+  let s=fresh();const resting=makePartner(1,16,rt);
+  s.partners.push(resting);s.team.push(resting.id);
+  s.settings.dailyCap=1;grantShared(s,10);
+  s=act(s,'parent.partner.lock',{partnerId:resting.id,locked:true},'parent').state;
+  expect(s.team).toHaveLength(1);
+  const previous=s.partners[1].exp;
+  s.settings.dailyCap=300;settleSharedQueue(s);
+  expect(s.partners[1].exp).toBeGreaterThan(previous);
+  const earned=s.partners[1].exp;grantShared(s,20);expect(s.partners[1].exp).toBe(earned);
+  s=act(s,'evolve',{partnerId:resting.id,speciesId:2}).state;
+  expect(s.partners[1]).toMatchObject({id:resting.id,speciesId:2,parentLocked:true});
+  const battle=act(s,'gym.start').state;expect(battle.battle?.teamHp).not.toHaveProperty(resting.id);
+  expect(()=>act(battle,'battle.switch',{partnerId:resting.id})).toThrow();validateSave(battle);
+ });
+ it('serializes simultaneous parent locking and child team changes',async()=>{
+  const db=new Store(),reserve=makePartner(7,5,rt);db.row.state.partners.push(reserve);db.row.state.boxes![0].slots[0]=reserve.id;
+  const expectedRevision=db.row.revision;
+  const results=await Promise.all([
+    run(db,'parent.partner.lock',{partnerId:reserve.id,locked:true,expectedRevision},'parent'),
+    run(db,'team.update',{partnerIds:[...db.row.state.team,reserve.id],expectedRevision})
+  ]);
+  expect(results.filter(r=>r.ok)).toHaveLength(1);
+  expect(db.row.state.team.includes(reserve.id)).toBe(!db.row.state.partners[1].parentLocked);validateSave(db.row.state);
+ });
+ it('keeps follow-family grants and partner locks local while weekly rules follow the source',async()=>{
+  const db=new Store();db.row.content_source_family_id='source';
+  db.source.state.settings.gymLimit=4;db.source.state.settings.ballLimit=7;db.source.state.settings.adventureDays=[];
+  const reserve=makePartner(7,5,rt);db.row.state.partners.push(reserve);db.row.state.boxes![0].slots[0]=reserve.id;
+  expect((await run(db,'parent.partner.lock',{partnerId:reserve.id,locked:true,expectedRevision:db.row.revision},'parent')).ok).toBe(true);
+  const result=await run(db,'parent.adventure.grant',payload('gym',1),'parent');
+  expect(result.state?.gymRemaining).toBe(5);expect(result.state?.canBattle).toBe(false);expect(result.state?.settings.ballLimit).toBe(7);
+  expect(db.source.state.daily.gymExtraStarts).toBeUndefined();expect(db.source.state.partners.some(p=>p.parentLocked)).toBe(false);
+  expect((await run(db,'parent.settings',{gymLimit:0},'parent')).ok).toBe(false);
  });
 });

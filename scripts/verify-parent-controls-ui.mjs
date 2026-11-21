@@ -4,7 +4,7 @@ import {build} from 'esbuild';
 import {mkdir,writeFile} from 'node:fs/promises';
 import assert from 'node:assert/strict';
 const fixture=await build({stdin:{resolveDir:process.cwd(),loader:'js',contents:`
-import {initialState,publicState} from './server/state';import {execute} from './server/engine';import {gameCommand} from './server/game-service';import {PgError} from './server/pg';
+import {initialState,publicState,makePartner} from './server/state';import {execute} from './server/engine';import {gameCommand} from './server/game-service';import {PgError} from './server/pg';
 const rt={now:new Date('2026-11-14T04:00:00Z'),uuid:()=>crypto.randomUUID(),random:()=>.3};
 const role=new URLSearchParams(location.search).get('role')==='parent'?'parent':'child';
 const get=()=>JSON.parse(localStorage.getItem('controls-fixture'));
@@ -12,6 +12,7 @@ const save=row=>localStorage.setItem('controls-fixture',JSON.stringify(row));
 const flags={offline:false,loseResponse:false,delayResponse:0};
 function prepare(kind='practice'){
  let s=execute(initialState([],rt.now,'测试训练师'),{type:'starter',payload:{speciesId:25}},'child',rt).state;
+ s.partners.push(makePartner(7,5,rt));
  if(kind==='practice')s=execute(s,{type:'practice.start',payload:{}},'child',rt).state;
  if(kind==='battle'){s.partners[0].moves=['normal-0'];s=execute(s,{type:'gym.start',payload:{}},'child',rt).state;s.battle.enemyHp=1000;s.battle.enemyMaxHp=1000;}
  save({state:s,revision:(get()?.revision??0)+1});localStorage.setItem('controls-operations','{}');
@@ -37,12 +38,28 @@ try{
  await child.goto(base+'?role=child#/learning');await child.locator('.quiz-options').waitFor();
  await parent.goto(base+'?role=parent#/parent');await parent.getByRole('button',{name:'家庭规则',exact:true}).click();
  await expect(parent.getByLabel('道馆难度系数')).toHaveValue('1.5');await parent.getByLabel('道馆难度系数').fill('2');await parent.getByRole('button',{name:'保存难度',exact:true}).click();await expect(parent.getByRole('button',{name:'保存难度',exact:true})).toBeDisabled();assert.equal((await row()).state.settings.gymDifficulty,2);
+ for(const [width,height] of [[1365,950],[1024,768]]){
+   await parent.setViewportSize({width,height});await child.setViewportSize({width,height});
+   const wild=parent.getByRole('region',{name:'野外遭遇',exact:true});
+   const before=(await row()).state.daily.extraEncounters??0;
+   await wild.getByRole('button',{name:'+3',exact:true}).click();await expect.poll(async()=>(await row()).state.daily.extraEncounters).toBe(before+3);
+   await wild.getByRole('spinbutton').fill('2');await wild.getByRole('button',{name:'追加',exact:true}).click();await expect.poll(async()=>(await row()).state.daily.extraEncounters).toBe(before+5);
+ }
+ await parent.getByLabel('每场野外精灵球数').fill('5');await parent.getByRole('button',{name:'保存冒险规则'}).click();await expect.poll(async()=>(await row()).state.settings.ballLimit).toBe(5);
+ await parent.getByRole('checkbox',{name:'周六',exact:true}).uncheck();await parent.getByRole('button',{name:'保存冒险规则'}).click();await expect.poll(async()=>(await row()).state.settings.adventureDays).toEqual([0]);
+ const reserve=parent.locator('.partner-lock-row').filter({has:parent.locator('strong').filter({hasText:'杰尼龟'})});
+ await reserve.getByRole('button',{name:'锁定',exact:true}).click();await expect(reserve.getByRole('button',{name:'解锁',exact:true})).toBeVisible();
+ pass('Parent grants stack during a question at desktop and iPad sizes; the weekly schedule and per-battle ball limit save.');
+ for(const page of [child,parent])await page.setViewportSize({width:1365,height:950});
  const q=(await row()).state.question;await lock(true);await child.locator('.child-rest-page').waitFor();assert.equal(await child.locator('.quiz-options').count(),0);const locked=await row();await sync();await expect.poll(async()=>(await row()).revision).toBe(locked.revision);
  await child.screenshot({path:'artifacts/parent-controls-rest-desktop.png'});await parent.screenshot({path:'artifacts/parent-controls-desktop.png',fullPage:true});pass('Parent saves difficulty; an already open child session locks through polling and read-only sync leaves revision unchanged.');
  await child.evaluate(()=>window.__controls.flags.offline=true);await lock(false);await sync();await expect(child.getByRole('alert')).toContainText('网络断开');assert.equal(await child.locator('.child-rest-page').count(),1);
  await child.evaluate(()=>{window.__controls.flags.offline=false;window.dispatchEvent(new Event('online'));});await child.locator('.quiz-options').waitFor();assert.equal((await row()).state.question.id,q.id);pass('Offline child stays locked; reconnect fetches the unlocked state and resumes the exact question.');
  await child.evaluate(()=>window.__controls.flags.loseResponse=true);await child.locator('.quiz-options button').nth(q.options.findIndex(o=>o.id===q.correctOptionId)).click();await expect(child.locator('.connection-banner')).toContainText('模拟响应丢失');
  assert(await child.evaluate(()=>!!localStorage.getItem('rr-pending-child')));await lock(true);await sync();await child.locator('.child-rest-page').waitFor();assert(await child.evaluate(()=>!!localStorage.getItem('rr-pending-child')));await lock(false);await sync();await child.locator('.app-shell').waitFor();await child.getByRole('button',{name:'重试',exact:true}).click();await expect.poll(()=>child.evaluate(()=>localStorage.getItem('rr-pending-child'))).toBeNull();assert.equal((await row()).state.daily.questions,1);pass('Lost-response operation survives lock/unlock and retry commits no duplicate answer.');
+ await child.goto(base+'?role=child#/partners');await expect(child.locator('.box-cell').filter({hasText:'杰尼龟'})).toContainText('家长已锁定');
+ await expect(child.locator('.box-cell').filter({hasText:'杰尼龟'}).getByRole('button',{name:'加入队伍'})).toBeDisabled();
+ pass('A locked box partner is visibly marked on the child device and cannot join the team.');
  await child.waitForLoadState('networkidle');await child.evaluate(()=>{window.__controls.prepare('battle');history.replaceState(null,'','?role=child#/adventure');});await child.reload();await child.locator('.battle-panel').waitFor();
  // Delay the action response until after a newer lock read has arrived.
  await child.evaluate(()=>window.__controls.flags.delayResponse=3000);await child.getByRole('button',{name:/撞击/}).click();await expect.poll(async()=>!!(await row()).state.question).toBe(true);await lock(true);await sync();await child.locator('.child-rest-page').waitFor();await child.waitForTimeout(3300);assert.equal(await child.locator('.child-rest-page').count(),1);assert.equal(await child.locator('.quiz-options').count(),0);pass('A delayed pre-lock response cannot reopen gameplay or its question.');

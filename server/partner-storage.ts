@@ -16,6 +16,7 @@ export function initializeBoxes(s:GameState){
   for(const p of s.partners)if(!s.team.includes(p.id)&&!stored.has(p.id)){storePartner(s,p.id);stored.add(p.id);}
 }
 export function updateTeam(s:GameState,team:string[]){
+  if(s.partners.some(p=>p.parentLocked&&team.includes(p.id)))throw new Error('家长已锁定这位伙伴，暂时不能入队');
   if(!team.length||team.length>TEAM_SIZE||new Set(team).size!==team.length||team.some(id=>!s.partners.some(p=>p.id===id&&!p.sealed)))throw new Error('选择 1 到 6 位已唤醒的伙伴');
   initializeBoxes(s);
   const removed=s.team.filter(id=>!team.includes(id));

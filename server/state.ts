@@ -1,7 +1,7 @@
 import type { GameState, Daily, Npc, Partner, Role, PublicState } from '../src/game/types';
 import { defaultMoves, levelFor, expFor, species, wordsFor, wordBank,questionWords,dailyGoal } from './game-data';
 import {learned} from './learning-scheduler';
-import {adventureAccess,initializeGymProgress,gymRemaining} from './gym-progress';
+import {adventureAccess,adventureQuota,initializeGymProgress,gymRemaining} from './gym-progress';
 import {initializeBoxes} from './partner-storage';
 import {qualifies} from '../src/game/checkins';
 export interface Runtime { now:Date; random:()=>number; uuid:()=>string }
@@ -93,7 +93,8 @@ export function rollover(s:GameState,rt:Runtime){
   else if(carry)grant(s,carry,targets,true);
   settleSharedQueue(s);
 }
-export function canBattle(s:GameState,day:string){return isWeekend(day)||s.settings.weekdayPassDate===day;}
+export function canBattle(s:GameState,day:string){const weekday=new Date(day+'T00:00:00Z').getUTCDay();
+  return (s.settings.adventureDays??[6,0]).includes(weekday)||s.settings.weekdayPassDate===day;}
 export function publicState(s:GameState,role:Role,revision:number,now:Date):PublicState {
   s=structuredClone(s);s.settings.childLocked??=false;s.settings.gymDifficulty??=1.5;initializeBoxes(s);initializeGymProgress(s,dayOf(now));
   const {question,customWords:_,disabledWordIds:__,recentWordIds:___recent,realName,...rest}=structuredClone(s);
@@ -103,7 +104,7 @@ export function publicState(s:GameState,role:Role,revision:number,now:Date):Publ
     publicQuestion={...safe,...(question.wrong?{explanation,word,example}:{})};
   }
   const availableWords=questionWords(s),reviewWords=availableWords.filter(w=>learned(s.mastery[w.id])),availableIds=new Set(availableWords.map(w=>w.id)),goal=dailyGoal(s,availableWords);
-  return {...rest,adventureAccess:adventureAccess(s,dayOf(now)),gymRemaining:gymRemaining(s,dayOf(now)),daily:{...rest.daily,goal,practiceFinished:goal>0&&s.daily.questions>=goal},question:publicQuestion,role,revision,today:dayOf(now),canBattle:canBattle(s,dayOf(now)),reviewWords:wordBank(s).filter(w=>s.mastery[w.id]).map(({id,word,meaning})=>({id,word,meaning,reviewable:availableIds.has(id)})),reviewCount:reviewWords.filter(w=>s.mastery[w.id].due<=dayOf(now)).length,claimableExp:claimableExp(s),wordCount:wordsFor(s).length,...(role==='parent'?{realName,words:wordBank(s).map(w=>({...w,active:!s.disabledWordIds.includes(w.id)}))}:{})};
+  return {...rest,adventureAccess:adventureAccess(s,dayOf(now)),gymRemaining:gymRemaining(s,dayOf(now)),encounterRemaining:adventureQuota(s,dayOf(now),'wild').remaining,daily:{...rest.daily,goal,practiceFinished:goal>0&&s.daily.questions>=goal},question:publicQuestion,role,revision,today:dayOf(now),canBattle:canBattle(s,dayOf(now)),reviewWords:wordBank(s).filter(w=>s.mastery[w.id]).map(({id,word,meaning})=>({id,word,meaning,reviewable:availableIds.has(id)})),reviewCount:reviewWords.filter(w=>s.mastery[w.id].due<=dayOf(now)).length,claimableExp:claimableExp(s),wordCount:wordsFor(s).length,...(role==='parent'?{realName,words:wordBank(s).map(w=>({...w,active:!s.disabledWordIds.includes(w.id)}))}:{})};
 }
 export function qualifyingDates(s:GameState){return [...new Set(s.checkins.filter(qualifies).map(c=>c.date))].sort();}
 export function streak(s:GameState,day:string):number {

@@ -43,3 +43,22 @@ html[data-reduced=true] *,html[data-reduced=true] *:before,html[data-reduced=tru
 .parent-controls{margin-bottom:24px}.parent-controls h2{display:flex;align-items:center;gap:8px}.gym-difficulty,.gym-retry{padding-top:20px;margin-top:20px;border-top:1px solid #e3e7dd}.gym-difficulty label{display:flex;justify-content:space-between;gap:16px}.gym-difficulty input[type=range]{width:100%;margin:20px 0 8px;accent-color:#48785a}.difficulty-scale{display:flex;justify-content:space-between;font-size:12px;color:#687467}.gym-difficulty p,.gym-retry p,.gym-retry small{color:#687467}.gym-retry small{display:block;margin-top:10px}.child-rest-page{min-height:100dvh;display:grid;place-items:center;padding:24px;background:#f4f4e9}.child-rest-page section{width:min(100%,520px);text-align:center;padding:40px 24px}.child-rest-page .eyebrow{display:block;margin-top:20px}.child-rest-page p{line-height:1.9}.child-rest-page section>div{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin-top:24px}
 
 .settings-popover .music-volume{align-items:flex-start;flex-direction:column;gap:8px}.music-volume input{width:100%;accent-color:#678451}
+
+.adventure-admin {display:grid;gap:18px;margin-bottom:24px}
+.adventure-admin h2,.quota-row header,.adventure-actions,.adventure-days,.partner-lock-row {display:flex;align-items:center;gap:8px}
+.adventure-admin h3,.quota-row p {margin:0}
+.quota-grid {display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:18px;margin:16px 0}
+.quota-row {background:#f5f7ee;border-radius:12px;padding:14px}
+.quota-row header {justify-content:space-between}
+.quota-row header strong {color:#37634a}
+.adventure-days,.adventure-actions {flex-wrap:wrap;margin:10px 0}
+.adventure-actions input {width:64px}
+.adventure-days label {display:flex;gap:5px;align-items:center;padding:6px}
+.partner-lock-list {max-height:24rem;overflow:auto}
+.partner-lock-row {padding:9px 0;border-top:1px solid #e3e7dd}
+.partner-lock-row img {width:45px;height:45px;image-rendering:pixelated}
+.partner-lock-row>div {flex:1;min-width:0}
+.partner-lock-row small {display:block}
+.partner-lock-row select {max-width:100%;margin-top:5px}
+
+.adventure-admin [id] {scroll-margin-top:90px}
