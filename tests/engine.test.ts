@@ -124,7 +124,7 @@ describe('adventure state',()=>{
  });
  it('blocks weekday starts and allows a dated parent override',()=>{
    const monday={...rt,now:new Date('2026-10-19T10:00:00Z')};
-   expect(()=>act(started(),'encounter',{},'child',monday)).toThrow('周末');
+   expect(()=>act(started(),'encounter',{},'child',monday)).toThrow('未开放');
    let s=act(started(),'parent.settings',{weekdayPassDate:true},'parent',monday).state;
    s=act(s,'encounter',{},'child',monday).state;expect(s.battle?.status).toBe('active');
  });

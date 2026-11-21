@@ -6,7 +6,7 @@ import {gzipSync} from 'node:zlib';
 import {randomUUID} from 'node:crypto';
 import assert from 'node:assert/strict';
 import {loadOps,settings} from './ops-lib.mjs';
-const {BackupStore,restoreFamily,execute,initialState,validateSave}=await loadOps(),{envId,apiKey,version}=await settings(),store=new BackupStore(envId,apiKey);
+const {BackupStore,restoreFamily,execute,initialState,makePartner,validateSave}=await loadOps(),{envId,apiKey,version}=await settings(),store=new BackupStore(envId,apiKey);
 const families=JSON.parse(await readFile('private/family-seed.json','utf8')),accounts=JSON.parse(await readFile('private/account-identities.json','utf8'));
 assert.notEqual(families.qa,families.home);
 const before=await store.snapshot(version,'manual'),original=before.saves.find(s=>s.family_id===families.qa);
@@ -37,6 +37,7 @@ async function command(page,type,payload={},operationId=randomUUID()){
 try{
  const now=new Date(),rt={now,uuid:randomUUID,random:()=>.3};
  let state=execute(initialState([],now,'测试训练师',''),{type:'starter',payload:{speciesId:25},operationId:randomUUID()},'child',rt).state;
+ state.partners.push(makePartner(7,5,rt));
  state.settings.weekdayPassDate=state.daily.date;
  state=execute(state,{type:'practice.start',payload:{},operationId:randomUUID()},'child',rt).state;
  await commit(state);const child=await login('child'),parent=await login('parent');
@@ -57,16 +58,27 @@ try{
  const battle=await command(child,'gym.start');assert(battle.ok,battle.error);assert.equal(battle.state.battle.gymDifficulty,2);const oldBattle=battle.state.battle;
  assert((await command(parent,'parent.settings',{gymDifficulty:.5})).ok);assert.deepEqual((await current()).state.battle,oldBattle);assert.equal((await command(parent,'parent.gym.retry')).ok,false);
  assert((await command(child,'battle.leave')).ok);await parent.reload();await parent.locator('.parent-page').waitFor();await parent.getByRole('button',{name:'家庭规则',exact:true}).click();
- const grant=parent.getByRole('button',{name:'今天再给一次挑战机会',exact:true});await expect(grant).toBeEnabled();await grant.click();await expect(grant).toBeDisabled();await expect.poll(async()=>(await current()).state.daily.gymExtraStarts,{timeout:15000}).toBe(1);
+ const grant=parent.getByRole('region',{name:'道馆挑战',exact:true}).getByRole('button',{name:'+1',exact:true});await expect(grant).toBeEnabled();await grant.click();await expect.poll(async()=>(await current()).state.daily.gymExtraStarts,{timeout:15000}).toBe(1);
  const retryId=randomUUID();const extra=await command(child,'gym.start',{},retryId);assert(extra.ok,extra.error);assert.equal(extra.state.battle.gymDifficulty,.5);assert.equal(extra.state.daily.gymStarts,2);assert((await command(child,'gym.start',{},retryId)).ok);assert.equal((await current()).state.daily.gymStarts,2);
  assert((await command(child,'battle.leave')).ok);const grantId=randomUUID();assert((await command(parent,'parent.gym.retry',{},grantId)).ok);assert((await command(parent,'parent.gym.retry',{},grantId)).ok);assert.equal((await current()).state.daily.gymExtraStarts,2);
+ await parent.getByLabel('每天道馆挑战次数').fill('3');await parent.getByLabel('每场野外精灵球数').fill('5');await parent.getByRole('button',{name:'保存冒险规则'}).click();
+ await expect.poll(async()=>(await current()).state.settings.ballLimit).toBe(5);
+ const wild=parent.getByRole('region',{name:'野外遭遇',exact:true});await wild.getByRole('button',{name:'+3',exact:true}).click();await expect.poll(async()=>(await current()).state.daily.extraEncounters).toBe(3);
+ const reserve=(await current()).state.partners.find(p=>p.speciesId===7);
+ await parent.getByLabel('选择替补').selectOption(reserve.id);
+ const lead=parent.locator('.partner-lock-row').filter({has:parent.locator('strong').filter({hasText:'皮卡丘'})});await lead.getByRole('button',{name:'锁定',exact:true}).click();await expect(lead.getByRole('button',{name:'解锁',exact:true})).toBeVisible();
+ const view=await command(child,'state.read');assert.deepEqual(view.state.team,[reserve.id]);assert.equal(view.state.encounterRemaining,6);assert.equal(view.state.gymRemaining,3);
+ const wildBattle=await command(child,'encounter');assert(wildBattle.ok,wildBattle.error);assert.equal(wildBattle.state.battle.ballLimit,5);assert.equal(wildBattle.state.encounterRemaining,5);
+ await child.getByRole('button',{name:'我的伙伴',exact:true}).click();await expect(child.locator('.box-cell').filter({hasText:'皮卡丘'})).toContainText('家长已锁定');
+ pass('QA grants, weekly limits, atomic last-partner substitution and child-side lock display verified against the deployed game.');
  validateSave((await current()).state);pass('Active gym retains its coefficient; parent grants exactly one retry and the next battle uses the new difficulty.');
  await parent.setViewportSize({width:1024,height:768});await parent.reload();await parent.locator('.parent-page').waitFor();await parent.getByRole('button',{name:'家庭规则',exact:true}).click();await parent.screenshot({path:'artifacts/parent-controls-live-ipad.png',fullPage:true});assert(await parent.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));
  for(const path of ['assets/pokemon/art/1.png','assets/pokemon/back/25.png','manifest.webmanifest']){const response=await fetch(base+path);assert(response.ok);}
  assert.deepEqual(report.errors,[]);pass('Production assets and iPad-sized parent layout load without uncaught browser errors.');
 }finally{
- for(const context of browser.contexts())for(const page of context.pages())await page.waitForLoadState('networkidle',{timeout:45000});
- await browser.close();const row=await current();await restoreFamily(store,before,families.qa,row.revision,version);assert.deepEqual((await current()).state,original.state);report.qaRestored=true;
+ try{await browser.close();}finally{
+  const row=await current();await restoreFamily(store,before,families.qa,row.revision,version);assert.deepEqual((await current()).state,original.state);report.qaRestored=true;
+ }
  for(const row of before.saves.filter(s=>s.family_id!==families.qa)){const after=await store.currentFamily(row.family_id);assert.equal(after.revision,row.revision,'Another family changed concurrently; inspect before releasing');assert.deepEqual(after.state,row.state);}
  report.otherFamiliesUnchanged=true;await writeFile('artifacts/parent-controls-live-report.json',JSON.stringify(report,null,2));console.log('QA restored; all other families unchanged.');
 }
