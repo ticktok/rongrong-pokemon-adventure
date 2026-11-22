@@ -6,7 +6,8 @@ import { MOVES } from '../content/world';
 import {STARTERS,NPC_GIFTS} from '../content/packs';
 import {isWalkable,mapOf,safePoint,placedNpcs} from '../content/geometry';
 import type { GameState, GameCommand, ActionResult, Role, Word, Npc, Question, Partner, BattleEvent } from '../src/game/types';
-import { species, region, hp, damage, captureChance, wildPool, availableMoves, defaultMoves, EVOLUTIONS, wordsFor,wordBank,sameLineage,dailyGoal,syncLearning } from './game-data';
+import {remainingWildSpecies} from '../content/packs';
+import { species, region, hp, damage, captureChance, availableMoves, defaultMoves, EVOLUTIONS, wordsFor,wordBank,sameLineage,dailyGoal,syncLearning } from './game-data';
 import { dayOf, rollover, canBattle, grant, makePartner, addEvent, updateSeals,initializeRewardProgress, type Runtime } from './state';
 import { makeQuestion, recordFirst } from './quiz';
 import {reviewRules,ensureReview,updateCheckinStatus,settleCheckin,claimReward} from './checkins';
@@ -35,9 +36,12 @@ function startBattle(s:GameState,kind:'wild'|'gym',rt:Runtime):ActionResult {
   let enemy:number,level:number,enemies:number[];
   if(kind==='wild'){
     if(quota.remaining<=0)throw new Error('今天的捕捉冒险已完成，下次再来看看吧');
-    const pool=wildPool(r.id).flatMap(p=>Array(s.caught.includes(p.id)?1:5).fill(p.id) as number[]);
+    const candidates=remainingWildSpecies(r.id,s.daily.wildSpecies);
+    if(!candidates.length)throw new Error('这片草丛的宝可梦今天都见过啦');
+    const pool=candidates.flatMap(id=>Array<number>(s.caught.includes(id)?1:5).fill(id));
     enemy=pool[Math.floor(rt.random()*pool.length)];level=Math.max(3,r.level-4+Math.floor(rt.random()*3));enemies=[enemy];
     s.daily.extraEncountersUsed=quota.spent+(quota.baseRemaining===0?1:0);
+    (s.daily.wildSpecies??=[]).push(enemy);
     s.daily.encounters++;
   }else{if(!access.gymAvailable)throw new Error(access.gymReason);enemy=r.boss[0];level=r.level;enemies=r.boss;}
   const team=s.team.map(id=>s.partners.find(p=>p.id===id)!).filter(p=>!p.sealed&&!p.parentLocked);

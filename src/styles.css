@@ -54,7 +54,16 @@ html[data-reduced=true] *,html[data-reduced=true] *:before,html[data-reduced=tru
 .adventure-days,.adventure-actions {flex-wrap:wrap;margin:10px 0}
 .adventure-actions input {width:64px}
 .adventure-days label {display:flex;gap:5px;align-items:center;padding:6px}
-.partner-lock-list {max-height:24rem;overflow:auto}
+.lock-tools,.lock-pages {display:flex;flex-wrap:wrap;align-items:center;gap:.6rem;margin:1rem 0}
+.lock-tools input {flex:1 1 12rem;min-width:0}
+.lock-tools select {width:auto;min-width:8rem}
+.lock-tools span,.lock-pages span {font-size:.84rem;color:#476053}
+.lock-pages {justify-content:center}
+.partner-lock-list {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.6rem}
+.partner-lock-list .partner-lock-row {padding:.8rem;border:1px solid #d9e4d8;border-radius:14px;background:#f8faf5;align-items:flex-start}
+.partner-lock-row input {width:100%;margin-top:.5rem}
+.partner-lock-row button {min-height:44px}
+@media(max-width:600px){.partner-lock-list {grid-template-columns:1fr}}
 .partner-lock-row {padding:9px 0;border-top:1px solid #e3e7dd}
 .partner-lock-row img {width:45px;height:45px;image-rendering:pixelated}
 .partner-lock-row>div {flex:1;min-width:0}
@@ -62,3 +71,5 @@ html[data-reduced=true] *,html[data-reduced=true] *:before,html[data-reduced=tru
 .partner-lock-row select {max-width:100%;margin-top:5px}
 
 .adventure-admin [id] {scroll-margin-top:90px}
+
+.wild-exhausted {position:absolute;z-index:2;top:4rem;left:1rem;right:1rem;margin:auto;width:fit-content;max-width:90%;padding:.55rem .9rem;border-radius:12px;background:#fff9e9;color:#29483d;pointer-events:none}

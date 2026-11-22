@@ -67,7 +67,14 @@ export class MusicPlayer {
   playCapture(id:string){
     if(this.lastCue===id)return true;this.lastCue=id;
     if(!this.enabled||!this.visible||!this.unlocked||!this.wanted)return false;
-    this.cue=id;void this.start('capture',true);return true;
+    return this.playCue('capture');
+  }
+  playCue(track:'capture'|'evolution'|'evolution-finish',loop=false){
+    if(!this.enabled||!this.visible||!this.unlocked||!this.wanted)return false;
+    this.cue=track;void this.start(track,true,loop);return true;
+  }
+  endCue(){
+    this.cancelCue();void this.sync();
   }
   private target(voice:Voice){return this.volume*this.assets[voice.track].gain*(this.ducked?.2:1);}
   private adjustGain(seconds=.3){
@@ -97,7 +104,7 @@ export class MusicPlayer {
     if(this.voice?.track===this.wanted||this.loading===this.wanted)return;
     await this.start(this.wanted,false);
   }
-  private async start(track:MusicTrack,cue:boolean){
+  private async start(track:MusicTrack,cue:boolean,loopCue=false){
     const c=this.context;if(!c)return;
     const token=++this.generation;this.loading=track;
     // Stop the previous theme immediately if loading the next one takes a long time.
@@ -107,7 +114,7 @@ export class MusicPlayer {
       if(token!==this.generation||!this.enabled)return;
       this.loading=null;
       const source=c.createBufferSource(),gain=c.createGain(),asset=this.assets[track];
-      source.buffer=buffer;source.loop=!cue;
+      source.buffer=buffer;source.loop=!cue||loopCue;
       if(!cue){source.loopStart=asset.loopStart??0;source.loopEnd=asset.loopEnd??buffer.duration;}
       const voice:Voice={source,gain,track,cue};this.voice=voice;this.voices.add(voice);
       source.connect(gain);gain.connect(c.destination);gain.gain.setValueAtTime(0,c.currentTime);

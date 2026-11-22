@@ -1,7 +1,7 @@
 import {useEffect,useMemo,useRef,useState} from 'react';
 import type Phaser from 'phaser';
 import {ArrowUp,ArrowDown,ArrowLeft,ArrowRight,MessageCircle,Shield,MapPin} from 'lucide-react';
-import {REGIONS} from '../../content/world';
+import {REGIONS,remainingWildSpecies} from '../../content/packs';
 import {COLS,ROWS,TILE,mapOf,placedNpcs,isGrass,isWalkable} from '../../content/geometry';
 import type {Npc,PublicState} from '../game/types';
 import Dialog from './Dialog';
@@ -17,6 +17,9 @@ export default function World(props:Props){
   const visibleNpcs=useMemo(()=>placedNpcs(props.state.npcs,props.state.position.regionId),[props.state.npcs,props.state.position.regionId]);npcRef.current=visibleNpcs;
   const region=REGIONS.find(r=>r.id===props.state.position.regionId)!;
   const map=mapOf(region.id),discovery=map.discoveries.find(d=>d.id===discoveryId);
+  const dailySeen=props.state.daily.date===props.state.today?props.state.daily.wildSpecies:undefined;
+  const exhausted=!remainingWildSpecies(region.id,dailySeen).length;
+  const alternative=exhausted&&REGIONS.find(r=>props.state.adventureAccess?.[r.id]?.regionOpen&&remainingWildSpecies(r.id,dailySeen).length);
   const lead=props.state.partners.find(p=>p.id===props.state.team[0]);
   useEffect(()=>{
     let game:Phaser.Game|undefined,disposed=false;let observer:ResizeObserver|undefined;
@@ -25,7 +28,7 @@ export default function World(props:Props){
       if(disposed||!host.current)return;
       const position=latest.current.state.position;
       class AdventureScene extends P.Scene {
-        hero!:Phaser.GameObjects.Container;buddy!:Phaser.GameObjects.Image;tx=position.x;ty=position.y;moving=false;syncing=false;nextMove=0;lastEncounter=0;lastSaved='';saveEvent?:Phaser.Time.TimerEvent;
+        hero!:Phaser.GameObjects.Container;buddy!:Phaser.GameObjects.Image;tx=position.x;ty=position.y;moving=false;syncing=false;gymRequested=false;nextMove=0;lastEncounter=0;lastSaved='';saveEvent?:Phaser.Time.TimerEvent;
         keys!:Record<string,Phaser.Input.Keyboard.Key>;nearNpc:Npc|undefined;nearDiscovery='';
         preload(){this.load.image('town',import.meta.env.BASE_URL+'assets/town/tilemap_packed.png');const first=latest.current.state.partners.find(p=>p.id===latest.current.state.team[0]);if(first)this.load.image('buddy',import.meta.env.BASE_URL+'assets/pokemon/front/'+first.speciesId+'.png');}
         create(){
@@ -66,9 +69,10 @@ export default function World(props:Props){
           this.cameras.main.setBounds(0,0,COLS*TILE,ROWS*TILE);this.cameras.main.startFollow(this.hero,true,0.12,0.12);this.cameras.main.roundPixels=true;
           if(this.input.keyboard){
             this.keys=this.input.keyboard.addKeys('UP,DOWN,LEFT,RIGHT,W,A,S,D,E,SPACE') as Record<string,Phaser.Input.Keyboard.Key>;
-            this.input.keyboard.on('keydown-E',()=>this.interaction());this.input.keyboard.on('keydown-SPACE',()=>this.interaction());
+            this.input.keyboard.on('keydown-E',(event:KeyboardEvent)=>{if(!event.repeat)void this.interaction();});this.input.keyboard.on('keydown-SPACE',(event:KeyboardEvent)=>{if(!event.repeat)void this.interaction();});
           }
           interact.current=()=>this.interaction();
+          this.game.canvas.setAttribute('aria-label',region.name+'地图就绪');
         }
         tree(x:number,y:number){this.add.ellipse(x*TILE+17,y*TILE+25,34,15,0x4c7757,0.2);this.add.image(x*TILE+16,y*TILE+2,'tree').setScale(2.3).setDepth(y*TILE+2).setTint(region.biome==='volcano'?0xe2c39a:0xffffff);}
         house(x:number,y:number,label:string,color:number){
@@ -92,20 +96,33 @@ export default function World(props:Props){
           g.fillStyle(0x3b453c);g.fillRect(-5,-15,3,3);g.fillRect(4,-15,3,3);
           g.fillStyle(0xffedbd);g.fillRect(-4,-3,8,3);c.add(g);return c;
         }
+        atGym(){return Math.hypot(this.tx-map.gym[0],this.ty-map.gym[1])<3;}
+        async openGym(){
+          if(!this.gymRequested||this.moving||this.syncing||disposed)return;
+          if(!this.atGym()||latest.current.busy||latest.current.state.question){this.gymRequested=false;return;}
+          this.gymRequested=false;
+          const saved=await this.save();
+          this.gymRequested=false;
+          if(saved&&!disposed){confirming.current=true;setGymConfirm(true);}
+        }
         async interaction(){
+          if(!confirming.current&&this.atGym()&&!latest.current.state.question&&(!latest.current.busy||this.syncing)){
+            this.gymRequested=true;await this.openGym();return;
+          }
           if(confirming.current||latest.current.busy||latest.current.state.question||this.syncing||this.moving)return;
           if(!await this.save())return;
           if(this.nearNpc){latest.current.onNpc(this.nearNpc);return;}
           if(this.nearDiscovery){const result=await latest.current.run('world.interact',{discoveryId:this.nearDiscovery});if(result?.ok&&!disposed)setDiscoveryId(this.nearDiscovery);return;}
-          if(Math.hypot(this.tx-map.gym[0],this.ty-map.gym[1])<3)setGymConfirm(true);
+
         }
         update(time:number){
           const p=latest.current;
           if(confirming.current||!this.hero||p.busy||p.state.question||this.moving||this.syncing)return;
+          if(this.gymRequested){void this.openGym();return;}
           const npcs=npcRef.current;
           this.nearNpc=npcs.find(n=>Math.hypot(n.x-this.tx,n.y-this.ty)<2.4);
           this.nearDiscovery=map.discoveries.find(d=>Math.hypot(d.x-this.tx,d.y-this.ty)<2.4)?.id??'';
-          const near=this.nearNpc?'和'+this.nearNpc.name+'聊一聊':this.nearDiscovery?'观察'+map.discoveries.find(d=>d.id===this.nearDiscovery)!.name:Math.hypot(this.tx-map.gym[0],this.ty-map.gym[1])<3?'进入道馆':'';
+          const near=this.atGym()?'进入道馆':this.nearNpc?'和'+this.nearNpc.name+'聊一聊':this.nearDiscovery?'观察'+map.discoveries.find(d=>d.id===this.nearDiscovery)!.name:'';
           setNear(old=>old===near?old:near);
           if(time<this.nextMove)return;
           let dx=0,dy=0;
@@ -116,8 +133,8 @@ export default function World(props:Props){
           if(!dx&&!dy)return;
           const x=this.tx+dx,y=this.ty+dy;this.nextMove=time+130;
           if(!isWalkable(x,y,region.id)||npcs.some(n=>n.x===x&&n.y===y))return;
-          const oldX=this.hero.x,oldY=this.hero.y;this.tx=x;this.ty=y;setCursor({regionId:region.id,x,y});this.moving=true;setWalking(true);
-          this.tweens.add({targets:this.hero,x:x*TILE+16,y:y*TILE+16,duration:p.reduced?0:115,onComplete:()=>{this.moving=false;setWalking(false);this.arrived(time);}});
+          const oldX=this.hero.x,oldY=this.hero.y;this.tx=x;this.ty=y;if(this.atGym())setNear('进入道馆');setCursor({regionId:region.id,x,y});this.moving=true;setWalking(true);
+          this.tweens.add({targets:this.hero,x:x*TILE+16,y:y*TILE+16,duration:p.reduced?0:115,onComplete:()=>{this.moving=false;setWalking(false);if(this.gymRequested)void this.openGym();else void this.arrived(time);}});
           if(this.buddy)this.tweens.add({targets:this.buddy,x:oldX-14,y:oldY+6,duration:p.reduced?0:170});
           this.saveEvent?.remove();
           this.saveEvent=this.time.delayedCall(1100,()=>this.save());
@@ -142,7 +159,7 @@ export default function World(props:Props){
               await latest.current.run('world.position',{regionId:next.id,x:point[0],y:point[1]});return;
             }
           }
-          if(isGrass(this.tx,this.ty,region.id)&&state.canBattle&&state.encounterRemaining>0&&time-this.lastEncounter>10000&&Math.random()<.11){
+          if(isGrass(this.tx,this.ty,region.id)&&state.canBattle&&state.encounterRemaining>0&&remainingWildSpecies(region.id,state.daily.date===state.today?state.daily.wildSpecies:undefined).length>0&&time-this.lastEncounter>10000&&Math.random()<.11){
             this.lastEncounter=time;if(await this.save())await latest.current.run('encounter');
           }
         }
@@ -156,6 +173,7 @@ export default function World(props:Props){
   return <div className="world-wrap">
     <div className="map-label"><MapPin size={14}/><span>{region.name}</span><small>{region.subtitle}</small></div>
     <div className="gym-status" role="status">{exitHint||props.state.adventureAccess?.[region.id]?.gymReason||'今日道馆剩余 '+props.state.gymRemaining+' 次'}</div>
+    {exhausted&&<div className="wild-exhausted" role="status">这片草丛的宝可梦今天都见过啦 · 剩余 {props.state.encounterRemaining} 次{alternative&&props.state.encounterRemaining>0?'，可以去'+alternative.name+'继续探索。':''}</div>}
     {gymConfirm&&<div className="modal-scrim"><section className="dialog" role="dialog" aria-modal="true" aria-label="道馆挑战确认"><h2>{region.leader}的道馆</h2><p>{props.state.adventureAccess?.[region.id]?.gymReason||('今天还可挑战 '+props.state.gymRemaining+' 次，失败或退出也计次。准备好了吗？')}</p><button className="primary" disabled={props.busy||!props.state.adventureAccess?.[region.id]?.gymAvailable} onClick={async()=>{setGymConfirm(false);await props.run('gym.start');}}>开始挑战</button><button onClick={()=>setGymConfirm(false)}>再准备一下</button></section></div>}
     <LocalMap regionId={region.id} x={cursor.regionId===region.id?cursor.x:props.state.position.x} y={cursor.regionId===region.id?cursor.y:props.state.position.y} discoveries={props.state.discoveries??[]}/>
     {discovery&&<Dialog title={discovery.name} onClose={()=>setDiscoveryId('')}><span className="eyebrow">关都发现 · 已收集</span><p>{discovery.description}</p><Pronunciation word={discovery.word}><span>{discovery.word}</span></Pronunciation><p>本区发现 {map.discoveries.filter(d=>props.state.discoveries?.includes(d.id)).length} / 3</p><button className="primary" onClick={()=>setDiscoveryId('')}>继续探索</button></Dialog>}
@@ -165,7 +183,7 @@ export default function World(props:Props){
         {([['up',ArrowUp,'向上'],['left',ArrowLeft,'向左'],['down',ArrowDown,'向下'],['right',ArrowRight,'向右']] as const).map(([direction,Icon,label])=><button key={direction} className={direction} aria-label={label} onPointerDown={e=>{e.currentTarget.setPointerCapture(e.pointerId);held.current=direction;}} onPointerUp={()=>held.current=''} onPointerCancel={()=>held.current=''}><Icon size={22}/></button>)}
       </div>
       <div className="map-hint">方向键 / WASD 移动<span>E / 空格 互动</span></div>
-      <button className={'interact '+(near?'available':'')} disabled={!near||props.busy||walking} onClick={()=>interact.current()}>{near.includes('道馆')?<Shield size={23}/>:<MessageCircle size={23}/>}<span>{near||'走近朋友'}</span></button>
+      <button className={'interact '+(near?'available':'')} disabled={!near||(near!=='进入道馆'&&(props.busy||walking))} onClick={()=>interact.current()}>{near.includes('道馆')?<Shield size={23}/>:<MessageCircle size={23}/>}<span>{near||'走近朋友'}</span></button>
     </div>
   </div>;
 }

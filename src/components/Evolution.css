@@ -1,0 +1,21 @@
+.evolution-scene {position:fixed;inset:0;margin:0;padding:0;border:0;width:100%;height:100%;max-width:none;max-height:none;background:radial-gradient(ellipse at 50% 42%,#34676d,#193749 55%,#102532);color:#fff8e2}
+.evolution-scene::backdrop {background:#102532}
+.evolution-stage {min-height:100%;display:grid;align-content:center;justify-items:center;gap:clamp(24px,6vh,64px);padding:24px;box-sizing:border-box}
+.evolution-portraits {position:relative;width:min(44vh,65vw,340px);aspect-ratio:1}
+.evolution-portraits img {position:absolute;inset:0;width:100%;height:100%;object-fit:contain}
+.evolution-before {animation:evo-glow 1.8s ease-in both,evo-pulse-old 1.3s 1.8s ease-in-out infinite alternate}
+.evolution-after {opacity:0;filter:brightness(0) invert(1);animation:evo-pulse-new 1.3s 1.8s ease-in-out infinite alternate}
+.evolution-dialogue {width:min(100%,600px);padding:18px 20px;text-align:center;color:#23483f;background:#fff9e7;border:3px solid #85af9c;border-radius:16px;box-shadow:0 5px 0 #102f36}
+.evolution-dialogue h2 {margin:0;font-size:clamp(1.15rem,3vw,1.65rem)}
+.evolution-dialogue button {margin-top:12px;min-width:7rem}
+.evolution-scene.revealed .evolution-before {animation:none;opacity:0}
+.evolution-scene.revealed .evolution-after {animation:evo-reveal .85s ease-out both;opacity:1;filter:none}
+.evolution-scene.reduced .evolution-before {animation:evo-soft-out .6s ease-in both}
+.evolution-scene.reduced .evolution-after {animation:none}
+.evolution-scene.reduced.revealed .evolution-after {animation:evo-soft-in .35s ease-out both}
+@keyframes evo-glow {0%,55%{filter:none}100%{filter:brightness(0) invert(1) drop-shadow(0 0 12px #c9fffa)}}
+@keyframes evo-pulse-old {0%,15%{opacity:1;transform:scale(1)}85%,100%{opacity:0;transform:scale(.92)}}
+@keyframes evo-pulse-new {0%,15%{opacity:0;transform:scale(.92)}85%,100%{opacity:1;transform:scale(1)}}
+@keyframes evo-reveal {from{filter:brightness(0) invert(1) drop-shadow(0 0 16px white);transform:scale(.98)}to{filter:none;transform:scale(1)}}
+@keyframes evo-soft-in {from{opacity:0}to{opacity:1}}
+@keyframes evo-soft-out {from{opacity:1}to{opacity:0}}

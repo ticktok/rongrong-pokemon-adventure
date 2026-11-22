@@ -204,3 +204,36 @@ describe('family adventure rules',()=>{
   expect((await run(db,'parent.settings',{gymLimit:0},'parent')).ok).toBe(false);
  });
 });
+
+describe('daily wild species',()=>{
+ it('shares one species list across regions, counts a retry once and preserves unused quota at exhaustion',async()=>{
+   const db=new Store(),state=db.row.state;
+   state.settings.captureLimit=30;
+   const enter=cmd('encounter'),first=await gameCommand(enter,'child',db,rt);
+   const id=first.state!.battle!.enemy;
+   await gameCommand(enter,'child',db,rt);
+   expect(db.row.state.daily.wildSpecies).toEqual([id]);
+   expect(db.row.state.daily.encounters).toBe(1);
+   await run(db,'battle.leave');
+   db.row.state.position.regionId='blue-river';
+   db.row.state.badges=['home-meadow','blue-river'];
+   const other=await run(db,'encounter');
+   expect(other.ok).toBe(true);
+   const second=other.state!.battle!.enemy;
+   expect(db.row.state.daily.wildSpecies).toEqual([id,second]);
+   await run(db,'battle.leave');
+   db.row.state.position.regionId='home-meadow';
+   for(let i=1;i<9;i++){
+     expect((await run(db,'encounter')).ok).toBe(true);
+     await run(db,'battle.leave');
+   }
+   expect(new Set(db.row.state.daily.wildSpecies).size).toBe(10);
+   const before=structuredClone(db.row);
+   expect((await run(db,'encounter')).error).toContain('都见过');
+   expect(db.row).toEqual(before);
+   const tomorrow=await gameCommand(cmd('encounter'),'child',db,{...rt,now:new Date('2026-11-14T16:00:00Z')});
+   expect(tomorrow.ok).toBe(true);
+   expect(tomorrow.state!.daily.wildSpecies).toEqual([id]);
+   expect(tomorrow.state!.daily.encounters).toBe(1);
+ });
+});

@@ -1,4 +1,5 @@
 // Uses only the isolated QA family. Formal and trial saves are read-only.
+import {checkBoxEvolution,checkForest,checkLockCards,populateForest} from './adventure-experience-checks.mjs';
 import {chromium,expect} from '@playwright/test';
 import {build} from 'esbuild';
 import {readFile,writeFile,mkdir} from 'node:fs/promises';
@@ -74,6 +75,16 @@ try{
  validateSave((await current()).state);pass('Active gym retains its coefficient; parent grants exactly one retry and the next battle uses the new difficulty.');
  await parent.setViewportSize({width:1024,height:768});await parent.reload();await parent.locator('.parent-page').waitFor();await parent.getByRole('button',{name:'家庭规则',exact:true}).click();await parent.screenshot({path:'artifacts/parent-controls-live-ipad.png',fullPage:true});assert(await parent.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));
  for(const path of ['assets/pokemon/art/1.png','assets/pokemon/back/25.png','manifest.webmanifest']){const response=await fetch(base+path);assert(response.ok);}
+ const forest=execute(initialState([],now,'测试训练师',''),{type:'starter',payload:{speciesId:25},operationId:randomUUID()},'child',rt).state;
+ populateForest(forest,makePartner,rt);await commit(forest);
+ const encounterId=randomUUID(),firstWild=await command(child,'encounter',{},encounterId);
+ assert(firstWild.ok,firstWild.error);assert((await command(child,'encounter',{},encounterId)).ok);
+ await command(child,'battle.leave');const another=await command(child,'encounter');assert(another.ok,another.error);
+ assert.notEqual(another.state.battle.enemy,firstWild.state.battle.enemy);assert.equal(another.state.daily.wildSpecies.length,2);
+ await command(child,'battle.leave');await child.goto(base+'#/adventure');await child.reload();
+ await checkForest(child,current);await parent.reload();await parent.getByRole('button',{name:'家庭规则',exact:true}).click();
+ await checkLockCards(parent,current);await child.setViewportSize({width:768,height:1024});await child.goto(base+'#/partners');await checkBoxEvolution(child,current);
+ pass('Live QA verified daily wild species, operation retry, Koga keyboard entry, duplicate-species lock and full-screen box evolution.');
  assert.deepEqual(report.errors,[]);pass('Production assets and iPad-sized parent layout load without uncaught browser errors.');
 }finally{
  try{await browser.close();}finally{

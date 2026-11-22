@@ -5,7 +5,7 @@ import {execute} from '../server/engine';
 import {initializeBoxes,updateTeam,movePartners,createBox} from '../server/partner-storage';
 import {validateSave} from '../server/save-validation';
 import {expFor,WORDS} from '../server/game-data';
-import {MAPS,placedNpcs,safePoint,reachable,isWalkable} from '../content/geometry';
+import {mapOf,MAPS,placedNpcs,safePoint,reachable,isWalkable} from '../content/geometry';
 import {gameCommand} from '../server/game-service';
 import type {GameState,Role} from '../src/game/types';
 const rt={now:new Date('2026-11-08T04:00:00Z'),uuid:randomUUID,random:()=>.2};
@@ -44,4 +44,9 @@ describe('Kanto discoveries and position compatibility',()=>{
  it('places overlapping NPCs deterministically without editing original coordinates',()=>{const s=fresh();s.npcs=Array.from({length:8},(_,i)=>({id:'npc-'+i,name:'朋友',regionId:MAPS[0].id,x:0,y:0,kind:'family',line:'你好',quest:'观察'}));const original=structuredClone(s.npcs),placed=placedNpcs(s.npcs,MAPS[0].id);expect(new Set(placed.map(n=>n.x+','+n.y)).size).toBe(8);expect(placedNpcs(s.npcs,MAPS[0].id)).toEqual(placed);expect(s.npcs).toEqual(original);for(const n of placed)expect(isWalkable(n.x,n.y,n.regionId)).toBe(true);});
  it('adapts obstructed old positions without changing ongoing battles',()=>{let s=fresh();s.position.x=0;s.position.y=0;const fixed=act(s,'bootstrap');expect([fixed.position.x,fixed.position.y]).toEqual(safePoint(s.position.regionId,0,0));s=act(s,'gym.start');s.position.x=0;s.position.y=0;expect(act(s,'bootstrap').position).toEqual(s.position);expect(act(s,'battle.leave').position.x).toBeGreaterThan(0);});
  it('requires proximity/open regions, records each discovery once and pays no experience',()=>{let s=fresh();const point=MAPS[0].discoveries[0];expect(()=>act(s,'world.interact',{discoveryId:point.id})).toThrow('附近');s.position={regionId:MAPS[0].id,x:point.x,y:point.y};s=act(s,'world.interact',{discoveryId:point.id});s=act(s,'world.interact',{discoveryId:point.id});expect(s.discoveries).toEqual([point.id]);expect(s.daily.expGranted).toBe(0);expect(s.daily.questions).toBe(0);s.position={regionId:MAPS[2].id,x:MAPS[2].discoveries[0].x,y:MAPS[2].discoveries[0].y};expect(()=>act(s,'world.interact',{discoveryId:MAPS[2].discoveries[0].id})).toThrow();});
+});
+
+it('connects the forest loop and all three gym approaches with an unbroken paved path',()=>{
+ const forest=mapOf('mist-forest');
+ for(let y=12;y<=14;y++)for(let x=24;x<=30;x++)expect(forest.tiles[y][x]).toBe('path');
 });
