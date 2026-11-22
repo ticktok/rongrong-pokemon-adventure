@@ -68,14 +68,14 @@ try{
  await lock(false);await sync();await child.locator('.quiz-options').waitFor();const bq=(await row()).state.question;await child.locator('.quiz-options button').nth(bq.options.findIndex(o=>o.id===bq.correctOptionId)).click();await expect.poll(async()=>!(await row()).state.question).toBe(true);await lock(true);await sync();await child.locator('.child-rest-page').waitFor();assert.equal(await child.locator('.battle-panel').count(),0);pass('Lock dismisses battle presentation; the settled battle remains in the save.');
  await parent.setViewportSize({width:1024,height:768});await parent.screenshot({path:'artifacts/parent-controls-ipad.png',fullPage:true});await child.setViewportSize({width:1024,height:768});await child.screenshot({path:'artifacts/parent-controls-rest-ipad.png'});
  for(const page of [parent,child]){await page.setViewportSize({width:390,height:844});assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));}pass('Desktop, iPad-sized and narrow layouts render without horizontal overflow.');
- await child.evaluate(()=>window.__controls.prepare('forest'));await child.goto(base+'?role=child#/adventure');await child.reload();
+ await child.evaluate(()=>window.__controls.prepare('forest'));await child.goto(base+'?role=child&scenario=forest#/adventure');
  await child.setViewportSize({width:1024,height:768});await checkForest(child,row,true);
  await parent.setViewportSize({width:1024,height:768});await parent.reload();await parent.getByRole('button',{name:'家庭规则',exact:true}).click();
  await checkLockCards(parent,row);await parent.locator('#partner-locks').screenshot({path:'artifacts/lock-cards-ipad.png'});
  await child.setViewportSize({width:768,height:1024});await child.goto(base+'?role=child#/partners');
  await checkBoxEvolution(child,row,true);
  await child.evaluate(()=>{window.__controls.prepare('forest');const row=window.__controls.get();row.state.daily.wildSpecies=[13,32,50,69,86,102,114,125,138];row.state.daily.encounters=9;localStorage.setItem('controls-fixture',JSON.stringify(row));});
- await child.goto(base+'?role=child#/adventure');await child.reload();await expect(child.locator('.wild-exhausted')).toContainText(/剩余 3 次.*可以去/);
+ await child.goto(base+'?role=child&scenario=exhausted#/adventure');await child.locator('canvas[aria-label="浅红秘林地图就绪"]').waitFor();await expect(child.locator('.wild-exhausted')).toContainText(/剩余 3 次.*可以去/);
  pass('Tablet keyboard and turn input reaches Koga, duplicate partner search and replacement select the correct ID, and lost evolution response retries once.');
  assert.deepEqual(errors,[]);
 }finally{await writeFile('artifacts/parent-controls-ui-'+(useWebkit?'webkit':'chrome')+'.json',JSON.stringify({checks,errors},null,2));await browser.close();}

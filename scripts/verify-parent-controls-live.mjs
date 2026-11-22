@@ -76,7 +76,9 @@ try{
  await parent.setViewportSize({width:1024,height:768});await parent.reload();await parent.locator('.parent-page').waitFor();await parent.getByRole('button',{name:'家庭规则',exact:true}).click();await parent.screenshot({path:'artifacts/parent-controls-live-ipad.png',fullPage:true});assert(await parent.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));
  for(const path of ['assets/pokemon/art/1.png','assets/pokemon/back/25.png','manifest.webmanifest']){const response=await fetch(base+path);assert(response.ok);}
  const forest=execute(initialState([],now,'测试训练师',''),{type:'starter',payload:{speciesId:25},operationId:randomUUID()},'child',rt).state;
- populateForest(forest,makePartner,rt);await commit(forest);
+ populateForest(forest,makePartner,rt);
+ const prepared=execute(forest,{type:'bootstrap',payload:{},operationId:randomUUID()},'child',rt).state;
+ validateSave(prepared);await commit(prepared);
  const encounterId=randomUUID(),firstWild=await command(child,'encounter',{},encounterId);
  assert(firstWild.ok,firstWild.error);assert((await command(child,'encounter',{},encounterId)).ok);
  await command(child,'battle.leave');const another=await command(child,'encounter');assert(another.ok,another.error);
