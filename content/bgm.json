@@ -126,5 +126,17 @@
     "source": "https://fi.zophar.net/soundfiles/gameboy-gbs/pokemon-red/49%20Pokemon%20Capture%20Fanfare.mp3",
     "sourcePage": "https://www.zophar.net/music/gameboy-gbs/pokemon-red",
     "rights": "Original Pokémon game music; copyright belongs to its respective rights holders. No open license claimed."
+  },
+  "evolution": {
+    "path": "assets/bgm/evolution.wav",
+    "title": "伙伴进化",
+    "gain": 0.78,
+    "rights": "Original chiptune composed for this project."
+  },
+  "evolution-finish": {
+    "path": "assets/bgm/evolution-finish.wav",
+    "title": "进化完成",
+    "gain": 0.78,
+    "rights": "Original chiptune composed for this project."
   }
 }

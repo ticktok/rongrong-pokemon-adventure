@@ -1,6 +1,7 @@
 import {useState} from 'react';
 import {CalendarDays,Lock,Ticket} from 'lucide-react';
 import type {PublicState} from '../game/types';
+import {dexEntry,dexMatchRank} from '../game/pokedex';
 import {pokemon} from '../game/catalog';
 import {asset,type Run} from '../lib';
 
@@ -50,6 +51,13 @@ function WeeklyRules({state,run,busy}:Props){
 
 function PartnerLocks({state,run,busy}:Props){
   const [replacement,setReplacement]=useState('');
+  const [query,setQuery]=useState(''),[filter,setFilter]=useState('all'),[page,setPage]=useState(1);
+  const [reserveQuery,setReserveQuery]=useState('');
+  const matches=(speciesId:number,q:string)=>Number.isFinite(dexMatchRank(dexEntry(speciesId)!,q));
+  const byId=new Map(state.partners.map(p=>[p.id,p]));
+  const ordered=[...state.team,...(state.boxes??[]).flatMap(box=>box.slots)].flatMap(id=>id&&byId.has(id)?[byId.get(id)!]:[]);
+  const filtered=ordered.filter(p=>matches(p.speciesId,query)&&(filter==='all'||(filter==='team'?state.team.includes(p.id):!!p.parentLocked===(filter==='locked'))));
+  const pages=Math.max(1,Math.ceil(filtered.length/12)),currentPage=Math.min(page,pages);
   const reserves=state.partners.filter(p=>!state.team.includes(p.id)&&!p.sealed&&!p.parentLocked);
   const position=(id:string)=>{
     const index=state.team.indexOf(id);
@@ -60,18 +68,27 @@ function PartnerLocks({state,run,busy}:Props){
   return <section id="partner-locks" className="admin-panel"><h2><Lock size={21}/> 伙伴上场管理</h2>
     <p>锁定后回到盒子，暂停上场和新的队伍打卡经验。解锁后可重新入队。</p>
     {!state.partners.length&&<p>选择初始伙伴后，就能在这里管理。</p>}
-    <div className="partner-lock-list">{state.partners.map(p=>{
+    <div className="lock-tools">
+      <input type="search" aria-label="搜索上场伙伴" placeholder="名字、英文、拼音或图鉴编号" value={query} onChange={e=>{setQuery(e.target.value);setPage(1);}}/>
+      <select aria-label="上场状态" value={filter} onChange={e=>{setFilter(e.target.value);setPage(1);}}>
+        <option value="all">全部伙伴</option><option value="team">队伍中</option><option value="locked">已锁定</option><option value="unlocked">未锁定</option>
+      </select>
+      <span>{filtered.length} 位伙伴</span>
+    </div>
+    {state.partners.length>0&&!filtered.length&&<p>没有找到匹配的伙伴。 <button onClick={()=>{setQuery('');setFilter('all');setPage(1);}}>清除筛选</button></p>}
+    <div className="partner-lock-list">{filtered.slice((currentPage-1)*12,currentPage*12).map(p=>{
       const inTeam=state.team.includes(p.id),last=inTeam&&state.team.length===1;
       const reason=inTeam&&state.battle?.status==='active'?'等当前战斗结束后可锁定':inTeam&&state.question?'等当前题目完成后可锁定':last&&!reserves.length?'需先有一位已唤醒、未锁定的替补':'';
       return <div className="partner-lock-row" key={p.id}>
         <img src={asset('front',p.speciesId)} alt="" loading="lazy"/>
-        <div><strong>{pokemon(p.speciesId).name} · Lv.{p.level}</strong><small>{position(p.id)}{p.sealed?' · 待唤醒':''}{p.parentLocked?' · 家长已锁定':''}</small>
-          {last&&reserves.length>0&&<select aria-label="选择替补" value={replacement} onChange={e=>setReplacement(e.target.value)}><option value="">选择替补</option>{reserves.map(r=><option key={r.id} value={r.id}>{pokemon(r.speciesId).name} · Lv.{r.level} · {position(r.id)}</option>)}</select>}
+        <div><strong>{pokemon(p.speciesId).name} · Lv.{p.level}</strong><small>{position(p.id)}{p.sealed?' · 待唤醒':''}{p.parentLocked?' · 家长已锁定':' · 未锁定'}</small>
+          {last&&reserves.length>0&&<><input type="search" aria-label="搜索替补" placeholder="搜索替补伙伴" value={reserveQuery} onChange={e=>{setReserveQuery(e.target.value);setReplacement('');}}/><select aria-label="选择替补" value={replacement} onChange={e=>setReplacement(e.target.value)}><option value="">选择替补</option>{reserves.filter(r=>matches(r.speciesId,reserveQuery)).map(r=><option key={r.id} value={r.id}>{pokemon(r.speciesId).name} · Lv.{r.level} · {position(r.id)}</option>)}</select></>}
           {reason&&<small>{reason}</small>}
         </div>
         <button disabled={busy||!!reason||(last&&!reserves.some(r=>r.id===replacement))} onClick={()=>void run('parent.partner.lock',{partnerId:p.id,locked:!p.parentLocked,expectedRevision:state.revision,...(last?{replacementId:replacement}:{})})}>{p.parentLocked?'解锁':'锁定'}</button>
       </div>;
     })}</div>
+    {pages>1&&<nav className="lock-pages" aria-label="伙伴分页"><button disabled={currentPage<=1} onClick={()=>setPage(currentPage-1)}>上一页</button><span>{currentPage} / {pages}</span><button disabled={currentPage>=pages} onClick={()=>setPage(currentPage+1)}>下一页</button></nav>}
   </section>;
 }
 

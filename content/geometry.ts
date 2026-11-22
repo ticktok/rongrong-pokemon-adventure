@@ -54,6 +54,10 @@ function build(d:Design):RegionMap{
   const near=[...d.route,...d.loop].reduce((best,p)=>Math.abs(p[0]-point[0])+Math.abs(p[1]-point[1])<Math.abs(best[0]-point[0])+Math.abs(best[1]-point[1])?p:best);
   path([near,point]);
  }
+ // The forest loop runs north–south at x=24. Connect it to the gym with a clear three-tile approach.
+ if(d.id==='mist-forest'){
+  for(let y=12;y<=14;y++)for(let x=23;x<=31;x++)tiles[y][x]='path';
+ }
  const [land,road,water]=palettes[d.biome];return {id:d.id,tiles,spawn:d.entry,entry:d.entry,exit:d.exit,gym:d.gym,buildings,discoveries:discovery,land,path:road,water};
 }
 export const MAPS:RegionMap[]=designs.map(build);

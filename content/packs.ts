@@ -8,6 +8,9 @@ export interface GenerationPack {
   species:Species[];evolutions:Evolution[];regions:Region[];encounters:Record<string,number[]>;
   npcGifts:{npcId:string;speciesId:number;badges:number;level:number}[];
 }
+export function remainingWildSpecies(regionId:string,seen:readonly number[]=[]){
+  return encountersFor(regionId).filter(id=>!seen.includes(id));
+}
 // New generations append a pack here. Existing national IDs, region IDs and encounter pools stay unchanged.
 export const PACKS:GenerationPack[]=[{id:'gen1',name:'关都篇',collectionLabel:'第一世代 · 关都',badgeImages:{'home-meadow':'boulder','blue-river':'cascade','sunny-harbor':'thunder','leaf-garden':'rainbow','mist-forest':'soul','star-city':'marsh','ember-island':'volcano','evergreen-valley':'earth'},version:1,ruleset:'family-v1',starterIds:[1,4,7,25],species:species as Species[],evolutions,regions,encounters,npcGifts:[{npcId:'family-mum',speciesId:134,badges:4,level:18},{npcId:'family-grandpa',speciesId:135,badges:6,level:25},{npcId:'family-nana',speciesId:136,badges:8,level:35}]}];
 export const REGIONS=PACKS.flatMap(pack=>pack.regions);

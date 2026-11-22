@@ -1,4 +1,5 @@
 // Synthetic dual-session checks: no CloudBase credentials or real saves.
+import {checkBoxEvolution,checkForest,checkLockCards,populateForest} from './adventure-experience-checks.mjs';
 import {chromium,webkit,expect} from '@playwright/test';
 import {build} from 'esbuild';
 import {mkdir,writeFile} from 'node:fs/promises';
@@ -10,9 +11,10 @@ const role=new URLSearchParams(location.search).get('role')==='parent'?'parent':
 const get=()=>JSON.parse(localStorage.getItem('controls-fixture'));
 const save=row=>localStorage.setItem('controls-fixture',JSON.stringify(row));
 const flags={offline:false,loseResponse:false,delayResponse:0};
+const populateForest=${populateForest.toString()};
 function prepare(kind='practice'){
  let s=execute(initialState([],rt.now,'测试训练师'),{type:'starter',payload:{speciesId:25}},'child',rt).state;
- s.partners.push(makePartner(7,5,rt));
+ if(kind==='forest')populateForest(s,makePartner,rt);else s.partners.push(makePartner(7,5,rt));
  if(kind==='practice')s=execute(s,{type:'practice.start',payload:{}},'child',rt).state;
  if(kind==='battle'){s.partners[0].moves=['normal-0'];s=execute(s,{type:'gym.start',payload:{}},'child',rt).state;s.battle.enemyHp=1000;s.battle.enemyMaxHp=1000;}
  save({state:s,revision:(get()?.revision??0)+1});localStorage.setItem('controls-operations','{}');
@@ -25,7 +27,7 @@ export async function request(command){if(flags.offline)throw new Error('网络�
 export const asset=(kind,id)=>'/assets/pokemon/'+kind+'/'+id+'.png';export const saveFile=()=>{};export const dueWords=s=>s.reviewCount;
 `},bundle:true,write:false,platform:'browser',format:'esm'});
 const useWebkit=process.env.TEST_BROWSER==='webkit';const browser=await(useWebkit?webkit:chromium).launch(useWebkit?{headless:true}:{channel:'chrome',headless:true});
-const context=await browser.newContext({viewport:{width:1365,height:950},serviceWorkers:'block'}),child=await context.newPage(),parent=await context.newPage(),checks=[],errors=[];
+const context=await browser.newContext({viewport:{width:1365,height:950},hasTouch:true,serviceWorkers:'block'}),child=await context.newPage(),parent=await context.newPage(),checks=[],errors=[];
 const base=process.env.TEST_BASE_URL??'http://127.0.0.1:5176/';
 for(const page of [child,parent]){page.setDefaultTimeout(15000);page.on('pageerror',e=>errors.push(e.message));}
 await context.route('**/src/lib.ts',r=>r.fulfill({contentType:'application/javascript',body:fixture.outputFiles[0].text}));
@@ -66,5 +68,14 @@ try{
  await lock(false);await sync();await child.locator('.quiz-options').waitFor();const bq=(await row()).state.question;await child.locator('.quiz-options button').nth(bq.options.findIndex(o=>o.id===bq.correctOptionId)).click();await expect.poll(async()=>!(await row()).state.question).toBe(true);await lock(true);await sync();await child.locator('.child-rest-page').waitFor();assert.equal(await child.locator('.battle-panel').count(),0);pass('Lock dismisses battle presentation; the settled battle remains in the save.');
  await parent.setViewportSize({width:1024,height:768});await parent.screenshot({path:'artifacts/parent-controls-ipad.png',fullPage:true});await child.setViewportSize({width:1024,height:768});await child.screenshot({path:'artifacts/parent-controls-rest-ipad.png'});
  for(const page of [parent,child]){await page.setViewportSize({width:390,height:844});assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));}pass('Desktop, iPad-sized and narrow layouts render without horizontal overflow.');
+ await child.evaluate(()=>window.__controls.prepare('forest'));await child.goto(base+'?role=child&scenario=forest#/adventure');
+ await child.setViewportSize({width:1024,height:768});await checkForest(child,row,true);
+ await parent.setViewportSize({width:1024,height:768});await parent.reload();await parent.getByRole('button',{name:'家庭规则',exact:true}).click();
+ await checkLockCards(parent,row);await parent.locator('#partner-locks').screenshot({path:'artifacts/lock-cards-ipad.png'});
+ await child.setViewportSize({width:768,height:1024});await child.goto(base+'?role=child#/partners');
+ await checkBoxEvolution(child,row,true);
+ await child.evaluate(()=>{window.__controls.prepare('forest');const row=window.__controls.get();row.state.daily.wildSpecies=[13,32,50,69,86,102,114,125,138];row.state.daily.encounters=9;localStorage.setItem('controls-fixture',JSON.stringify(row));});
+ await child.goto(base+'?role=child&scenario=exhausted#/adventure');await child.locator('canvas[aria-label="浅红秘林地图就绪"]').waitFor();await expect(child.locator('.wild-exhausted')).toContainText(/剩余 3 次.*可以去/);
+ pass('Tablet keyboard and turn input reaches Koga, duplicate partner search and replacement select the correct ID, and lost evolution response retries once.');
  assert.deepEqual(errors,[]);
 }finally{await writeFile('artifacts/parent-controls-ui-'+(useWebkit?'webkit':'chrome')+'.json',JSON.stringify({checks,errors},null,2));await browser.close();}

@@ -66,7 +66,7 @@ describe('scene and capture policy',()=>{
     for(const [key,track] of Object.entries(tracks)){
       expect(existsSync('public/'+track.path)).toBe(true);expect(readFileSync('public/'+track.path).length).toBeGreaterThan(1000);
       if('loopStart'in track){expect(track.loopStart).toBeGreaterThanOrEqual(0);expect(track.loopEnd).toBeGreaterThan(track.loopStart+5);}
-      else expect(key).toBe('capture');
+      else expect(['capture','evolution','evolution-finish']).toContain(key);
     }
   });
 });

@@ -31,7 +31,7 @@ export const saveSchema:z.ZodType<GameState>=z.object({
   position:z.object({regionId:id,x:z.number().int(),y:z.number().int()}).passthrough(),
   battle:z.object({ballLimit:count.min(1).max(10).optional(),gymDifficulty:z.number().min(0.5).max(3).optional(),id,kind:z.enum(['wild','gym']),regionId:id,enemy:z.number().int().positive(),enemyLevel:count,enemyHp:count,enemyMaxHp:count,playerId:id,playerHp:count,playerMaxHp:count,teamHp:z.record(id,count),enemyIndex:count,enemies:numbers,combo:count,balls:count,turn:count,log:z.array(z.string()),status:z.enum(['active','won','lost','caught','fled'])}).passthrough().nullable(),
   question:question.nullable(),
-  daily:z.object({extraEncounters:count.optional(),extraEncountersUsed:count.optional(),gymExtrasUsed:count.optional(),gymExtraStarts:count.optional(),baseExpUsed:count.optional(),date:day,questions:count,correct:count,completedIds:ids,encounters:count,expGranted:count,practiceFinished:z.boolean(),goal:count.optional(),gymStarts:count.optional(),newWordCount:count.optional()}).passthrough(),
+  daily:z.object({wildSpecies:numbers.optional(),extraEncounters:count.optional(),extraEncountersUsed:count.optional(),gymExtrasUsed:count.optional(),gymExtraStarts:count.optional(),baseExpUsed:count.optional(),date:day,questions:count,correct:count,completedIds:ids,encounters:count,expGranted:count,practiceFinished:z.boolean(),goal:count.optional(),gymStarts:count.optional(),newWordCount:count.optional()}).passthrough(),
   checkins:z.array(z.object({date:day,taskIds:ids,status:z.enum(['pending','partial','approved','rejected']),submittedAt:id,englishCorrect:count,granted:count,reason:z.string().optional(),reviewedAt:id.optional(),review:checkinReview.optional()}).passthrough()),
   mastery:z.record(id,z.object({correct:count,wrong:count,due:day,stage:count,reviewStarted:day.optional(),lastAnsweredOn:day.optional(),fsrs:z.object({algorithm:z.literal('fsrs-6'),card:memoryCard,scheduledOn:day,lastRating:z.enum(['good','again'])}).passthrough().optional()}).passthrough()),
   carry:count,carryTargets:ids,carryByPartner:z.record(id,count).optional(),unallocatedExp:count.optional(),streakRewardsSettled:count.optional(),
@@ -106,6 +106,7 @@ export function validateSave(value:unknown,content=contentIdentity()):GameState{
   for(const r of s.sharedRewards??[]){unique(r.partnerIds,'reward recipients');r.partnerIds.forEach(id=>requireRef(partners.has(id),'reward recipient'));}
   Object.keys(s.expHalfRemainders??{}).forEach(id=>requireRef(partners.has(id),'experience remainder'));
 
+  (s.daily.wildSpecies??[]).forEach(n=>species(n,'daily wild species'));
   [...s.caught,...s.seen].forEach(n=>species(n,'Pokedex'));s.badges.forEach(n=>region(n,'badges'));region(s.position.regionId,'position');
   if(s.gymProgress){Object.keys(s.gymProgress.firstWins).forEach(n=>{region(n,'gym first win');requireRef(s.badges.includes(n),'gym badge');});s.gymProgress.legacyOpenRegions.forEach(n=>region(n,'legacy region'));}
   s.npcs.forEach(n=>region(n.regionId,'NPC region'));
