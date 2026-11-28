@@ -128,15 +128,21 @@
     "rights": "Original Pokémon game music; copyright belongs to its respective rights holders. No open license claimed."
   },
   "evolution": {
-    "path": "assets/bgm/evolution.wav",
-    "title": "伙伴进化",
-    "gain": 0.78,
-    "rights": "Original chiptune composed for this project."
+    "path": "assets/bgm/kanto-evolution.wav",
+    "title": "Evolution",
+    "gain": 0.65,
+    "rights": "Original Pokémon game music; copyright belongs to its respective rights holders. No open license claimed.",
+    "sourcePage": "https://www.zophar.net/music/gameboy-gbs/pokemon-red",
+    "source": "https://fi.zophar.net/soundfiles/gameboy-gbs/pokemon-red/17%20Evolution.mp3",
+    "loopStart": 4.932789115646258,
+    "loopEnd": 11.562585034013605
   },
   "evolution-finish": {
-    "path": "assets/bgm/evolution-finish.wav",
-    "title": "进化完成",
-    "gain": 0.78,
-    "rights": "Original chiptune composed for this project."
+    "path": "assets/bgm/kanto-evolution-finish.wav",
+    "title": "Evolution complete (SFX_GET_ITEM_2)",
+    "gain": 0.65,
+    "rights": "Original Pokémon game music; copyright belongs to its respective rights holders. No open license claimed.",
+    "sourcePage": "https://www.zophar.net/music/gameboy-gbs/pokemon-red",
+    "source": "https://fi.zophar.net/soundfiles/gameboy-gbs/pokemon-red/49%20Pokemon%20Capture%20Fanfare.mp3"
   }
 }

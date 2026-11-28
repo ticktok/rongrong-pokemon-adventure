@@ -13,7 +13,9 @@ function prepare(kind='battle'){
  s=execute(initialState([],rt.now,'测试训练师'),{type:'starter',payload:{speciesId:25}},'child',rt).state;
  s.partners[0].level=15;s.partners[0].exp=2000;s.settings.captureLimit=30;
  for(const id of [1,4,7]){const p=makePartner(id,5,rt);s.partners.push(p);s.team.push(p.id);}
- if(kind==='battle'){s=execute(s,{type:'encounter',payload:{}},'child',rt).state;Object.assign(s.battle,{enemy:10,enemies:[10],enemyHp:1,enemyMaxHp:40,playerHp:100,playerMaxHp:100});s.battle.teamHp[s.team[0]]=100;}
+ if(kind==='duplicate')s.partners.push(makePartner(50,21,rt));
+ if(kind==='battle'||kind==='duplicate'){s=execute(s,{type:'encounter',payload:{}},'child',rt).state;Object.assign(s.battle,{enemy:10,enemies:[10],enemyHp:1,enemyMaxHp:40,playerHp:100,playerMaxHp:100});s.battle.teamHp[s.team[0]]=100;}
+ if(kind==='duplicate')Object.assign(s.battle,{enemy:50,enemies:[50],enemyLevel:23});
  if(kind==='world')s.position={regionId:'home-meadow',x:5,y:18};
  flags.failCapture=false;flags.failEncounter=false;flags.delay=0;persist();
 }
@@ -65,6 +67,18 @@ try{
  pass('Success shows all three shakes before flash/stars/result; inputs stay locked through playback.');
  await page.reload();await page.locator('.capture-result').waitFor();assert.equal(await page.locator('.skip-battle').count(),0);
  pass('Reload of a settled catch shows a static keepsake and does not replay the capture.');
+ for(const choice of ['keep','experience']){
+  await prepare('duplicate');await capture();await page.locator('.capture-choices button').first().waitFor();
+  await page.reload();
+  assert(await page.getByRole('button',{name:'回到地图',exact:true}).isDisabled());
+  const name=choice==='keep'?'把 23 级地鼠收入盒子':'给 21 级地鼠 80 经验';
+  await page.getByRole('button',{name,exact:true}).click();
+  await page.locator('.capture-choices').waitFor({state:'hidden'});
+  const saved=await page.evaluate(()=>window.__cinema.state);
+  assert.equal(saved.partners.filter(p=>p.speciesId===50).length,choice==='keep'?2:1);
+  assert.match(await page.locator('.battle-log').innerText(),choice==='keep'?/地鼠已收入.*第.*格/:/获得 80 经验/);
+ }
+ pass('Duplicate capture survives reload and resolves to the chosen box slot or recipient experience.');
  await prepare();await page.evaluate(()=>window.__cinema.flags.failCapture=true);await watchPhases();await capture();await page.locator('[data-capture-phase="breakout"]').waitFor();assert.equal(await page.locator('.capture-result').count(),0);await page.screenshot({path:'artifacts/capture-breakout-'+kind+'.png'});await page.locator('.skip-battle').waitFor({state:'hidden'});
  assert.deepEqual(await page.evaluate(()=>window.__phases),['throw','absorb','drop','shake-1','shake-2','breakout']);assert.equal((await page.evaluate(()=>window.__cinema.state)).battle.status,'active');
  pass('Failed capture breaks out after two shakes, then runs the real counterattack.');

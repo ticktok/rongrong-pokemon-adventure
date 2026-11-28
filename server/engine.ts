@@ -1,4 +1,4 @@
-import {initializeBoxes,updateTeam,createBox,movePartners} from './partner-storage';
+import {initializeBoxes,storePartner,updateTeam,createBox,movePartners} from './partner-storage';
 import {adventureAccess,adventureQuota,initializeGymProgress,gymRemaining} from './gym-progress';
 import {recordGrowth,acknowledgeGrowth} from './growth';
 import {battleFrame,attackEvent,stageEvent} from './battle-events';
@@ -21,12 +21,15 @@ function integer(p:Record<string,unknown>,key:string,min:number,max:number){
 const ids=(p:Record<string,unknown>,key:string,max=20)=>{const v=p[key];if(!Array.isArray(v)||v.length>max||!v.every(x=>typeof x==='string'))throw new Error('请选择有效项目');return [...new Set(v)] as string[];};
 function requireParent(role:Role){if(role!=='parent')throw new Error('这项操作需要家长登录');}
 function noQuestion(s:GameState){if(s.question)throw new Error('先完成眼前这道题，再继续吧');}
+function requireCaptureChoiceResolved(s:GameState){
+  if(s.battle?.captureRecipientId)throw new Error('先决定把新伙伴收入盒子，还是换成经验吧');
+}
 function noBattle(s:GameState){if(s.battle?.status==='active')throw new Error('先完成这场冒险，再做这件事吧');}
 function current(s:GameState):Partner { const p=s.partners.find(p=>p.id===s.battle?.playerId);if(!p)throw new Error('请先选择出战伙伴');return p; }
 function addCaught(s:GameState,id:number){if(!s.caught.includes(id))s.caught.push(id);if(!s.seen.includes(id))s.seen.push(id);}
 function log(s:GameState,message:string){if(s.battle)s.battle.log=[...s.battle.log,message].slice(-12);}
 function startBattle(s:GameState,kind:'wild'|'gym',rt:Runtime):ActionResult {
-  noQuestion(s);noBattle(s);
+  noQuestion(s);noBattle(s);requireCaptureChoiceResolved(s);
   if(!s.started||!s.team.length)throw new Error('先邀请一位宝可梦伙伴吧');
   if(!canBattle(s,dayOf(rt.now)))throw new Error('今天未开放冒险，可以请家长临时放行');
   const r=region(s.position.regionId);
@@ -91,7 +94,10 @@ function settleAction(s:GameState,q:Question,firstCorrect:boolean,rt:Runtime,eve
       b.status='caught';addCaught(s,b.enemy);
       const duplicate=s.partners.find(p=>p.speciesId===b.enemy&&!p.sealed)??s.partners.find(p=>sameLineage(p.speciesId,b.enemy)&&!p.sealed);
       let message:string;
-      if(duplicate){const gained=grant(s,80,[duplicate.id]);message='又遇见了同一家族的伙伴！为'+species(duplicate.speciesId).name+'带来 '+gained+' 经验，其余奖励按每日上限顺延。';}
+      if(duplicate){
+        b.captureRecipientId=duplicate.id;
+        message='抓到了 '+b.enemyLevel+' 级'+species(b.enemy).name+'！请选择收入盒子或换成经验。';
+      }
       else{const p=makePartner(b.enemy,b.enemyLevel,rt);s.partners.push(p);if(s.team.length<6)s.team.push(p.id);message='捕捉成功！'+species(b.enemy).name+'加入了你的冒险。';}
       addEvent(s,rt,message);stageEvent(events,before,s,'capture','enemy','捕捉成功！');return {message,effect:'catch'};
     }
@@ -251,7 +257,27 @@ export function execute(input:GameState,cmd:GameCommand,role:Role,rt:Runtime):{s
       stageEvent(events,before,s,'sendout','own',species(next.speciesId).name+'上场了！');
       result=enemyTurn(s,events)??{message:species(next.speciesId).name+'上场了！',effect:'attack'};break;
     }
-    case 'battle.leave':noQuestion(s);s.battle=null;result={message:'回到地图，伙伴们已经恢复体力。'};break;
+    case 'battle.resolveCapture':{
+      const b=s.battle;
+      if(!b?.captureRecipientId||b.kind!=='wild'||b.status!=='caught'||p.battleId!==b.id)
+        throw new Error('这场捕获已处理，请查看最新进度');
+      let message:string;
+      if(p.choice==='keep'){
+        const partner=makePartner(b.enemy,b.enemyLevel,rt);
+        s.partners.push(partner);
+        const {box,slot}=storePartner(s,partner.id);
+        message=partner.level+' 级'+species(partner.speciesId).name+'已收入「'+box.name+'」第 '+(slot+1)+' 格。';
+      }else if(p.choice==='experience'){
+        const recipient=s.partners.find(partner=>partner.id===b.captureRecipientId);
+        if(!recipient)throw new Error('找不到领取经验的伙伴');
+        const actual=grant(s,80,[recipient.id]);
+        message=species(recipient.speciesId).name+'获得 '+actual+' 经验。';
+        if(actual<80)message+='剩余 '+(80-actual)+(recipient.level>=50?' 经验可在伙伴页分配。':' 经验顺延。');
+      }else throw new Error('请选择收入盒子或换成经验');
+      delete b.captureRecipientId;
+      log(s,message);addEvent(s,rt,message);result={message};break;
+    }
+    case 'battle.leave':requireCaptureChoiceResolved(s);noQuestion(s);s.battle=null;result={message:'回到地图，伙伴们已经恢复体力。'};break;
     case 'team.update':{
       noBattle(s);noQuestion(s);updateTeam(s,ids(p,'partnerIds',6));result={message:'出战队伍准备好了！'};break;
     }
