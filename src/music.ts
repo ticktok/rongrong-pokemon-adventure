@@ -115,7 +115,7 @@ export class MusicPlayer {
       this.loading=null;
       const source=c.createBufferSource(),gain=c.createGain(),asset=this.assets[track];
       source.buffer=buffer;source.loop=!cue||loopCue;
-      if(!cue){source.loopStart=asset.loopStart??0;source.loopEnd=asset.loopEnd??buffer.duration;}
+      if(source.loop){source.loopStart=asset.loopStart??0;source.loopEnd=asset.loopEnd??buffer.duration;}
       const voice:Voice={source,gain,track,cue};this.voice=voice;this.voices.add(voice);
       source.connect(gain);gain.connect(c.destination);gain.gain.setValueAtTime(0,c.currentTime);
       gain.gain.linearRampToValueAtTime(this.target(voice),c.currentTime+(cue?.04:.3));

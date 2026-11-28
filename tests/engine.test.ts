@@ -28,6 +28,38 @@ describe('questions and rewards',()=>{
    for(let i=0;i<3;i++){const before=s.battle!.enemyHp;s=act(s,'battle.move',{moveId:'normal-0'}).state;s=solve(s).state;losses.push(before-s.battle!.enemyHp);}
    expect(losses).toEqual([8,8,10]);expect(s.battle!.combo).toBe(0);
  });
+ it.each([50,51])('offers a single recoverable choice when a diglett family partner already exists (%i)',speciesId=>{
+   let s=started();
+   const recipient=makePartner(speciesId,21,rt);
+   s.partners.push(recipient);
+   for(let i=1;i<30;i++)s.partners.push(makePartner(10,5,rt));
+   s=act(s,'encounter').state;
+   Object.assign(s.battle!,{enemy:50,enemyLevel:23,enemies:[50],enemyHp:1});
+   const pending=solve(act(s,'battle.catch').state).state;
+   expect(pending.battle?.captureRecipientId).toBe(recipient.id);
+   expect(pending.partners).toEqual(s.partners);
+   expect(pending.caught.filter(id=>id===50)).toHaveLength(1);
+   const resumed=act(pending,'bootstrap').state,battleId=resumed.battle!.id;
+   for(const type of ['battle.leave','encounter','gym.start'])expect(()=>act(resumed,type)).toThrow('先决定');
+   const resolve=(state:GameState,choice:string,id=battleId)=>act(state,'battle.resolveCapture',{battleId:id,choice});
+   expect(()=>resolve(resumed,'keep','stale-battle')).toThrow();
+   const kept=resolve(resumed,'keep');
+   const added=kept.state.partners.at(-1)!;
+   expect(added).toMatchObject({speciesId:50,level:23});
+   expect(added.id).not.toBe(recipient.id);
+   expect(kept.state.team).toEqual(s.team);
+   expect(kept.state.boxes![1].slots[0]).toBe(added.id);
+   expect(kept.result.message).toContain('第 1 格');
+   expect(()=>resolve(kept.state,'experience')).toThrow();
+   resumed.daily.baseExpUsed=resumed.settings.dailyCap-10;
+   const xp=resolve(resumed,'experience');
+   expect(xp.state.partners).toHaveLength(s.partners.length);
+   expect(xp.state.partners.find(p=>p.id===recipient.id)!.exp).toBe(recipient.exp+10);
+   expect(xp.state.carryByPartner?.[recipient.id]).toBe(70);
+   expect(xp.result.message).toContain('70 经验顺延');
+   expect(()=>resolve(xp.state,'keep')).toThrow();
+   expect(act(xp.state,'battle.leave').state.battle).toBeNull();
+ });
  it('adds fifteen capture percentage points only for a correct first attempt',()=>{
    let s=act(started(),'encounter').state;Object.assign(s.battle!,{enemy:10,enemyLevel:4,enemyHp:50,enemyMaxHp:50});
    s=act(s,'battle.catch').state;const q=s.question!;

@@ -59,7 +59,23 @@ try{
  await page.goto(base+'#/partners');await page.getByRole('button',{name:'成长记录',exact:false}).click();await page.locator('.growth-dialog').waitFor();await page.getByRole('button',{name:'收好手册',exact:true}).click();assert.equal((await state()).growth.readThrough,0);
  await page.evaluate(()=>window.__presentation.setRole('child'));await reload();await page.locator('.growth-dialog').waitFor();
  await page.getByRole('button',{name:'可以进化了，去看看',exact:false}).click();await page.locator('.partner-detail').waitFor();assert.equal(await page.locator('.growth-dialog').count(),0);
- page.once('dialog',dialog=>dialog.accept());await page.getByRole('button',{name:'进化为火恐龙',exact:false}).click();await page.getByRole('dialog',{name:'宝可梦进化'}).getByRole('button',{name:'继续',exact:true}).click();await page.waitForFunction(()=>window.__presentation.state.partners[0].speciesId===5);await page.locator('.partner-detail .close').click();await page.locator('.growth-dialog').waitFor();assert.match(await page.locator('.growth-evolution').innerText(),/小火龙.*火恐龙/s);await page.screenshot({path:'artifacts/growth-evolution.png'});await page.getByRole('button',{name:'知道啦',exact:true}).click();
+ page.once('dialog',dialog=>dialog.accept());await page.getByRole('button',{name:'进化为火恐龙',exact:false}).click();
+ await page.waitForFunction(async()=>(await import('/src/music.ts')).music.snapshot().track==='evolution');
+ const switches=await page.locator('.evolution-before').evaluate(async image=>{
+  const times=[];let previous=getComputedStyle(image).opacity;
+  const until=performance.now()+5500;
+  while(performance.now()<until&&!image.closest('.revealed')){
+   await new Promise(requestAnimationFrame);
+   const opacity=getComputedStyle(image).opacity;
+   if(opacity!==previous){times.push(performance.now());previous=opacity;}
+  }
+  return times.slice(1).map((t,i)=>Math.round(t-times[i]));
+ });
+ assert(switches.length>=7,'Expected alternating silhouettes throughout evolution');
+ assert(switches[0]>450&&switches.at(-1)<260&&switches[3]<switches[0],JSON.stringify(switches));
+ await page.waitForFunction(async()=>(await import('/src/music.ts')).music.snapshot().track==='evolution-finish');
+ pass('Original evolution cues decoded in order; observed silhouette intervals (ms): '+switches.join(', '));
+ await page.getByRole('dialog',{name:'宝可梦进化'}).getByRole('button',{name:'继续',exact:true}).click();await page.waitForFunction(()=>window.__presentation.state.partners[0].speciesId===5);await page.locator('.partner-detail .close').click();await page.locator('.growth-dialog').waitFor();assert.match(await page.locator('.growth-evolution').innerText(),/小火龙.*火恐龙/s);await page.screenshot({path:'artifacts/growth-evolution.png'});await page.getByRole('button',{name:'知道啦',exact:true}).click();
  pass('Parents cannot consume child reminders; manual evolution keeps confirmation and presents both forms after the detail dialog closes.');
  for(const [width,height] of [[360,844],[768,1024],[1024,768],[1365,950]]){
   await page.setViewportSize({width,height});await prepare('multi');await page.locator('.growth-dialog').waitFor();assert.equal(await page.locator('.growth-card').count(),6);

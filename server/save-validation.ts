@@ -29,7 +29,7 @@ export const saveSchema:z.ZodType<GameState>=z.object({
   sharedUnallocated:count.optional(),expHalfRemainders:z.record(id,z.number().int().min(0).max(1)).optional(),
   team:ids.max(6),seen:numbers,caught:numbers,badges:ids,
   position:z.object({regionId:id,x:z.number().int(),y:z.number().int()}).passthrough(),
-  battle:z.object({ballLimit:count.min(1).max(10).optional(),gymDifficulty:z.number().min(0.5).max(3).optional(),id,kind:z.enum(['wild','gym']),regionId:id,enemy:z.number().int().positive(),enemyLevel:count,enemyHp:count,enemyMaxHp:count,playerId:id,playerHp:count,playerMaxHp:count,teamHp:z.record(id,count),enemyIndex:count,enemies:numbers,combo:count,balls:count,turn:count,log:z.array(z.string()),status:z.enum(['active','won','lost','caught','fled'])}).passthrough().nullable(),
+  battle:z.object({captureRecipientId:id.optional(),ballLimit:count.min(1).max(10).optional(),gymDifficulty:z.number().min(0.5).max(3).optional(),id,kind:z.enum(['wild','gym']),regionId:id,enemy:z.number().int().positive(),enemyLevel:count,enemyHp:count,enemyMaxHp:count,playerId:id,playerHp:count,playerMaxHp:count,teamHp:z.record(id,count),enemyIndex:count,enemies:numbers,combo:count,balls:count,turn:count,log:z.array(z.string()),status:z.enum(['active','won','lost','caught','fled'])}).passthrough().nullable(),
   question:question.nullable(),
   daily:z.object({wildSpecies:numbers.optional(),extraEncounters:count.optional(),extraEncountersUsed:count.optional(),gymExtrasUsed:count.optional(),gymExtraStarts:count.optional(),baseExpUsed:count.optional(),date:day,questions:count,correct:count,completedIds:ids,encounters:count,expGranted:count,practiceFinished:z.boolean(),goal:count.optional(),gymStarts:count.optional(),newWordCount:count.optional()}).passthrough(),
   checkins:z.array(z.object({date:day,taskIds:ids,status:z.enum(['pending','partial','approved','rejected']),submittedAt:id,englishCorrect:count,granted:count,reason:z.string().optional(),reviewedAt:id.optional(),review:checkinReview.optional()}).passthrough()),
@@ -119,7 +119,9 @@ export function validateSave(value:unknown,content=contentIdentity()):GameState{
     requireRef(f.card.last_review===new Date(f.scheduledOn+'T00:00:00+08:00').toISOString(),'memory review date');
     requireRef(!!m.lastAnsweredOn&&m.lastAnsweredOn>=f.scheduledOn,'memory last answer');
   }
-  if(s.battle){const b=s.battle;region(b.regionId,'battle region');[b.enemy,...b.enemies].forEach(n=>species(n,'battle species'));for(const p of [b.playerId,...Object.keys(b.teamHp)])requireRef(partners.has(p),'battle partner');}
+  if(s.battle){const b=s.battle;
+    if(b.captureRecipientId)requireRef(b.kind==='wild'&&b.status==='caught'&&partners.has(b.captureRecipientId),'capture recipient');
+    region(b.regionId,'battle region');[b.enemy,...b.enemies].forEach(n=>species(n,'battle species'));for(const p of [b.playerId,...Object.keys(b.teamHp)])requireRef(partners.has(p),'battle partner');}
   if(s.question){const q=s.question;requireRef(wordIds.has(q.wordId),'question word');unique(q.options.map(o=>o.id),'question options');requireRef(q.options.some(o=>o.id===q.correctOptionId),'question answer');if(q.moveId)move(q.moveId,'question move');if(q.npcId)requireRef(npcs.has(q.npcId),'question NPC');if(q.kind==='battle'||q.kind==='catch')requireRef(s.battle!==null,'question battle');}
   return s;
 }

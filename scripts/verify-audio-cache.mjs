@@ -1,10 +1,10 @@
 import {chromium} from '@playwright/test';import {readFile} from 'node:fs/promises';import assert from 'node:assert/strict';
 const wordFile=JSON.parse(await readFile('content/pronunciations.json'))[process.env.AUDIO_WORD??'apple'];assert(wordFile);
-const bgm=JSON.parse(await readFile('content/bgm.json')).capture.path;
+const music=JSON.parse(await readFile('content/bgm.json'));
 const browser=await chromium.launch({channel:'chrome',headless:true}),context=await browser.newContext(),page=await context.newPage();
 try{
  await page.goto(process.env.PREVIEW_URL??'http://127.0.0.1:4173/');await page.evaluate(()=>navigator.serviceWorker.ready);await page.reload();await page.waitForFunction(()=>!!navigator.serviceWorker.controller);
- for(const file of [wordFile,bgm]){
+ for(const file of [wordFile,music.capture.path,music.evolution.path,music['evolution-finish'].path]){
  await context.setOffline(false);
  const result=await page.evaluate(async file=>{
   const full=await fetch('/'+file);const size=(await full.arrayBuffer()).byteLength;
@@ -18,5 +18,5 @@ try{
  await page.locator('#play-cached-audio').click();await page.waitForFunction(()=>window.__cacheAudio.currentTime>0);assert.equal(await page.evaluate(()=>window.__audioError),undefined);
  await page.evaluate(()=>{window.__cacheAudio.pause();document.querySelector('#play-cached-audio').remove();});
  }
- console.log('PASS: production Service Worker serves full, partial, suffix and invalid audio ranges; word and BGM MP3s play offline in Chrome.');
+ console.log('PASS: production Service Worker serves full, partial, suffix and invalid audio ranges; word and BGM recordings play offline in Chrome.');
 }finally{await browser.close();}

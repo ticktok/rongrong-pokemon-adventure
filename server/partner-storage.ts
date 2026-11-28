@@ -8,7 +8,9 @@ export function createBox(s:GameState,name?:string):PartnerBox {
 }
 export function storePartner(s:GameState,id:string){
   const box=s.boxes!.find(b=>b.slots.includes(null))??createBox(s);
-  box.slots[box.slots.indexOf(null)]=id;
+  const slot=box.slots.indexOf(null);
+  box.slots[slot]=id;
+  return {box,slot};
 }
 export function initializeBoxes(s:GameState){
   s.boxes??=[];if(!s.boxes.length)createBox(s);
