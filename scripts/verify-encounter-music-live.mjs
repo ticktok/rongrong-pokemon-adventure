@@ -67,14 +67,25 @@ try{
   assert(observed,'Did not observe '+mode+' within isolated QA attempts');
   pass('Deployed capture '+mode+' matches server result, preserves delayed reveal and finishes without stuck controls.');
  }
+ await child.getByRole('button',{name:'学习手册',exact:true}).click();await child.locator('.learning-grid').waitFor();
  for(const choice of ['keep','experience']){
   const state=fixture('success');
   state.partners.push(makePartner(50,21,rt));
   Object.assign(state.battle,{enemy:50,enemies:[50],enemyLevel:23});
   const catching=execute(state,{type:'battle.catch',payload:{},operationId:randomUUID()},'child',rt).state;
   const q=catching.question;
-  const pending=execute(catching,{type:'answer',payload:{questionId:q.id,optionId:q.correctOptionId},operationId:randomUUID()},'child',rt).state;
-  assert(pending.battle.captureRecipientId);await commit(pending);await child.reload();
+  let pending;
+  for(let attempt=0;attempt<8;attempt++){
+    await commit(catching);
+    const response=await command(child,'answer',{questionId:q.id,optionId:q.correctOptionId});
+    assert(response.ok,response.error);
+    const actual=(await current()).state;
+    if(actual.battle.captureRecipientId){pending=actual;break;}
+    assert.notEqual(actual.battle.status,'caught','Successful duplicate capture must offer the choice');
+  }
+  assert(pending,'No duplicate caught during bounded QA attempts');
+  assert.equal(pending.partners.filter(partner=>partner.speciesId===50).length,1);
+  await child.goto(base+'#/adventure');await child.reload();
   await child.getByRole('button',{name:choice==='keep'?'把 23 级地鼠收入盒子':'给 21 级地鼠 80 经验',exact:true}).click();
   await child.locator('.capture-choices').waitFor({state:'hidden'});
   const saved=(await current()).state, diglett=saved.partners.filter(p=>p.speciesId===50);
@@ -100,7 +111,6 @@ try{
  await scene.getByRole('button',{name:'继续',exact:true}).click();
  assert.equal((await current()).state.partners.find(p=>p.id===exeggcute.id).speciesId,103);
  pass('Production evolution displayed the confirmed form and played the decoded original theme and finish cue.');
- await child.getByRole('button',{name:'学习手册',exact:true}).click();await child.locator('.learning-grid').waitFor();
  for(const path of ['music-credits.html','assets/bgm/pallet.mp3','assets/bgm/capture.mp3','assets/bgm/kanto-evolution.wav','assets/bgm/kanto-evolution-finish.wav','sw.js']){const response=await fetch(base+path);assert(response.ok,path+' HTTP '+response.status);if(path==='sw.js')assert((await response.text()).includes(version));}
  validateSave((await current()).state);assert.deepEqual(report.errors,[]);
  pass('Deployed music assets, release version, learning route and compatible QA save verified.');
